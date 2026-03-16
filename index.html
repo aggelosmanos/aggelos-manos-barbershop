@@ -1,463 +1,496 @@
 <!DOCTYPE html>
 <html lang="el">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aggelos Manos Mens Salon – Αλμυρός</title>
-  <meta name="description" content="Aggelos Manos Mens Salon – Αθηνών 33, Αλμυρός 37100. Τηλ: 2422029600 | 6987033949" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Raleway:wght@300;400;500;600;700&family=Cinzel:wght@400;700&display=swap" rel="stylesheet" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Aggelos Manos Mens Salon – Αλμυρός</title>
+<meta name="description" content="Aggelos Manos Mens Salon – Αθηνών 33, Αλμυρός 37100 · 2422 029600"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&family=Cinzel:wght@400;600&display=swap" rel="stylesheet"/>
 <style>
-:root {
-  --gold:#c9a84c; --gold-light:#e8c97a; --gold-dark:#9a7330;
-  --black:#0d0d0d; --dark:#141414; --dark-2:#1c1c1c; --dark-3:#242424;
-  --gray:#888; --white:#f5f0e8;
-  --font-display:'Cinzel',serif; --font-heading:'Playfair Display',serif; --font-body:'Raleway',sans-serif;
-  --nav-h:80px; --radius:2px; --transition:0.35s ease;
+:root{
+  --gold:#c9a84c;--gold-l:#e8c97a;--gold-d:#7a5c1e;
+  --bg:#0a0a0a;--s1:#111;--s2:#181818;--s3:#202020;
+  --txt:#f0ebe0;--txt2:rgba(240,235,224,.55);--txt3:rgba(240,235,224,.3);
+  --f-display:'Cormorant Garamond',serif;
+  --f-title:'Cinzel',serif;
+  --f-body:'Outfit',sans-serif;
+  --nav-h:72px;--tr:.3s ease;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;font-size:16px}
-body{background:var(--black);color:var(--white);font-family:var(--font-body);font-weight:400;line-height:1.7;overflow-x:hidden;padding-bottom:38px}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:var(--f-body);line-height:1.7;overflow-x:hidden;padding-bottom:40px}
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 ul{list-style:none}
-.container{width:90%;max-width:1200px;margin:0 auto}
-.section{padding:100px 0;position:relative}
-.section-eyebrow{font-family:var(--font-body);font-size:.72rem;font-weight:600;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:block}
-.section-title{font-family:var(--font-heading);font-size:clamp(2rem,4vw,3rem);font-weight:700;line-height:1.15;color:var(--white);margin-bottom:28px}
-.section-title em{font-style:italic;color:var(--gold)}
-.center{text-align:center}
-.light{color:var(--white)!important}
+.wrap{width:88%;max-width:1160px;margin:0 auto}
+.sec{padding:110px 0;position:relative}
 
-/* NAVBAR */
-.navbar{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:1000;transition:background var(--transition),box-shadow var(--transition);background:transparent}
-.navbar.scrolled{background:rgba(13,13,13,.97);box-shadow:0 2px 24px rgba(0,0,0,.5);border-bottom:1px solid rgba(201,168,76,.2)}
-.nav-inner{max-width:1280px;margin:0 auto;padding:0 5%;height:100%;display:flex;align-items:center;justify-content:space-between;gap:24px}
-.logo{display:flex;align-items:center;gap:12px;text-decoration:none}
-.logo-img{width:44px;height:44px;object-fit:contain;border-radius:50%;display:block;flex-shrink:0}
-.logo-text{display:flex;flex-direction:column;line-height:1.1}
-.logo-name{font-family:var(--font-display);font-size:.8rem;font-weight:700;letter-spacing:.2em;color:var(--white)}
-.logo-sub{font-family:var(--font-body);font-size:.58rem;letter-spacing:.3em;color:var(--gold);font-weight:500;text-transform:uppercase}
-.nav-links{display:flex;align-items:center;gap:36px}
-.nav-links a{font-family:var(--font-body);font-size:.72rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(245,240,232,.75);transition:color var(--transition);position:relative}
-.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gold);transition:width var(--transition)}
+/* ── NAVBAR ── */
+.nav{position:fixed;inset:0 0 auto 0;height:var(--nav-h);z-index:500;transition:background var(--tr),border-color var(--tr);background:transparent;border-bottom:1px solid transparent}
+.nav.s{background:rgba(10,10,10,.96);border-bottom-color:rgba(201,168,76,.15);backdrop-filter:blur(12px)}
+.nav-w{max-width:1280px;margin:0 auto;padding:0 5%;height:100%;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{display:flex;align-items:center;gap:11px}
+.logo img{width:40px;height:40px;object-fit:contain;border-radius:50%}
+.logo-t{line-height:1.15}
+.logo-n{font-family:var(--f-title);font-size:.72rem;font-weight:600;letter-spacing:.22em;color:var(--txt);display:block}
+.logo-s{font-family:var(--f-body);font-size:.52rem;font-weight:300;letter-spacing:.38em;color:var(--gold);display:block;text-transform:uppercase}
+.nav-links{display:flex;gap:32px}
+.nav-links a{font-family:var(--f-body);font-size:.68rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--txt2);transition:color var(--tr);position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--gold);transition:width var(--tr)}
 .nav-links a:hover{color:var(--gold)}
 .nav-links a:hover::after{width:100%}
-.nav-phone{display:flex;align-items:center;gap:8px;font-family:var(--font-body);font-size:.8rem;font-weight:600;color:var(--gold);border:1px solid var(--gold);padding:8px 16px;border-radius:var(--radius);transition:all var(--transition)}
-.nav-phone:hover{background:var(--gold);color:var(--black)}
-.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
-.hamburger span{display:block;width:26px;height:2px;background:var(--white);border-radius:2px;transition:all var(--transition)}
+.nav-phone{display:flex;align-items:center;gap:8px;font-family:var(--f-body);font-size:.75rem;font-weight:500;color:var(--txt);letter-spacing:.06em;border:1px solid rgba(201,168,76,.4);padding:7px 16px;border-radius:2px;transition:all var(--tr)}
+.nav-phone svg{color:var(--gold);flex-shrink:0}
+.nav-phone:hover{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+.nav-phone:hover svg{color:var(--bg)}
+.burger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.burger span{display:block;width:24px;height:1.5px;background:var(--txt);transition:all var(--tr)}
 
-/* HERO */
-.hero{position:relative;height:100vh;min-height:700px;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.hero-bg{position:absolute;inset:0;z-index:0}
-.hero-img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:grayscale(20%) brightness(.65);transform:scale(1.04);transition:transform 8s ease}
-.hero:hover .hero-img{transform:scale(1.0)}
-.hero-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(0,0,0,.35) 0%,rgba(13,13,13,.55) 60%,rgba(13,13,13,.95) 100%)}
-.hero-content{position:relative;z-index:2;text-align:center;padding:0 20px;animation:fadeUp 1.2s ease forwards}
-.hero-eyebrow{font-family:var(--font-body);font-size:.72rem;font-weight:600;letter-spacing:.45em;color:var(--gold);text-transform:uppercase;margin-bottom:20px;opacity:0;animation:fadeUp .8s ease .2s forwards}
-.hero-title{display:flex;flex-direction:column;align-items:center;line-height:1;margin-bottom:24px}
-.hero-title-main{font-family:var(--font-display);font-size:clamp(2.4rem,7vw,6rem);font-weight:700;letter-spacing:.12em;color:var(--white);opacity:0;animation:fadeUp .8s ease .4s forwards}
-.hero-title-main.clip-img{background-image:url('images/hero-bg.jpg');background-size:120%;background-position:center 35%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;filter:drop-shadow(0 0 28px rgba(201,168,76,.18)) brightness(1.22) contrast(1.1) saturate(.9)}
-.hero-title-sub{font-family:var(--font-body);font-size:clamp(.9rem,2.5vw,1.4rem);font-weight:300;letter-spacing:.55em;color:var(--gold);margin-top:8px;opacity:0;animation:fadeUp .8s ease .6s forwards}
-.hero-tagline{font-family:var(--font-body);font-size:clamp(.75rem,1.5vw,.9rem);font-weight:400;letter-spacing:.3em;text-transform:uppercase;color:rgba(245,240,232,.6);margin-bottom:48px;opacity:0;animation:fadeUp .8s ease .8s forwards}
-.hero-actions{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;opacity:0;animation:fadeUp .8s ease 1s forwards}
-.hero-scroll{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);z-index:2}
-.hero-scroll span{display:block;width:1px;height:60px;background:linear-gradient(to bottom,transparent,var(--gold));margin:0 auto;animation:scrollPulse 1.8s ease-in-out infinite}
+/* ── HERO ── */
+.hero{position:relative;height:100vh;min-height:680px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:brightness(.55) grayscale(15%);transform:scale(1.04);transition:transform 9s ease}
+.hero:hover .hero-bg img{transform:scale(1)}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,10,10,.2) 0%,rgba(10,10,10,.5) 55%,rgba(10,10,10,1) 100%)}
+.hero-inner{position:relative;z-index:2;text-align:center;padding:0 24px}
+.hero-tag{font-family:var(--f-body);font-size:.62rem;font-weight:500;letter-spacing:.55em;color:var(--gold);text-transform:uppercase;margin-bottom:22px;opacity:0;animation:up .9s ease .1s forwards}
+.hero-h1{margin-bottom:16px}
+.hero-h1 .main{font-family:var(--f-title);font-size:clamp(2.6rem,7.5vw,6.5rem);font-weight:600;letter-spacing:.1em;display:block;line-height:1;background-image:url('images/hero-bg.jpg');background-size:120%;background-position:center 35%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;filter:brightness(1.3) contrast(1.1) saturate(.85);opacity:0;animation:up .9s ease .3s forwards}
+.hero-h1 .sub{font-family:var(--f-body);font-size:clamp(.7rem,1.8vw,.95rem);font-weight:300;letter-spacing:.6em;color:var(--gold);display:block;margin-top:10px;opacity:0;animation:up .9s ease .5s forwards}
+.hero-line{font-family:var(--f-display);font-size:clamp(.8rem,1.6vw,1.05rem);font-weight:300;font-style:italic;color:var(--txt2);letter-spacing:.12em;margin-bottom:44px;opacity:0;animation:up .9s ease .7s forwards}
+.hero-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;opacity:0;animation:up .9s ease .9s forwards}
+.hero-scroll{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);z-index:2}
+.hero-scroll span{display:block;width:1px;height:52px;background:linear-gradient(to bottom,transparent,var(--gold));animation:pulse 2s ease-in-out infinite}
 
-/* BUTTONS */
-.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-body);font-size:.78rem;font-weight:700;letter-spacing:.25em;text-transform:uppercase;padding:14px 32px;border-radius:var(--radius);border:1px solid transparent;cursor:pointer;transition:all var(--transition);white-space:nowrap}
-.btn-primary{background:var(--gold);color:var(--black);border-color:var(--gold)}
-.btn-primary:hover{background:var(--gold-light);border-color:var(--gold-light);transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,.35)}
-.btn-outline{background:transparent;color:var(--white);border-color:rgba(245,240,232,.5)}
-.btn-outline:hover{border-color:var(--white);background:rgba(255,255,255,.07);transform:translateY(-2px)}
-.btn-dark{background:var(--dark-2);color:var(--white);border-color:rgba(255,255,255,.15)}
-.btn-dark:hover{background:var(--dark-3);border-color:rgba(255,255,255,.3);transform:translateY(-2px)}
-.btn-large{padding:18px 42px;font-size:.82rem}
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-body);font-size:.7rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;padding:13px 28px;border:1px solid transparent;cursor:pointer;transition:all var(--tr);white-space:nowrap}
+.btn-g{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+.btn-g:hover{background:var(--gold-l);border-color:var(--gold-l);transform:translateY(-2px);box-shadow:0 8px 28px rgba(201,168,76,.3)}
+.btn-o{background:transparent;color:var(--txt);border-color:rgba(240,235,224,.3)}
+.btn-o:hover{border-color:var(--txt);transform:translateY(-2px)}
+.btn-d{background:var(--s2);color:var(--txt);border-color:rgba(255,255,255,.08)}
+.btn-d:hover{background:var(--s3);border-color:rgba(255,255,255,.2);transform:translateY(-2px)}
+.btn-lg{padding:15px 36px;font-size:.74rem}
 
-/* ABOUT */
-.about{background:var(--dark)}
+/* ── ABOUT ── */
+.about{background:var(--s1)}
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-.about-image-wrap{position:relative}
-.about-img-frame{position:relative;border-radius:var(--radius);overflow:visible}
-.about-img{width:100%;height:520px;object-fit:cover;border-radius:var(--radius);filter:grayscale(15%);display:block}
-.about-img-accent{position:absolute;bottom:-20px;right:-20px;width:60%;height:60%;border:2px solid var(--gold);border-radius:var(--radius);z-index:-1;opacity:.4}
-.about-desc{color:rgba(245,240,232,.7);font-size:1rem;margin-bottom:20px;font-weight:300}
-.about-badges{display:flex;gap:32px;margin-top:40px;padding-top:32px;border-top:1px solid rgba(201,168,76,.2);flex-wrap:wrap}
-.badge{display:flex;flex-direction:column;gap:4px}
-.badge-num{font-family:var(--font-display);font-size:2rem;color:var(--gold);font-weight:700;line-height:1}
-.badge-label{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);font-weight:500}
+.about-img-wrap{position:relative}
+.about-img-wrap img{width:100%;height:500px;object-fit:cover;filter:grayscale(10%)}
+.about-img-wrap::after{content:'';position:absolute;bottom:-16px;right:-16px;width:55%;height:55%;border:1px solid rgba(201,168,76,.3);pointer-events:none;z-index:-1}
+.eyebrow{font-family:var(--f-body);font-size:.6rem;font-weight:500;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:14px}
+.h2{font-family:var(--f-display);font-size:clamp(2rem,4vw,3rem);font-weight:300;color:var(--txt);line-height:1.2;margin-bottom:24px}
+.h2 em{font-style:italic;color:var(--gold)}
+.about p{font-family:var(--f-body);font-size:.95rem;font-weight:300;color:var(--txt2);line-height:1.85;margin-bottom:16px}
+.stats{display:flex;gap:36px;margin-top:40px;padding-top:32px;border-top:1px solid rgba(201,168,76,.15);flex-wrap:wrap}
+.stat-n{font-family:var(--f-display);font-size:2.4rem;font-weight:400;color:var(--gold);line-height:1;display:block}
+.stat-l{font-family:var(--f-body);font-size:.62rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--txt3);margin-top:4px;display:block}
 
-/* SERVICES */
-.services{background:var(--black)}
-.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:60px;background:rgba(201,168,76,.1)}
-.service-card{background:var(--dark-2);padding:52px 36px 40px;text-align:left;position:relative;overflow:hidden;transition:all var(--transition)}
-.service-card::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--gold);transition:width .5s ease}
-.service-card:hover::after{width:100%}
-.service-card:hover{background:#1a1a1a}
-.featured-service{background:var(--dark-3);border-top:2px solid var(--gold)}
-.service-badge{position:absolute;top:20px;right:20px;font-size:.58rem;font-weight:700;letter-spacing:.25em;color:var(--black);background:var(--gold);padding:4px 10px;border-radius:2px}
-.service-num{font-family:var(--font-display);font-size:3.5rem;font-weight:700;color:rgba(201,168,76,.08);line-height:1;margin-bottom:20px;letter-spacing:-.02em}
-.service-icon-wrap{color:var(--gold);margin-bottom:20px;display:block}
-.service-card h3{font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--white);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
-.service-sub{font-family:var(--font-heading);font-size:.82rem;font-style:italic;color:var(--gold);margin-bottom:16px;display:block}
-.service-card p:not(.service-sub){font-size:.88rem;color:rgba(245,240,232,.52);font-weight:300;line-height:1.8}
-.service-line{width:32px;height:1px;background:rgba(201,168,76,.35);margin:24px 0 16px}
-.service-price{font-family:var(--font-display);font-size:1.6rem;font-weight:700;color:var(--gold)}
+/* ── SERVICES ── */
+.services{background:var(--bg)}
+.sec-head{text-align:center;margin-bottom:64px}
+.sec-head .h2{font-size:clamp(1.8rem,3.5vw,2.8rem)}
+.srv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(201,168,76,.08)}
+.srv{background:var(--s2);padding:48px 32px 40px;position:relative;overflow:hidden;transition:background var(--tr)}
+.srv::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--gold);transition:width .5s ease}
+.srv:hover{background:var(--s3)}
+.srv:hover::after{width:100%}
+.srv.pop{background:var(--s3);border-top:1.5px solid var(--gold)}
+.srv-badge{position:absolute;top:18px;right:18px;font-family:var(--f-body);font-size:.52rem;font-weight:600;letter-spacing:.25em;background:var(--gold);color:var(--bg);padding:3px 9px}
+.srv-num{font-family:var(--f-display);font-size:4rem;font-weight:300;color:rgba(201,168,76,.06);line-height:1;margin-bottom:18px}
+.srv-ico{color:var(--gold);margin-bottom:18px}
+.srv h3{font-family:var(--f-title);font-size:.82rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--txt);margin-bottom:4px}
+.srv-sub{font-family:var(--f-display);font-size:.95rem;font-style:italic;color:var(--gold);display:block;margin-bottom:14px}
+.srv p{font-family:var(--f-body);font-size:.88rem;font-weight:300;color:var(--txt2);line-height:1.8}
+.srv-sep{width:28px;height:1px;background:rgba(201,168,76,.3);margin:22px 0 14px}
+.srv-price{font-family:var(--f-display);font-size:1.8rem;font-weight:400;color:var(--gold)}
 
-/* PRICE LIST */
+/* ── PRICELIST ── */
 .pricelist{position:relative;overflow:hidden}
-.pricelist-bg{position:absolute;inset:0;z-index:0}
-.pricelist-bg-img{width:100%;height:100%;object-fit:cover;filter:grayscale(50%) brightness(.3)}
-.pricelist-overlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(13,13,13,.88) 0%,rgba(28,20,4,.85) 100%)}
-.pricelist-inner{position:relative;z-index:1}
-.price-table{max-width:720px;margin:60px auto 0}
-.price-row{display:flex;align-items:center;gap:16px;padding:28px 0;border-bottom:1px solid rgba(201,168,76,.15);transition:all var(--transition)}
-.price-row:first-child{border-top:1px solid rgba(201,168,76,.15)}
-.price-row:hover .price-dots{background-image:radial-gradient(circle,var(--gold) 1px,transparent 1px)}
-.price-row.featured{background:rgba(201,168,76,.06);padding-left:20px;padding-right:20px;margin:0 -20px;border-color:rgba(201,168,76,.3)!important}
-.price-left{display:flex;flex-direction:column;min-width:180px}
-.price-name{font-family:var(--font-heading);font-size:1.15rem;font-weight:700;color:var(--white)}
-.price-desc{font-size:.75rem;color:var(--gray);letter-spacing:.12em;margin-top:2px;font-style:italic}
-.price-dots{flex:1;height:1px;background-image:radial-gradient(circle,rgba(201,168,76,.35) 1px,transparent 1px);background-size:10px 1px;transition:background-image var(--transition)}
-.price-right{font-family:var(--font-display);font-size:1.6rem;font-weight:700;color:var(--gold);min-width:60px;text-align:right}
-.pricelist-cta{text-align:center;margin-top:60px}
+.price-bg{position:absolute;inset:0}
+.price-bg img{width:100%;height:100%;object-fit:cover;filter:grayscale(50%) brightness(.25)}
+.price-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(10,10,10,.92),rgba(20,14,2,.9))}
+.price-in{position:relative;z-index:1}
+.price-table{max-width:680px;margin:56px auto 0}
+.price-row{display:flex;align-items:center;gap:16px;padding:24px 0;border-bottom:1px solid rgba(201,168,76,.1);transition:all var(--tr)}
+.price-row:first-child{border-top:1px solid rgba(201,168,76,.1)}
+.price-row.feat{background:rgba(201,168,76,.05);padding-left:16px;padding-right:16px;margin:0 -16px;border-color:rgba(201,168,76,.25)!important}
+.price-row:hover .pdots{background-image:radial-gradient(circle,var(--gold) 1px,transparent 1px)}
+.price-l{flex:1}
+.price-n{font-family:var(--f-display);font-size:1.2rem;font-weight:400;color:var(--txt);display:block}
+.price-d{font-family:var(--f-body);font-size:.65rem;font-weight:400;letter-spacing:.14em;color:var(--txt3);font-style:italic;display:block;margin-top:2px}
+.pdots{flex:1;height:1px;background-image:radial-gradient(circle,rgba(201,168,76,.25) 1px,transparent 1px);background-size:9px 1px;transition:background-image var(--tr)}
+.price-v{font-family:var(--f-display);font-size:1.7rem;font-weight:400;color:var(--gold);min-width:56px;text-align:right}
+.price-cta{text-align:center;margin-top:52px}
 
-/* BOOKING */
-.booking{background:var(--dark)}
-.booking-inner{text-align:center}
-.booking-sub{font-size:1rem;color:rgba(245,240,232,.6);margin-bottom:48px;font-weight:300}
-.booking-actions{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:60px}
-.booking-hours{display:inline-flex;flex-direction:column;gap:12px;background:var(--dark-2);border:1px solid rgba(201,168,76,.2);padding:32px 48px;border-radius:var(--radius);min-width:320px;text-align:left}
-.hour-item{display:flex;justify-content:space-between;gap:40px;font-size:.88rem}
-.hour-item span:first-child{color:rgba(245,240,232,.65)}
-.hour-item span:last-child{color:var(--gold);font-weight:600}
-.hour-closed span{color:rgba(245,240,232,.3)!important;font-style:italic}
-.closed-note{color:var(--gray);font-style:italic;font-size:.85em}
+/* ── BOOKING ── */
+.booking{background:var(--s1)}
+.bk-inner{text-align:center}
+.bk-desc{font-family:var(--f-body);font-size:.9rem;font-weight:300;color:var(--txt2);margin-bottom:44px;letter-spacing:.02em}
+.bk-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:56px}
 
-/* CONTACT */
-.contact{background:var(--black)}
-.contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:80px;align-items:start}
-.contact-list{display:flex;flex-direction:column;gap:28px;margin-bottom:40px}
-.contact-list li{display:flex;align-items:flex-start;gap:16px}
-.contact-icon{font-size:1.3rem;line-height:1;margin-top:2px;flex-shrink:0}
-.contact-list strong{display:block;font-family:var(--font-body);font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
-.contact-list p,.contact-list a{color:rgba(245,240,232,.65);font-size:.95rem;line-height:1.6;transition:color var(--transition)}
-.contact-list a:hover{color:var(--gold)}
-.social-links{display:flex;gap:12px}
-.social-btn{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border:1px solid rgba(201,168,76,.3);border-radius:50%;color:var(--gold);transition:all var(--transition)}
-.social-btn:hover{background:var(--gold);color:var(--black);border-color:var(--gold)}
-.contact-map{border-radius:var(--radius);overflow:hidden;border:1px solid rgba(201,168,76,.15)}
-.contact-map iframe{display:block;filter:grayscale(80%) invert(5%) brightness(.85)}
+/* Hours table */
+.hours-wrap{display:inline-block;min-width:380px;text-align:left}
+.hours-title{font-family:var(--f-body);font-size:.58rem;font-weight:600;letter-spacing:.45em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid rgba(201,168,76,.2)}
+.hours-grid{width:100%}
+.h-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.h-row:last-child{border-bottom:none}
+.h-day{font-family:var(--f-body);font-size:.88rem;font-weight:400;color:rgba(240,235,224,.65);letter-spacing:.02em}
+.h-time{font-family:var(--f-body);font-size:.88rem;font-weight:500;color:var(--gold);letter-spacing:.04em}
+.h-row.closed .h-day,.h-row.closed .h-time{color:rgba(240,235,224,.2);font-weight:300}
 
-/* FOOTER */
-.footer{background:var(--dark);border-top:1px solid rgba(201,168,76,.15);padding:48px 0}
-.footer-inner{display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center}
-.footer-logo{display:flex;align-items:center;gap:12px;margin-bottom:8px}
-.footer-logo .logo-img{width:52px;height:52px}
-.footer-copy{font-size:.8rem;color:var(--gray);letter-spacing:.1em}
-.footer-tagline{font-size:.68rem;letter-spacing:.35em;text-transform:uppercase;color:rgba(201,168,76,.5);font-style:italic}
+/* ── CONTACT ── */
+.contact{background:var(--bg)}
+.ct-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:80px;align-items:start}
+
+/* Contact info cards */
+.ct-items{display:flex;flex-direction:column;gap:1px;background:rgba(201,168,76,.08);margin-bottom:32px}
+.ct-item{display:flex;align-items:flex-start;gap:16px;padding:18px 20px;background:var(--s2);transition:background var(--tr)}
+.ct-item:hover{background:var(--s3)}
+.ct-icon{width:36px;height:36px;border:1px solid rgba(201,168,76,.25);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.85rem;margin-top:1px}
+.ct-text{}
+.ct-label{font-family:var(--f-body);font-size:.58rem;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:4px}
+.ct-val{font-family:var(--f-body);font-size:.92rem;font-weight:300;color:rgba(240,235,224,.75);line-height:1.6}
+.ct-val a{color:rgba(240,235,224,.75);transition:color var(--tr)}
+.ct-val a:hover{color:var(--gold)}
+
+/* Social */
+.socials{display:flex;gap:10px}
+.soc{width:40px;height:40px;border:1px solid rgba(201,168,76,.25);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);transition:all var(--tr)}
+.soc:hover{background:var(--gold);color:var(--bg);border-color:var(--gold)}
+
+/* Map */
+.ct-map{border-radius:2px;overflow:hidden;border:1px solid rgba(201,168,76,.1)}
+.ct-map iframe{display:block;filter:grayscale(80%) brightness(.8)}
+
+/* ── FOOTER ── */
+.footer{background:var(--s1);border-top:1px solid rgba(201,168,76,.1);padding:44px 0}
+.footer-in{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.ft-logo{display:flex;align-items:center;gap:11px;margin-bottom:6px}
+.ft-logo img{width:44px;height:44px;object-fit:contain;border-radius:50%}
+.ft-copy{font-family:var(--f-body);font-size:.72rem;font-weight:300;color:var(--txt3);letter-spacing:.08em}
+.ft-tag{font-family:var(--f-display);font-size:.82rem;font-style:italic;color:rgba(201,168,76,.4);letter-spacing:.1em}
 
 /* FAB */
-.fab-phone{position:fixed;bottom:48px;right:28px;width:58px;height:58px;background:var(--gold);color:var(--black);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;z-index:900;box-shadow:0 4px 24px rgba(201,168,76,.45);transition:all var(--transition);text-decoration:none}
-.fab-phone:hover{background:var(--gold-light);transform:scale(1.1);box-shadow:0 6px 32px rgba(201,168,76,.6)}
+.fab{position:fixed;bottom:52px;right:24px;width:52px;height:52px;background:var(--gold);color:var(--bg);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;z-index:400;box-shadow:0 4px 20px rgba(201,168,76,.4);transition:all var(--tr)}
+.fab:hover{background:var(--gold-l);transform:scale(1.1)}
 
-/* ANIMATIONS */
-@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
-@keyframes scrollPulse{0%,100%{opacity:0;transform:scaleY(0);transform-origin:top}50%{opacity:1;transform:scaleY(1);transform-origin:top}}
+/* Powered */
+.powered{text-align:center;padding:9px 0;background:#f0f0f0;color:#444;position:fixed;bottom:0;left:0;width:100%;font-size:12px;font-family:var(--f-body);font-weight:400;letter-spacing:.04em;z-index:9999;box-shadow:0 -1px 12px rgba(0,0,0,.12)}
+.powered a{color:#0070f3}
+.powered a:hover{text-decoration:underline}
 
-/* POWERED FOOTER */
-.powered-footer{text-align:center;padding:10px 0;background-color:#f1f1f1;color:#333;position:fixed;bottom:0;left:0;width:100%;font-size:14px;z-index:9999;box-shadow:0 -2px 8px rgba(0,0,0,.15)}
-.powered-footer a{color:#007bff;text-decoration:none}
-.powered-footer a:hover{text-decoration:underline}
+/* ── ANIMATIONS ── */
+@keyframes up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{opacity:0;transform:scaleY(0);transform-origin:top}50%{opacity:1;transform:scaleY(1);transform-origin:top}}
 
-/* RESPONSIVE */
+/* ── RESPONSIVE ── */
 @media(max-width:1024px){
-  .about-grid{grid-template-columns:1fr;gap:56px}
-  .about-img{height:380px}
-  .contact-grid{grid-template-columns:1fr;gap:56px}
-  .services-grid{grid-template-columns:1fr 1fr}
-  .service-num{font-size:2.5rem}
+  .about-grid{grid-template-columns:1fr;gap:48px}
+  .about-img-wrap img{height:360px}
+  .ct-grid{grid-template-columns:1fr;gap:48px}
+  .srv-grid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:768px){
-  :root{--nav-h:68px}
-  .section{padding:72px 0}
-  .hamburger{display:flex}
-  .nav-links{position:fixed;top:0;right:0;width:280px;height:100vh;background:rgba(13,13,13,.99);backdrop-filter:blur(20px);flex-direction:column;align-items:flex-start;padding:100px 40px 40px;gap:28px;transform:translateX(100%);transition:transform .4s ease;border-left:1px solid rgba(201,168,76,.15)}
+  .sec{padding:80px 0}
+  .burger{display:flex}
+  .nav-links{position:fixed;inset:0 0 0 auto;width:270px;background:rgba(10,10,10,.98);backdrop-filter:blur(20px);flex-direction:column;align-items:flex-start;padding:90px 36px 36px;gap:24px;transform:translateX(100%);transition:transform .4s ease;border-left:1px solid rgba(201,168,76,.1)}
   .nav-links.open{transform:translateX(0)}
-  .nav-links a{font-size:1rem;letter-spacing:.15em}
+  .nav-links a{font-size:.9rem}
   .nav-phone{display:none}
-  .hero-title-main{letter-spacing:.06em}
-  .hero-actions{flex-direction:column;gap:14px}
-  .btn{width:100%;justify-content:center;max-width:280px}
-  .about-img{height:280px}
-  .about-badges{gap:20px}
-  .services-grid{grid-template-columns:1fr}
-  .service-card{padding:40px 28px}
-  .price-row{flex-wrap:wrap;gap:8px}
-  .price-dots{display:none}
-  .price-left{flex:1}
-  .price-right{font-size:1.4rem}
-  .booking-hours{padding:24px 28px;min-width:auto;width:100%;max-width:360px}
-  .hour-item{gap:20px}
-  .footer-logo{flex-direction:column;text-align:center}
-  .fab-phone{bottom:48px;right:20px;width:52px;height:52px;font-size:1.3rem}
+  .hero-cta{flex-direction:column;align-items:center}
+  .btn{width:100%;justify-content:center;max-width:260px}
+  .about-img-wrap img{height:260px}
+  .stats{gap:20px}
+  .srv-grid{grid-template-columns:1fr}
+  .price-row{flex-wrap:wrap;gap:6px}
+  .pdots{display:none}
+  .price-l{flex:1}
+  .hours-wrap{min-width:auto;width:100%;max-width:340px}
+  .footer-in .logo-n,.footer-in .logo-s{text-align:center}
+  .fab{bottom:52px;right:16px;width:46px;height:46px;font-size:1.1rem}
 }
 @media(max-width:480px){
-  .hero-title-main{letter-spacing:.04em}
-  .booking-hours{padding:20px}
+  .hero-h1 .main{letter-spacing:.05em}
+  .bk-btns{flex-direction:column;align-items:center}
 }
 </style>
 </head>
 <body>
 
-  <!-- NAVBAR -->
-  <header class="navbar" id="navbar">
-    <div class="nav-inner">
-      <a href="#hero" class="logo">
-        <img src="images/logo.png" alt="Aggelos Manos Logo" class="logo-img" />
-        <div class="logo-text">
-          <span class="logo-name">AGGELOS MANOS</span>
-          <span class="logo-sub">MENS SALON</span>
-        </div>
+<!-- NAVBAR -->
+<header class="nav" id="nav">
+  <div class="nav-w">
+    <a href="#hero" class="logo">
+      <img src="images/logo.png" alt="AM Logo"/>
+      <div class="logo-t">
+        <span class="logo-n">AGGELOS MANOS</span>
+        <span class="logo-s">Mens Salon</span>
+      </div>
+    </a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#about">Σχετικά</a>
+      <a href="#services">Υπηρεσίες</a>
+      <a href="#pricelist">Τιμές</a>
+      <a href="#contact">Επικοινωνία</a>
+    </nav>
+    <a href="tel:+302422029600" class="nav-phone">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.7 12.09 19.79 19.79 0 0 1 1.61 3.5 2 2 0 0 1 3.6 1.3h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      2422 029600
+    </a>
+    <button class="burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg">
+    <img src="images/hero-bg.jpg" alt="Mens Salon"/>
+  </div>
+  <div class="hero-inner">
+    <p class="hero-tag">Αλμυρός &middot; Αθηνών 33</p>
+    <h1 class="hero-h1">
+      <span class="main">AGGELOS MANOS</span>
+      <span class="sub">MENS SALON</span>
+    </h1>
+    <p class="hero-line">We don't cut hair &mdash; we create character</p>
+    <div class="hero-cta">
+      <a href="#booking" class="btn btn-g">Κλείσε Ραντεβού</a>
+      <a href="tel:+302422029600" class="btn btn-o">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.7 12.09 19.79 19.79 0 0 1 1.61 3.5 2 2 0 0 1 3.6 1.3h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Καλέσε μας
       </a>
-      <nav class="nav-links" id="navLinks">
-        <a href="#about">ΣΧΕΤΙΚΑ</a>
-        <a href="#services">ΥΠΗΡΕΣΙΕΣ</a>
-        <a href="#pricelist">ΤΙΜΕΣ</a>
-        <a href="#contact">ΕΠΙΚΟΙΝΩΝΙΑ</a>
-      </nav>
-      <a href="tel:+302422029600" class="nav-phone">
-        <span>📞</span>
-        <span>2422 029600</span>
+    </div>
+  </div>
+  <div class="hero-scroll"><span></span></div>
+</section>
+
+<!-- ABOUT -->
+<section class="about sec" id="about">
+  <div class="wrap about-grid">
+    <div class="about-img-wrap">
+      <img src="images/barber-1.jpg" alt="Barber at work"/>
+    </div>
+    <div>
+      <span class="eyebrow">Σχετικά με εμάς</span>
+      <h2 class="h2">Η τέχνη του <em>κουρέματος</em></h2>
+      <p>Στο <strong>Aggelos Manos Mens Salon</strong>, το κούρεμα είναι τέχνη. Συνδυάζουμε τεχνική ακρίβειας με σύγχρονες τάσεις, προσφέροντας εξατομικευμένες υπηρεσίες που αναδεικνύουν το στυλ κάθε άνδρα.</p>
+      <p>Με εξειδικευμένους επαγγελματίες και κορυφαία προϊόντα, δημιουργούμε ένα περιβάλλον όπου η ποιότητα και η προσοχή στη λεπτομέρεια κάνουν τη διαφορά.</p>
+      <div class="stats">
+        <div><span class="stat-n">10+</span><span class="stat-l">Χρόνια εμπειρίας</span></div>
+        <div><span class="stat-n">5k+</span><span class="stat-l">Ευχαριστημένοι πελάτες</span></div>
+        <div><span class="stat-n">100%</span><span class="stat-l">Επαγγελματισμός</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services sec" id="services">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Τι προσφέρουμε</span>
+      <h2 class="h2">Υπηρεσίες</h2>
+    </div>
+    <div class="srv-grid">
+      <div class="srv">
+        <div class="srv-num">01</div>
+        <div class="srv-ico">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M6 9v7"/><path d="M18 15a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/><path d="M18 15V7l-12 5"/></svg>
+        </div>
+        <h3>Precision Haircut</h3>
+        <span class="srv-sub">Απλό Κούρεμα</span>
+        <p>Κλασικό ή μοντέρνο κούρεμα προσαρμοσμένο στη μορφολογία του προσώπου σου.</p>
+        <div class="srv-sep"></div>
+        <span class="srv-price">12€</span>
+      </div>
+      <div class="srv pop">
+        <div class="srv-badge">POPULAR</div>
+        <div class="srv-num">02</div>
+        <div class="srv-ico">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M6 9v7"/><path d="M18 15a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/><path d="M18 15V7l-12 5"/><line x1="2" y1="17" x2="6" y2="17"/></svg>
+        </div>
+        <h3>Full Experience</h3>
+        <span class="srv-sub">Κούρεμα &amp; Γένια</span>
+        <p>Η πλήρης ανδρική περιποίηση. Κούρεμα και διαμόρφωση γενιάς σε ένα session.</p>
+        <div class="srv-sep"></div>
+        <span class="srv-price">15€</span>
+      </div>
+      <div class="srv">
+        <div class="srv-num">03</div>
+        <div class="srv-ico">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <h3>Beard Sculpting</h3>
+        <span class="srv-sub">Περιποίηση Γενιού</span>
+        <p>Τριμάρισμα, σχηματισμός και φροντίδα με premium προϊόντα για τέλειο αποτέλεσμα.</p>
+        <div class="srv-sep"></div>
+        <span class="srv-price">7€</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICE LIST -->
+<section class="pricelist sec" id="pricelist">
+  <div class="price-bg">
+    <img src="images/price-bg.jpg" alt=""/>
+  </div>
+  <div class="wrap price-in">
+    <div style="text-align:center">
+      <span class="eyebrow">Τιμοκατάλογος</span>
+      <h2 class="h2" style="color:var(--txt)">Price List</h2>
+    </div>
+    <div class="price-table">
+      <div class="price-row">
+        <div class="price-l"><span class="price-n">Απλό Κούρεμα</span><span class="price-d">Haircut</span></div>
+        <div class="pdots"></div>
+        <div class="price-v">12€</div>
+      </div>
+      <div class="price-row feat">
+        <div class="price-l"><span class="price-n">Κούρεμα + Γένια</span><span class="price-d">Haircut &amp; Beard</span></div>
+        <div class="pdots"></div>
+        <div class="price-v">15€</div>
+      </div>
+      <div class="price-row">
+        <div class="price-l"><span class="price-n">Περιποίηση Γενιού</span><span class="price-d">Beard Trim</span></div>
+        <div class="pdots"></div>
+        <div class="price-v">7€</div>
+      </div>
+    </div>
+    <div class="price-cta">
+      <a href="https://aggelosmanos.setmore.com/" target="_blank" class="btn btn-g btn-lg">Κλείσε Ραντεβού Τώρα</a>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section class="booking sec" id="booking">
+  <div class="wrap bk-inner">
+    <span class="eyebrow">Online Ραντεβού</span>
+    <h2 class="h2" style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:300">Κλείσε <em>Ραντεβού</em></h2>
+    <p class="bk-desc">Κάνε κράτηση online ή κάλεσέ μας απευθείας — είμαστε εδώ για σένα.</p>
+    <div class="bk-btns">
+      <a href="https://aggelosmanos.setmore.com/" target="_blank" class="btn btn-g btn-lg">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Online Ραντεβού
       </a>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
+      <a href="tel:+302422029600" class="btn btn-d btn-lg">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.7 12.09 19.79 19.79 0 0 1 1.61 3.5 2 2 0 0 1 3.6 1.3h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        2422 029600
+      </a>
+      <a href="tel:+306987033949" class="btn btn-d btn-lg">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+        6987 033949
+      </a>
     </div>
-  </header>
-
-  <!-- HERO -->
-  <section class="hero" id="hero">
-    <div class="hero-overlay"></div>
-    <div class="hero-bg">
-      <img src="images/hero-bg.jpg" alt="Mens Salon interior" class="hero-img" />
-    </div>
-    <div class="hero-content">
-      <p class="hero-eyebrow">ΑΛΜΥΡΟΣ &middot; ΑΘΗΝΩΝ 33</p>
-      <h1 class="hero-title">
-        <span class="hero-title-main clip-img">AGGELOS MANOS</span>
-        <span class="hero-title-sub">MENS SALON</span>
-      </h1>
-      <p class="hero-tagline">WE DON'T CUT HAIR &mdash; WE CREATE CHARACTER</p>
-      <div class="hero-actions">
-        <a href="#booking" class="btn btn-primary">ΚΛΕΙΣΕ ΡΑΝΤΕΒΟΥ</a>
-        <a href="tel:+302422029600" class="btn btn-outline">
-          <span>📞</span> ΚΑΛΕΣΕ ΜΑΣ
-        </a>
+    <div class="hours-wrap">
+      <p class="hours-title">Ωράριο Λειτουργίας</p>
+      <div class="hours-grid">
+        <div class="h-row"><span class="h-day">Δευτέρα</span><span class="h-time">09:00 – 16:00</span></div>
+        <div class="h-row"><span class="h-day">Τρίτη</span><span class="h-time">09:00 – 21:00</span></div>
+        <div class="h-row"><span class="h-day">Τετάρτη</span><span class="h-time">09:00 – 15:00</span></div>
+        <div class="h-row"><span class="h-day">Πέμπτη</span><span class="h-time">09:00 – 21:00</span></div>
+        <div class="h-row"><span class="h-day">Παρασκευή</span><span class="h-time">09:00 – 21:00</span></div>
+        <div class="h-row"><span class="h-day">Σάββατο</span><span class="h-time">09:00 – 16:00</span></div>
+        <div class="h-row closed"><span class="h-day">Κυριακή</span><span class="h-time">Κλειστά</span></div>
       </div>
     </div>
-    <div class="hero-scroll"><span></span></div>
-  </section>
+  </div>
+</section>
 
-  <!-- ABOUT -->
-  <section class="about section" id="about">
-    <div class="container about-grid">
-      <div class="about-image-wrap">
-        <div class="about-img-frame">
-          <img src="images/barber-1.jpg" alt="Barber at work" class="about-img" />
-          <div class="about-img-accent"></div>
-        </div>
-      </div>
-      <div class="about-text">
-        <p class="section-eyebrow">ΣΧΕΤΙΚΑ ΜΕ ΕΜΑΣ</p>
-        <h2 class="section-title">Η Τέχνη του <em>Κουρέματος</em></h2>
-        <p class="about-desc">Στο <strong>Aggelos Manos Mens Salon</strong>, το κούρεμα είναι τέχνη. Συνδυάζουμε τεχνική ακρίβειας με σύγχρονες τάσεις, προσφέροντας εξατομικευμένες υπηρεσίες που αναδεικνύουν το στυλ κάθε άνδρα.</p>
-        <p class="about-desc">Με εξειδικευμένους επαγγελματίες και κορυφαία προϊόντα, δημιουργούμε ένα περιβάλλον όπου η ποιότητα και η προσοχή στη λεπτομέρεια κάνουν τη διαφορά. Κάθε κούρεμα είναι μια εμπειρία σχεδιασμένη για να προσφέρει το καλύτερο δυνατό αποτέλεσμα.</p>
-        <div class="about-badges">
-          <div class="badge"><span class="badge-num">10+</span><span class="badge-label">Χρόνια Εμπειρίας</span></div>
-          <div class="badge"><span class="badge-num">5000+</span><span class="badge-label">Ευχαριστημένοι Πελάτες</span></div>
-          <div class="badge"><span class="badge-num">100%</span><span class="badge-label">Επαγγελματισμός</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SERVICES -->
-  <section class="services section" id="services">
-    <div class="container">
-      <p class="section-eyebrow center">ΤΙ ΠΡΟΣΦΕΡΟΥΜΕ</p>
-      <h2 class="section-title center">Υπηρεσίες</h2>
-      <div class="services-grid">
-
-        <div class="service-card">
-          <div class="service-num">01</div>
-          <div class="service-icon-wrap">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M6 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M6 9v7"/><path d="M18 15a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/><path d="M18 15V7l-12 5"/>
-            </svg>
+<!-- CONTACT -->
+<section class="contact sec" id="contact">
+  <div class="wrap ct-grid">
+    <div>
+      <span class="eyebrow">Επικοινωνία</span>
+      <h2 class="h2">Βρες <em>μας</em></h2>
+      <div class="ct-items">
+        <div class="ct-item">
+          <div class="ct-icon">📍</div>
+          <div class="ct-text">
+            <span class="ct-label">Διεύθυνση</span>
+            <span class="ct-val">Αθηνών 33, Αλμυρός 37100</span>
           </div>
-          <h3>Precision Haircut</h3>
-          <p class="service-sub">Απλό Κούρεμα</p>
-          <p>Κλασικό ή μοντέρνο κούρεμα προσαρμοσμένο στη μορφολογία του προσώπου και τις επιθυμίες σου. Ψαλίδι ή μηχανή, πάντα με ακρίβεια.</p>
-          <div class="service-line"></div>
-          <span class="service-price">12€</span>
         </div>
-
-        <div class="service-card featured-service">
-          <div class="service-badge">POPULAR</div>
-          <div class="service-num">02</div>
-          <div class="service-icon-wrap">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M6 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M6 9v7"/><path d="M18 15a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/><path d="M18 15V7l-12 5"/>
-            </svg>
+        <div class="ct-item">
+          <div class="ct-icon">📞</div>
+          <div class="ct-text">
+            <span class="ct-label">Σταθερό</span>
+            <span class="ct-val"><a href="tel:+302422029600">2422 029600</a></span>
           </div>
-          <h3>Full Experience</h3>
-          <p class="service-sub">Κούρεμα &amp; Γένια</p>
-          <p>Η πλήρης ανδρική περιποίηση σε ένα session. Κούρεμα precision και διαμόρφωση γενιάς για ένα ολοκληρωμένο, αλάνθαστο αποτέλεσμα.</p>
-          <div class="service-line"></div>
-          <span class="service-price">15€</span>
         </div>
-
-        <div class="service-card">
-          <div class="service-num">03</div>
-          <div class="service-icon-wrap">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>
-            </svg>
+        <div class="ct-item">
+          <div class="ct-icon">📱</div>
+          <div class="ct-text">
+            <span class="ct-label">Κινητό</span>
+            <span class="ct-val"><a href="tel:+306987033949">6987 033949</a></span>
           </div>
-          <h3>Beard Sculpting</h3>
-          <p class="service-sub">Περιποίηση Γενιού</p>
-          <p>Τριμάρισμα, σχηματισμός και φροντίδα με premium προϊόντα. Δώσε στη γενειάδα σου το σωστό σχήμα που αναδεικνύει τα χαρακτηριστικά σου.</p>
-          <div class="service-line"></div>
-          <span class="service-price">7€</span>
         </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- PRICE LIST -->
-  <section class="pricelist section" id="pricelist">
-    <div class="pricelist-bg">
-      <img src="images/price-bg.jpg" alt="" class="pricelist-bg-img" />
-      <div class="pricelist-overlay"></div>
-    </div>
-    <div class="container pricelist-inner">
-      <p class="section-eyebrow center light">ΤΙΜΟΚΑΤΑΛΟΓΟΣ</p>
-      <h2 class="section-title center light">Price List</h2>
-      <div class="price-table">
-        <div class="price-row">
-          <div class="price-left"><span class="price-name">Απλό Κούρεμα</span><span class="price-desc">Haircut</span></div>
-          <div class="price-dots"></div>
-          <div class="price-right">12€</div>
-        </div>
-        <div class="price-row featured">
-          <div class="price-left"><span class="price-name">Κούρεμα + Γένια</span><span class="price-desc">Haircut &amp; Beard</span></div>
-          <div class="price-dots"></div>
-          <div class="price-right">15€</div>
-        </div>
-        <div class="price-row">
-          <div class="price-left"><span class="price-name">Περιποίηση Γενιού</span><span class="price-desc">Beard Trim</span></div>
-          <div class="price-dots"></div>
-          <div class="price-right">7€</div>
+        <div class="ct-item">
+          <div class="ct-icon">🕐</div>
+          <div class="ct-text">
+            <span class="ct-label">Ωράριο</span>
+            <span class="ct-val">Δευτ 09–16 · Τρί 09–21 · Τετ 09–15<br>Πέμ 09–21 · Παρ 09–21 · Σάβ 09–16<br>Κυριακή: Κλειστά</span>
+          </div>
         </div>
       </div>
-      <div class="pricelist-cta">
-        <a href="#booking" class="btn btn-primary">ΚΛΕΙΣΕ ΡΑΝΤΕΒΟΥ ΤΩΡΑ</a>
+      <div class="socials">
+        <a href="#" class="soc" aria-label="Instagram"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+        <a href="#" class="soc" aria-label="Facebook"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+        <a href="#" class="soc" aria-label="TikTok"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.22 8.22 0 004.82 1.56V6.79a4.85 4.85 0 01-1.05-.1z"/></svg></a>
       </div>
     </div>
-  </section>
+    <div class="ct-map">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3103.52!2d22.7607!3d39.1797!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a75af7ffdb0797%3A0x1c84b96f1ac3c1ee!2zzpHOuM63zr3zmM-OzrEgMzMsIM6Rz7zOvM-Bz4zPgg!5e0!3m2!1sel!2sgr!4v1700000000003" width="100%" height="440" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
 
-  <!-- BOOKING -->
-  <section class="booking section" id="booking">
-    <div class="container booking-inner">
-      <p class="section-eyebrow center">ONLINE ΡΑΝΤΕΒΟΥ</p>
-      <h2 class="section-title center">Κλείσε <em>Ραντεβού</em></h2>
-      <p class="booking-sub">Κάνε κράτηση online ή κάλεσέ μας απευθείας &mdash; είμαστε εδώ για σένα.</p>
-      <div class="booking-actions">
-        <a href="https://aggelosmanos.setmore.com/" target="_blank" class="btn btn-primary btn-large">📅 ONLINE ΡΑΝΤΕΒΟΥ</a>
-        <a href="tel:+302422029600" class="btn btn-dark btn-large">📞 2422 029600</a>
-        <a href="tel:+306987033949" class="btn btn-dark btn-large">📱 6987 033949</a>
-      </div>
-      <div class="booking-hours">
-        <div class="hour-item"><span>Δευτέρα</span><span>09:00 – 16:00</span></div>
-        <div class="hour-item"><span>Τρίτη</span><span>09:00 – 21:00</span></div>
-        <div class="hour-item"><span>Τετάρτη</span><span>09:00 – 15:00</span></div>
-        <div class="hour-item"><span>Πέμπτη</span><span>09:00 – 21:00</span></div>
-        <div class="hour-item"><span>Παρασκευή</span><span>09:00 – 21:00</span></div>
-        <div class="hour-item"><span>Σάββατο</span><span>09:00 – 16:00</span></div>
-        <div class="hour-item hour-closed"><span>Κυριακή</span><span>Κλειστά</span></div>
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap footer-in">
+    <div class="ft-logo">
+      <img src="images/logo.png" alt="AM Logo"/>
+      <div class="logo-t">
+        <span class="logo-n">AGGELOS MANOS</span>
+        <span class="logo-s">Mens Salon</span>
       </div>
     </div>
-  </section>
+    <p class="ft-copy">© 2025 Aggelos Manos Mens Salon &nbsp;·&nbsp; Αθηνών 33, Αλμυρός 37100</p>
+    <p class="ft-copy">2422 029600 &nbsp;|&nbsp; 6987 033949</p>
+    <p class="ft-tag">We don't cut hair — we create character</p>
+  </div>
+</footer>
 
-  <!-- CONTACT -->
-  <section class="contact section" id="contact">
-    <div class="container contact-grid">
-      <div class="contact-info">
-        <p class="section-eyebrow">ΕΠΙΚΟΙΝΩΝΙΑ</p>
-        <h2 class="section-title">Βρες μας</h2>
-        <ul class="contact-list">
-          <li><span class="contact-icon">📍</span><div><strong>Διεύθυνση</strong><p>Αθηνών 33, Αλμυρός 37100</p></div></li>
-          <li><span class="contact-icon">📞</span><div><strong>Σταθερό</strong><p><a href="tel:+302422029600">2422 029600</a></p></div></li>
-          <li><span class="contact-icon">📱</span><div><strong>Κινητό</strong><p><a href="tel:+306987033949">6987 033949</a></p></div></li>
-          <li><span class="contact-icon">🕐</span><div><strong>Ωράριο</strong><p>Δευτ: 09:00–16:00 &nbsp;&middot;&nbsp; Τρί: 09:00–21:00<br/>Τετ: 09:00–15:00 &nbsp;&middot;&nbsp; Πέμ: 09:00–21:00<br/>Παρ: 09:00–21:00 &nbsp;&middot;&nbsp; Σάβ: 09:00–16:00<br/><span class="closed-note">Κυριακή: Κλειστά</span></p></div></li>
-        </ul>
-        <div class="social-links">
-          <a href="#" class="social-btn" aria-label="Instagram"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
-          <a href="#" class="social-btn" aria-label="Facebook"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
-          <a href="#" class="social-btn" aria-label="TikTok"><svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.22 8.22 0 004.82 1.56V6.79a4.85 4.85 0 01-1.05-.1z"/></svg></a>
-        </div>
-      </div>
-      <div class="contact-map">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3103.52!2d22.7607!3d39.1797!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a75af7ffdb0797%3A0x1c84b96f1ac3c1ee!2zzpHOuM63zr3zmM-OzrEgMzMsIM6Rz7zOvM-Bz4zPgg!5e0!3m2!1sel!2sgr!4v1700000000003" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Αθηνών 33, Αλμυρός 37100"></iframe>
-      </div>
-    </div>
-  </section>
+<a href="tel:+302422029600" class="fab" aria-label="Καλέστε μας">
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.7 12.09 19.79 19.79 0 0 1 1.61 3.5 2 2 0 0 1 3.6 1.3h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.96a16 16 0 0 0 6.13 6.13l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+</a>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container footer-inner">
-      <div class="footer-logo">
-        <img src="images/logo.png" alt="Aggelos Manos Logo" class="logo-img" />
-        <div>
-          <span class="logo-name">AGGELOS MANOS</span>
-          <span class="logo-sub">MENS SALON</span>
-        </div>
-      </div>
-      <p class="footer-copy">© 2025 Aggelos Manos Mens Salon &nbsp;&middot;&nbsp; Αθηνών 33, Αλμυρός 37100</p>
-      <p class="footer-copy" style="margin-top:6px;">📞 2422 029600 &nbsp;|&nbsp; 📱 6987 033949</p>
-      <p class="footer-tagline">WE DON'T CUT HAIR — WE CREATE CHARACTER</p>
-    </div>
-  </footer>
-
-  <a href="tel:+302422029600" class="fab-phone" aria-label="Τηλεφωνήστε μας">📞</a>
-
-  <footer class="powered-footer">
-    Powered by <a href="#" target="_blank">Service Mantz</a>
-  </footer>
+<footer class="powered">
+  Powered by <a href="#" target="_blank">Service Mantz</a>
+</footer>
 
 <script>
-const navbar=document.getElementById('navbar');
-window.addEventListener('scroll',()=>{navbar.classList.toggle('scrolled',window.scrollY>60)},{passive:true});
-const hamburger=document.getElementById('hamburger');
-const navLinks=document.getElementById('navLinks');
-hamburger.addEventListener('click',()=>{navLinks.classList.toggle('open');hamburger.classList.toggle('active')});
-navLinks.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>{navLinks.classList.remove('open');hamburger.classList.remove('active')}));
-document.addEventListener('click',e=>{if(!navbar.contains(e.target)){navLinks.classList.remove('open');hamburger.classList.remove('active')}});
-const hs=document.createElement('style');
-hs.textContent='.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}.hamburger.active span:nth-child(2){opacity:0;transform:translateX(-10px)}.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}';
-document.head.appendChild(hs);
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:0.12});
-const as=document.createElement('style');
-as.textContent='.animate-fade{opacity:0;transform:translateY(36px);transition:opacity .75s ease,transform .75s ease}.animate-fade.visible{opacity:1;transform:translateY(0)}.animate-fade:nth-child(2){transition-delay:.1s}.animate-fade:nth-child(3){transition-delay:.2s}';
-document.head.appendChild(as);
-document.querySelectorAll('.service-card,.price-row,.badge,.contact-list li,.about-desc').forEach(el=>{el.classList.add('animate-fade');obs.observe(el)});
-const sections=document.querySelectorAll('section[id]');
-const navA=document.querySelectorAll('.nav-links a');
-window.addEventListener('scroll',()=>{let c='';sections.forEach(s=>{if(window.scrollY>=s.offsetTop-120)c=s.getAttribute('id')});navA.forEach(a=>{a.style.color='';if(a.getAttribute('href')==='#'+c)a.style.color='var(--gold)'})},{passive:true});
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('s',scrollY>60),{passive:true});
+const burger=document.getElementById('burger');
+const nl=document.getElementById('navLinks');
+burger.addEventListener('click',()=>{nl.classList.toggle('open');burger.classList.toggle('a')});
+nl.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nl.classList.remove('open');burger.classList.remove('a')}));
+document.addEventListener('click',e=>{if(!nav.contains(e.target)){nl.classList.remove('open');burger.classList.remove('a')}});
+const bs=document.createElement('style');
+bs.textContent='.burger.a span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}.burger.a span:nth-child(2){opacity:0}.burger.a span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}';
+document.head.appendChild(bs);
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)';io.unobserve(e.target)}})},{threshold:.1});
+document.querySelectorAll('.srv,.price-row,.ct-item,.stat-n').forEach(el=>{el.style.cssText+='opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease';io.observe(el)});
+const secs=document.querySelectorAll('section[id]');
+const nas=document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll',()=>{let c='';secs.forEach(s=>{if(scrollY>=s.offsetTop-100)c=s.id});nas.forEach(a=>{a.style.color=a.getAttribute('href')==='#'+c?'var(--gold)':''})},{passive:true});
 </script>
 </body>
 </html>
