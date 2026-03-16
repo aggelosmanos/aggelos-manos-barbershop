@@ -921,9 +921,6 @@ ul { list-style: none; }
 }
 
 /* ==================== POWERED FOOTER ==================== */
-body {
-    padding-bottom: 38px;
-}
 .powered-footer {
     text-align: center;
     padding: 10px 0;
@@ -934,8 +931,7 @@ body {
     left: 0;
     width: 100%;
     font-size: 14px;
-    z-index: 9999;
-    box-shadow: 0 -2px 8px rgba(0,0,0,0.15);
+    z-index: 1000;
 }
 .powered-footer a {
     color: #007bff;
