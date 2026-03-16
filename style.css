@@ -919,24 +919,3 @@ ul { list-style: none; }
   .hero-title-main { letter-spacing: 0.04em; }
   .booking-hours { padding: 20px; }
 }
-
-/* ==================== POWERED FOOTER ==================== */
-.powered-footer {
-    text-align: center;
-    padding: 10px 0;
-    background-color: #f1f1f1;
-    color: #333;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    font-size: 14px;
-    z-index: 1000;
-}
-.powered-footer a {
-    color: #007bff;
-    text-decoration: none;
-}
-.powered-footer a:hover {
-    text-decoration: underline;
-}

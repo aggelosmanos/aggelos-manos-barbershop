@@ -1,265 +1,64 @@
-<!DOCTYPE html>
-<html lang="el">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Aggelos Manos BarberShop – Αλμυρός</title>
-  <meta name="description" content="Aggelos Manos BarberShop – Αθηνών 33, Αλμυρός 37100. Τηλ: 2422029600 | 6987033949" />
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Raleway:wght@300;400;500;600;700&family=Cinzel:wght@400;700&display=swap" rel="stylesheet" />
-</head>
-<body>
+# Aggelos Manos BarberShop – Website
 
-  <!-- NAVBAR -->
-  <header class="navbar" id="navbar">
-    <div class="nav-inner">
-      <a href="#hero" class="logo">
-        <span class="logo-icon">✂</span>
-        <div class="logo-text">
-          <span class="logo-name">AGGELOS MANOS</span>
-          <span class="logo-sub">BARBERSHOP</span>
-        </div>
-      </a>
-      <nav class="nav-links" id="navLinks">
-        <a href="#about">ΣΧΕΤΙΚΑ</a>
-        <a href="#services">ΥΠΗΡΕΣΙΕΣ</a>
-        <a href="#pricelist">ΤΙΜΕΣ</a>
-        <a href="#contact">ΕΠΙΚΟΙΝΩΝΙΑ</a>
-      </nav>
-      <a href="tel:+302422029600" class="nav-phone">
-        <span class="phone-icon">📞</span>
-        <span>2422 029600</span>
-      </a>
-      <button class="hamburger" id="hamburger" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </header>
+## 📁 Δομή Αρχείων
 
-  <!-- HERO -->
-  <section class="hero" id="hero">
-    <div class="hero-overlay"></div>
-    <div class="hero-bg">
-      <img src="images/hero-bg.jpg" alt="Barbershop interior" class="hero-img" />
-    </div>
-    <div class="hero-content">
-      <p class="hero-eyebrow">ΑΛΜΥΡΟΣ &middot; ΑΘΗΝΩΝ 33</p>
-      <h1 class="hero-title">
-        <span class="hero-title-main clip-img">AGGELOS MANOS</span>
-        <span class="hero-title-sub">BARBERSHOP</span>
-      </h1>
-      <p class="hero-tagline">WE DON'T CUT HAIR &mdash; WE CREATE CHARACTER</p>
-      <div class="hero-actions">
-        <a href="#booking" class="btn btn-primary">ΚΛΕΙΣΕ ΡΑΝΤΕΒΟΥ</a>
-        <a href="tel:+302422029600" class="btn btn-outline">
-          <span>📞</span> ΚΑΛΕΣΕ ΜΑΣ
-        </a>
-      </div>
-    </div>
-    <div class="hero-scroll"><span></span></div>
-  </section>
+```
+aggelos-manos-barbershop/
+├── index.html          ← Κύρια σελίδα
+├── style.css           ← Όλα τα στυλ
+├── script.js           ← JavaScript (navbar, animations)
+├── images/
+│   ├── hero-bg.jpg     ← Κύρια background εικόνα hero section
+│   ├── barber-1.jpg    ← Φωτογραφία για "Σχετικά με εμάς"
+│   ├── price-bg.jpg    ← Background για τιμοκατάλογο
+│   └── .gitkeep
+└── README.md           ← Αυτό το αρχείο
+```
 
-  <!-- ABOUT -->
-  <section class="about section" id="about">
-    <div class="container about-grid">
-      <div class="about-image-wrap">
-        <div class="about-img-frame">
-          <img src="images/barber-1.jpg" alt="Barber at work" class="about-img" />
-          <div class="about-img-accent"></div>
-        </div>
-      </div>
-      <div class="about-text">
-        <p class="section-eyebrow">ΣΧΕΤΙΚΑ ΜΕ ΕΜΑΣ</p>
-        <h2 class="section-title">Η Τέχνη του <em>Κουρέματος</em></h2>
-        <p class="about-desc">Στο <strong>Aggelos Manos BarberShop</strong>, το κούρεμα είναι τέχνη. Συνδυάζουμε τεχνική ακρίβειας με σύγχρονες τάσεις, προσφέροντας εξατομικευμένες υπηρεσίες που αναδεικνύουν το στυλ κάθε άνδρα.</p>
-        <p class="about-desc">Με εξειδικευμένους επαγγελματίες και κορυφαία προϊόντα, δημιουργούμε ένα περιβάλλον όπου η ποιότητα και η προσοχή στη λεπτομέρεια κάνουν τη διαφορά. Κάθε κούρεμα είναι μια εμπειρία σχεδιασμένη για να προσφέρει το καλύτερο δυνατό αποτέλεσμα.</p>
-        <div class="about-badges">
-          <div class="badge"><span class="badge-num">10+</span><span class="badge-label">Χρόνια Εμπειρίας</span></div>
-          <div class="badge"><span class="badge-num">5000+</span><span class="badge-label">Ευχαριστημένοι Πελάτες</span></div>
-          <div class="badge"><span class="badge-num">100%</span><span class="badge-label">Επαγγελματισμός</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
+## 🖼️ Εικόνες (Σημαντικό!)
 
-  <!-- SERVICES -->
-  <section class="services section" id="services">
-    <div class="container">
-      <p class="section-eyebrow center">ΤΙ ΠΡΟΣΦΕΡΟΥΜΕ</p>
-      <h2 class="section-title center">Υπηρεσίες</h2>
-      <div class="services-grid">
-        <div class="service-card">
-          <div class="service-icon">✂</div>
-          <h3>Απλό Κούρεμα</h3>
-          <p>Κλασικό ή μοντέρνο κούρεμα με ψαλίδι ή μηχανή, προσαρμοσμένο στις επιθυμίες σου.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">🪒</div>
-          <h3>Κούρεμα &amp; Γένια</h3>
-          <p>Πλήρης περιποίηση – κούρεμα και styling γενιού για ολοκληρωμένο look.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-icon">◈</div>
-          <h3>Περιποίηση Γενιού</h3>
-          <p>Τριμάρισμα, σχηματισμός και φροντίδα γένιας με premium προϊόντα.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+Για να δουλέψει σωστά το site, χρειάζεσαι να προσθέσεις τις παρακάτω εικόνες στον φάκελο `images/`:
 
-  <!-- PRICE LIST -->
-  <section class="pricelist section" id="pricelist">
-    <div class="pricelist-bg">
-      <img src="images/price-bg.jpg" alt="" class="pricelist-bg-img" />
-      <div class="pricelist-overlay"></div>
-    </div>
-    <div class="container pricelist-inner">
-      <p class="section-eyebrow center light">ΤΙΜΟΚΑΤΑΛΟΓΟΣ</p>
-      <h2 class="section-title center light">Price List</h2>
-      <div class="price-table">
-        <div class="price-row">
-          <div class="price-left">
-            <span class="price-name">Απλό Κούρεμα</span>
-            <span class="price-desc">Haircut</span>
-          </div>
-          <div class="price-dots"></div>
-          <div class="price-right">12€</div>
-        </div>
-        <div class="price-row featured">
-          <div class="price-left">
-            <span class="price-name">Κούρεμα + Γένια</span>
-            <span class="price-desc">Haircut &amp; Beard</span>
-          </div>
-          <div class="price-dots"></div>
-          <div class="price-right">15€</div>
-        </div>
-        <div class="price-row">
-          <div class="price-left">
-            <span class="price-name">Περιποίηση Γενιού</span>
-            <span class="price-desc">Beard Trim</span>
-          </div>
-          <div class="price-dots"></div>
-          <div class="price-right">7€</div>
-        </div>
-      </div>
-      <div class="pricelist-cta">
-        <a href="#booking" class="btn btn-primary">ΚΛΕΙΣΕ ΡΑΝΤΕΒΟΥ ΤΩΡΑ</a>
-      </div>
-    </div>
-  </section>
+| Αρχείο | Περιγραφή | Προτεινόμενες διαστάσεις |
+|--------|-----------|--------------------------|
+| `hero-bg.jpg` | Κύρια εικόνα hero (εσωτερικό κουρείου ή barber σε δουλειά) | 1920×1080px |
+| `barber-1.jpg` | Πορτρέτο barber ή εσωτερικό | 800×1000px |
+| `price-bg.jpg` | Background τιμοκαταλόγου (σκούρα, με texture) | 1920×800px |
 
-  <!-- BOOKING -->
-  <section class="booking section" id="booking">
-    <div class="container booking-inner">
-      <p class="section-eyebrow center">ONLINE ΡΑΝΤΕΒΟΥ</p>
-      <h2 class="section-title center">Κλείσε <em>Ραντεβού</em></h2>
-      <p class="booking-sub">Κάνε κράτηση online ή κάλεσέ μας απευθείας &mdash; είμαστε εδώ για σένα.</p>
-      <div class="booking-actions">
-        <a href="https://aggelosmanos.setmore.com/" target="_blank" class="btn btn-primary btn-large">
-          📅 ONLINE ΡΑΝΤΕΒΟΥ
-        </a>
-        <a href="tel:+302422029600" class="btn btn-dark btn-large">
-          📞 2422 029600
-        </a>
-        <a href="tel:+306987033949" class="btn btn-dark btn-large">
-          📱 6987 033949
-        </a>
-      </div>
-      <div class="booking-hours">
-        <div class="hour-item"><span>Δευτέρα</span><span>09:00 – 16:00</span></div>
-        <div class="hour-item"><span>Τρίτη</span><span>09:00 – 21:00</span></div>
-        <div class="hour-item"><span>Τετάρτη</span><span>09:00 – 15:00</span></div>
-        <div class="hour-item"><span>Πέμπτη</span><span>09:00 – 21:00</span></div>
-        <div class="hour-item"><span>Παρασκευή</span><span>09:00 – 21:00</span></div>
-        <div class="hour-item"><span>Σάββατο</span><span>09:00 – 16:00</span></div>
-        <div class="hour-item hour-closed"><span>Κυριακή</span><span>Κλειστά</span></div>
-      </div>
-    </div>
-  </section>
+### 🆓 Δωρεάν εικόνες (Unsplash)
+Μπορείς να χρησιμοποιήσεις εικόνες από:
+- https://unsplash.com/s/photos/barbershop
+- https://unsplash.com/s/photos/barber
+- https://www.pexels.com/search/barber%20shop/
 
-  <!-- CONTACT -->
-  <section class="contact section" id="contact">
-    <div class="container contact-grid">
-      <div class="contact-info">
-        <p class="section-eyebrow">ΕΠΙΚΟΙΝΩΝΙΑ</p>
-        <h2 class="section-title">Βρες μας</h2>
-        <ul class="contact-list">
-          <li>
-            <span class="contact-icon">📍</span>
-            <div>
-              <strong>Διεύθυνση</strong>
-              <p>Αθηνών 33, Αλμυρός 37100</p>
-            </div>
-          </li>
-          <li>
-            <span class="contact-icon">📞</span>
-            <div>
-              <strong>Σταθερό</strong>
-              <p><a href="tel:+302422029600">2422 029600</a></p>
-            </div>
-          </li>
-          <li>
-            <span class="contact-icon">📱</span>
-            <div>
-              <strong>Κινητό</strong>
-              <p><a href="tel:+306987033949">6987 033949</a></p>
-            </div>
-          </li>
-          <li>
-            <span class="contact-icon">🕐</span>
-            <div>
-              <strong>Ωράριο</strong>
-              <p>
-                Δευτ: 09:00–16:00 &nbsp;&middot;&nbsp; Τρί: 09:00–21:00<br/>
-                Τετ: 09:00–15:00 &nbsp;&middot;&nbsp; Πέμ: 09:00–21:00<br/>
-                Παρ: 09:00–21:00 &nbsp;&middot;&nbsp; Σάβ: 09:00–16:00<br/>
-                <span class="closed-note">Κυριακή: Κλειστά</span>
-              </p>
-            </div>
-          </li>
-        </ul>
-        <div class="social-links">
-          <a href="#" class="social-btn" aria-label="Instagram">
-            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-          </a>
-          <a href="#" class="social-btn" aria-label="Facebook">
-            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-          </a>
-          <a href="#" class="social-btn" aria-label="TikTok">
-            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.22 8.22 0 004.82 1.56V6.79a4.85 4.85 0 01-1.05-.1z"/></svg>
-          </a>
-        </div>
-      </div>
-      <div class="contact-map">
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3103.52!2d22.7607!3d39.1797!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a75af7ffdb0797%3A0x1c84b96f1ac3c1ee!2zzpHOuM63zr3zmM-OzrEgMzMsIM6Rz7zOvM-Bz4zPgg!5e0!3m2!1sel!2sgr!4v1700000000003"
-          width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade" title="Αθηνών 33, Αλμυρός 37100"></iframe>
-      </div>
-    </div>
-  </section>
+## 🚀 Deploy στο GitHub Pages
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container footer-inner">
-      <div class="footer-logo">
-        <span class="logo-icon">✂</span>
-        <div>
-          <span class="logo-name">AGGELOS MANOS</span>
-          <span class="logo-sub">BARBERSHOP</span>
-        </div>
-      </div>
-      <p class="footer-copy">© 2025 Aggelos Manos BarberShop &nbsp;&middot;&nbsp; Αθηνών 33, Αλμυρός 37100</p>
-      <p class="footer-copy" style="margin-top:6px;">📞 2422 029600 &nbsp;|&nbsp; 📱 6987 033949</p>
-      <p class="footer-tagline">WE DON'T CUT HAIR — WE CREATE CHARACTER</p>
-    </div>
-  </footer>
+1. Δημιούργησε νέο repository στο GitHub (π.χ. `aggelos-manos-barbershop`)
+2. Upload όλα τα αρχεία
+3. Πήγαινε **Settings → Pages**
+4. Source: **Deploy from a branch** → `main` / `root`
+5. Το site θα είναι διαθέσιμο σε: `https://USERNAME.github.io/aggelos-manos-barbershop/`
 
-  <!-- FLOATING PHONE BUTTON -->
-  <a href="tel:+302422029600" class="fab-phone" aria-label="Τηλεφωνήστε μας">📞</a>
+## ✏️ Προσαρμογή
 
-  <script src="script.js"></script>
-</body>
-</html>
+### Τηλέφωνο
+Ψάξε και άλλαξε όλες τις εμφανίσεις του `+302310000000` και `2310 000 000` στα `index.html` και `script.js`.
+
+### Διεύθυνση
+Στο `index.html` άλλαξε: `Τσιμισκή 00, Θεσσαλονίκη 54624`
+
+### Online Ραντεβού
+Το κουμπί "ONLINE ΡΑΝΤΕΒΟΥ" ανοίγει WhatsApp. Άλλαξε τον αριθμό στο href:
+```html
+href="https://wa.me/302310000000?text=..."
+```
+Ή άλλαξε σε booking platform (π.χ. Treatwell, Fresha):
+```html
+href="https://www.fresha.com/your-barbershop-link"
+```
+
+### Χάρτης Google Maps
+Άλλαξε το `src` του `<iframe>` στο contact section με τον πραγματικό embed link.
+
+### Social Media
+Άλλαξε τα `href="#"` στα social buttons με τα πραγματικά links.
