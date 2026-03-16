@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aggelos Manos BarberShop</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="nav-inner">
+      <div class="logo">
+        <img src="logo.png" alt="Aggelos Manos Logo" class="logo-img" />
+        <div class="logo-text">
+          <span class="logo-name">Aggelos Manos</span>
+          <span class="logo-sub">BarberShop</span>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="#about">Σχετικά</a>
+        <a href="#services">Υπηρεσίες</a>
+        <a href="#pricing">Τιμές</a>
+        <a href="#contact">Επικοινωνία</a>
+      </nav>
+      <button class="nav-cta" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Κλείσε Ραντεβού</button>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#about" onclick="closeMobile()">Σχετικά</a>
+      <a href="#services" onclick="closeMobile()">Υπηρεσίες</a>
+      <a href="#pricing" onclick="closeMobile()">Τιμές</a>
+      <a href="#contact" onclick="closeMobile()">Επικοινωνία</a>
+      <a href="#booking" class="mobile-cta" onclick="closeMobile()">Κλείσε Ραντεβού</a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Premium Barbershop · Αλμυρός</p>
+      <h1 class="hero-title">
+        <span class="hero-line1">The Art</span>
+        <span class="hero-line2">of the Cut.</span>
+      </h1>
+      <p class="hero-desc">Κάθε κούρεμα είναι μια τέχνη. Έλα να νιώσεις τη διαφορά με προσωπική φροντίδα και πάθος για την τελειότητα.</p>
+      <div class="hero-actions">
+        <button class="btn-primary" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">
+          <span>Κλείσε Ραντεβού</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <a class="btn-secondary" href="tel:+306987033949">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.22 1.18 2 2 0 012.18 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.53-.53a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+          Κάλεσέ μας
+        </a>
+      </div>
+      <div class="hero-badges">
+        <div class="badge"><strong>10+</strong><span>Χρόνια εμπειρίας</span></div>
+        <div class="badge-divider"></div>
+        <div class="badge"><strong>2000+</strong><span>Ευχαριστημένοι πελάτες</span></div>
+        <div class="badge-divider"></div>
+        <div class="badge"><strong>100%</strong><span>Εγγύηση ικανοποίησης</span></div>
+      </div>
+    </div>
+    <div class="hero-logo-wrap">
+      <img src="logo.png" alt="AM BarberShop Logo" class="hero-logo-img" />
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-img-wrap">
+          <div class="about-img-box">
+            <img src="logo.png" alt="Aggelos Manos BarberShop" class="about-logo" />
+            <div class="about-tag about-tag-1">Est. 2010</div>
+            <div class="about-tag about-tag-2">Αλμυρός</div>
+          </div>
+        </div>
+        <div class="about-text">
+          <p class="section-label">// Σχετικά με εμάς</p>
+          <h2 class="section-title">Περισσότερο από ένα απλό κούρεμα.</h2>
+          <p>Το <strong>Aggelos Manos BarberShop</strong> είναι ένας χώρος όπου ο παραδοσιακός βαρβερισμός συναντά τη σύγχρονη αισθητική. Εδώ και πάνω από μια δεκαετία, προσφέρουμε υπηρεσίες κορυφαίας ποιότητας με προσωπική φροντίδα για κάθε πελάτη.</p>
+          <p>Χρησιμοποιούμε αποκλειστικά επαγγελματικά εργαλεία και προϊόντα, διασφαλίζοντας ότι κάθε επίσκεψη είναι μια εμπειρία που αξίζει να επαναλάβεις.</p>
+          <div class="about-features">
+            <div class="feature">
+              <div class="feature-icon">💈</div>
+              <div>
+                <strong>Κλασσική εμπειρία</strong>
+                <span>Ατμόσφαιρα παραδοσιακού barbershop</span>
+              </div>
+            </div>
+            <div class="feature">
+              <div class="feature-icon">⭐</div>
+              <div>
+                <strong>Premium προϊόντα</strong>
+                <span>Μόνο επαγγελματικά brand</span>
+              </div>
+            </div>
+            <div class="feature">
+              <div class="feature-icon">🕐</div>
+              <div>
+                <strong>Online ραντεβού</strong>
+                <span>Εύκολη κράτηση, χωρίς αναμονή</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">// Οι υπηρεσίες μας</p>
+        <h2 class="section-title">Τι κάνουμε καλύτερα.</h2>
+      </div>
+      <div class="services-grid">
+        <div class="service-card" style="--delay:0s">
+          <div class="service-num">01</div>
+          <div class="service-icon-wrap">✂</div>
+          <h3>Κούρεμα</h3>
+          <p>Κλασσικό ή σύγχρονο, fade ή texturized — σου ταιριάζει ό,τι ταιριάζει σε σένα.</p>
+        </div>
+        <div class="service-card" style="--delay:.1s">
+          <div class="service-num">02</div>
+          <div class="service-icon-wrap">🪒</div>
+          <h3>Κούρεμα & Γένια</h3>
+          <p>Το τέλειο combo. Κούρεμα και περιποίηση γενιού σε μία επίσκεψη.</p>
+        </div>
+        <div class="service-card" style="--delay:.2s">
+          <div class="service-num">03</div>
+          <div class="service-icon-wrap">🧔</div>
+          <h3>Περιποίηση Γενιού</h3>
+          <p>Μορφοποίηση, τακτοποίηση και styling για τέλεια εμφάνιση κάθε μέρα.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">// Τιμοκατάλογος</p>
+        <h2 class="section-title">Ξεκάθαρες τιμές, μηδέν εκπλήξεις.</h2>
+      </div>
+      <div class="pricing-grid">
+        <div class="price-card reveal">
+          <div class="price-top">
+            <span class="price-icon">✂</span>
+            <h3>Απλό Κούρεμα</h3>
+          </div>
+          <div class="price-amount"><span class="currency">€</span><span class="amount">12</span></div>
+          <ul class="price-list">
+            <li>Fade, classic ή modern</li>
+            <li>Styling περιλαμβάνεται</li>
+            <li>Τελείωμα με ξυράφι</li>
+          </ul>
+          <button class="price-btn" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Κλείσε Ραντεβού</button>
+        </div>
+        <div class="price-card featured reveal">
+          <div class="featured-badge">Δημοφιλές</div>
+          <div class="price-top">
+            <span class="price-icon">💈</span>
+            <h3>Κούρεμα + Γένια</h3>
+          </div>
+          <div class="price-amount"><span class="currency">€</span><span class="amount">15</span></div>
+          <ul class="price-list">
+            <li>Πλήρες κούρεμα</li>
+            <li>Trim & μορφοποίηση γενιού</li>
+            <li>Hot towel finish</li>
+          </ul>
+          <button class="price-btn" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Κλείσε Ραντεβού</button>
+        </div>
+        <div class="price-card reveal">
+          <div class="price-top">
+            <span class="price-icon">🪒</span>
+            <h3>Περιποίηση Γενιού</h3>
+          </div>
+          <div class="price-amount"><span class="currency">€</span><span class="amount">7</span></div>
+          <ul class="price-list">
+            <li>Trim & σχηματισμός</li>
+            <li>Moisturizing treatment</li>
+            <li>Ξύρισμα γραμμών</li>
+          </ul>
+          <button class="price-btn" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Κλείσε Ραντεβού</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOKING -->
+  <section class="booking" id="booking">
+    <div class="container">
+      <div class="booking-inner">
+        <div class="booking-text">
+          <p class="section-label">// Online Ραντεβού</p>
+          <h2 class="section-title">Κλείσε τη θέση σου σήμερα.</h2>
+          <p class="booking-desc">Χωρίς αναμονή, χωρίς ταλαιπωρία. Επέλεξε ώρα που σου βολεύει και εμείς θα είμαστε έτοιμοι για σένα.</p>
+          <div class="booking-hours">
+            <div class="hours-row"><span>Δευτέρα – Παρασκευή</span><span>09:00 – 20:00</span></div>
+            <div class="hours-row"><span>Σάββατο</span><span>09:00 – 17:00</span></div>
+            <div class="hours-row closed"><span>Κυριακή</span><span>Κλειστά</span></div>
+          </div>
+        </div>
+        <div class="booking-actions">
+          <a class="btn-whatsapp" href="https://wa.me/306987033949?text=Θέλω%20να%20κλείσω%20ραντεβού" target="_blank">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.117 1.528 5.845L.072 23.927l6.236-1.636A11.944 11.944 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.89 0-3.66-.49-5.2-1.348l-.374-.22-3.703.972.988-3.607-.243-.392A9.956 9.956 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+            WhatsApp Ραντεβού
+          </a>
+          <a class="btn-call" href="tel:+306987033949">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.22 1.18 2 2 0 012.18 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.53-.53a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+            +30 698 703 3949
+          </a>
+          <p class="booking-note">📍 Αθηνών 33, Αλμυρός</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <p class="section-label">// Επικοινωνία</p>
+          <h2 class="section-title">Βρες μας εύκολα.</h2>
+          <div class="contact-items">
+            <div class="contact-item">
+              <span class="ci-icon">📍</span>
+              <div><strong>Διεύθυνση</strong><span>Αθηνών 33, Αλμυρός</span></div>
+            </div>
+            <div class="contact-item">
+              <span class="ci-icon">📞</span>
+              <div><strong>Τηλέφωνο</strong><a href="tel:+306987033949">+30 698 703 3949</a></div>
+            </div>
+            <div class="contact-item">
+              <span class="ci-icon">📞</span>
+              <div><strong>Σταθερό</strong><a href="tel:+302422029600">+30 24220 29600</a></div>
+            </div>
+            <div class="contact-item">
+              <span class="ci-icon">💬</span>
+              <div><strong>WhatsApp</strong><a href="https://wa.me/306987033949" target="_blank">Στείλε μήνυμα</a></div>
+            </div>
+            <div class="contact-item">
+              <span class="ci-icon">📸</span>
+              <div><strong>Instagram</strong><a href="https://instagram.com/manos_aggelos_" target="_blank">@manos_aggelos_</a></div>
+            </div>
+          </div>
+        </div>
+        <div class="contact-logo-wrap">
+          <img src="logo.png" alt="AM BarberShop" class="contact-logo" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">
+          <img src="logo.png" alt="AM Logo" class="footer-logo-img" />
+          <div>
+            <span class="logo-name">Aggelos Manos</span>
+            <span class="logo-sub">BarberShop</span>
+          </div>
+        </div>
+        <p class="footer-copy">© 2025 Aggelos Manos BarberShop. Όλα τα δικαιώματα διατηρούνται.</p>
+        <div class="footer-links">
+          <a href="tel:+306987033949">Τηλέφωνο</a>
+          <a href="https://wa.me/306987033949" target="_blank">WhatsApp</a>
+          <a href="https://instagram.com/manos_aggelos_" target="_blank">Instagram</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Call Button -->
+  <a class="fab-call" href="tel:+306987033949" title="Κάλεσέ μας">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.22 1.18 2 2 0 012.18 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.53-.53a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+  </a>
+
+  <script>
+    const ham = document.getElementById('hamburger');
+    const menu = document.getElementById('mobileMenu');
+    ham.addEventListener('click', () => { ham.classList.toggle('open'); menu.classList.toggle('open'); });
+    function closeMobile() { ham.classList.remove('open'); menu.classList.remove('open'); }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal, .service-card, .price-card, .feature, .contact-item').forEach(el => {
+      el.classList.add('reveal');
+      observer.observe(el);
+    });
+
+    window.addEventListener('scroll', () => {
+      document.querySelector('.navbar').classList.toggle('scrolled', window.scrollY > 50);
+    });
+  </script>
+</body>
+</html>
