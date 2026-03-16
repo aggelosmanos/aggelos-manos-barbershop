@@ -290,6 +290,18 @@ ul { list-style: none; }
   animation: fadeUp 0.8s ease 0.4s forwards;
 }
 
+/* Image-clipped variant — εικόνα μέσα από τα γράμματα */
+.hero-title-main.clip-img {
+  background-image: url('images/hero-bg.jpg');
+  background-size: 120%;
+  background-position: center 35%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  filter: drop-shadow(0 0 28px rgba(201,168,76,0.18)) brightness(1.22) contrast(1.1) saturate(0.9);
+}
+
 .hero-title-sub {
   font-family: var(--font-body);
   font-size: clamp(0.9rem, 2.5vw, 1.4rem);
@@ -680,6 +692,8 @@ ul { list-style: none; }
 
 .hour-item span:first-child { color: rgba(245, 240, 232, 0.65); }
 .hour-item span:last-child  { color: var(--gold); font-weight: 600; }
+.hour-closed span { color: rgba(245,240,232,0.3) !important; font-style: italic; }
+.closed-note { color: var(--gray); font-style: italic; font-size: 0.85em; }
 
 /* ==================== CONTACT ==================== */
 .contact {
