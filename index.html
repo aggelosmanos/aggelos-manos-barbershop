@@ -253,6 +253,36 @@ ul{list-style:none}
 .call-menu a:first-child{border-bottom:1px solid rgba(255,255,255,.06)}
 .call-menu a span{display:flex;flex-direction:column;line-height:1.3}
 .call-menu a small{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(240,235,224,.35)}
+/* ── SEMINAR FULLSCREEN PAGE ── */
+.seminar-page{position:fixed;inset:0;background:var(--bg);z-index:9000;overflow-y:auto;opacity:0;pointer-events:none;transition:opacity .35s ease}
+.seminar-page.open{opacity:1;pointer-events:all}
+.sp-nav{position:sticky;top:0;background:rgba(10,10,10,.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08);padding:16px 5%;display:flex;align-items:center;justify-content:space-between;z-index:10}
+.sp-logo{display:flex;align-items:center;gap:11px}
+.sp-close{display:flex;align-items:center;gap:8px;background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);font-family:var(--f-body);font-size:.72rem;font-weight:400;letter-spacing:.12em;padding:8px 16px;border-radius:2px;cursor:pointer;transition:all .2s}
+.sp-close:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+.sp-hero{position:relative;height:55vh;min-height:400px;display:flex;align-items:flex-end;overflow:hidden}
+.sp-hero-bg{position:absolute;inset:0}
+.sp-hero-bg img{width:100%;height:100%;object-fit:cover;filter:grayscale(100%) brightness(.45)}
+.sp-hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,10,10,.2) 0%,rgba(10,10,10,.85) 100%)}
+.sp-hero-content{position:relative;z-index:2;padding:0 8% 56px}
+.sp-title{font-family:var(--f-title);font-size:clamp(2.8rem,6vw,5rem);font-weight:600;color:#fff;line-height:1.05;letter-spacing:.06em;margin:12px 0 16px}
+.sp-tagline{font-family:var(--f-body);font-size:.8rem;font-weight:300;letter-spacing:.35em;color:rgba(255,255,255,.4);text-transform:uppercase}
+.sp-body{background:var(--s1);padding:80px 0}
+.sp-wrap{max-width:1100px;margin:0 auto;padding:0 8%;display:grid;grid-template-columns:1fr 340px;gap:80px;align-items:start}
+.sp-h2{font-family:var(--f-body);font-size:1.1rem;font-weight:500;color:#fff;line-height:1.4;margin-bottom:28px;letter-spacing:.01em}
+.sp-content p{font-family:var(--f-body);font-size:.92rem;font-weight:300;color:rgba(240,235,224,.6);line-height:1.9;margin-bottom:20px}
+.sp-points{display:flex;flex-direction:column;gap:16px;margin:24px 0 28px;padding:24px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:2px}
+.sp-point{display:flex;gap:14px;align-items:flex-start}
+.sp-point-icon{width:28px;height:28px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;margin-top:2px}
+.sp-point p{font-family:var(--f-body);font-size:.9rem;font-weight:300;color:rgba(240,235,224,.7);line-height:1.75;margin:0}
+.sp-cta-box{background:var(--s2);border:1px solid rgba(255,255,255,.08);padding:32px;border-radius:2px;position:sticky;top:90px}
+.sp-cta-box h3{font-family:var(--f-body);font-size:.95rem;font-weight:500;color:#fff;margin-bottom:10px}
+.sp-cta-box p{font-family:var(--f-body);font-size:.82rem;font-weight:300;color:rgba(240,235,224,.5);line-height:1.7;margin-bottom:0}
+.sp-contact{margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,.06);text-align:center}
+.sp-contact p{font-family:var(--f-body);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:8px}
+.sp-contact a{font-family:var(--f-body);font-size:.92rem;font-weight:400;color:rgba(255,255,255,.7);transition:color .2s}
+.sp-contact a:hover{color:#fff}
+@media(max-width:768px){.sp-wrap{grid-template-columns:1fr}.sp-cta-box{position:static}}
 /* ── SEMINAR FORM ── */
 .seminar-form{display:flex;flex-direction:column;gap:18px}
 .form-group{display:flex;flex-direction:column;gap:6px}
@@ -614,28 +644,63 @@ ul{list-style:none}
 </footer>
 
 <!-- SEMINAR MODAL -->
-<div class="legal-modal" id="modal-seminar">
-  <div class="legal-box" style="max-width:780px">
-    <div class="legal-header">
+<div class="seminar-page" id="modal-seminar">
+  <div class="sp-nav">
+    <div class="sp-logo">
+      <img src="images/logo.png" alt="AM Logo" style="width:36px;height:36px;object-fit:contain;border-radius:50%"/>
       <div>
-        <p style="font-family:var(--f-body);font-size:.6rem;font-weight:500;letter-spacing:.4em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:6px">Εκπαίδευση</p>
-        <h3>Σεμινάρια Κομμωτικής</h3>
+        <span class="logo-n">AGGELOS MANOS</span>
+        <span class="logo-s">Mens Salon</span>
       </div>
-      <button class="legal-close" onclick="closeModal('seminar')">✕</button>
     </div>
-    <div class="legal-body">
-      <h4>Look &amp; Learn: Θεωρητική και Οπτική Κατάρτιση στην Κομμωτική</h4>
-      <p>Σε αυτό το εξειδικευμένο σεμινάριο, θα εστιάσουμε στο θεωρητικό υπόβαθρο της κομμωτικής, θέτοντας τις βάσεις για την επαγγελματική σας εξέλιξη. Θα αναλύσουμε τα βασικά θεμέλια της τέχνης της κομμωτικής, όπως:</p>
-      <ul>
-        <li>Σωστή στάση σώματος και θέση χεριών, απαραίτητα για την ακρίβεια και την αποφυγή καταπόνησης.</li>
-        <li>Βασικές τεχνικές και εργαλεία, με έμφαση στις λεπτομέρειες που κάνουν τη διαφορά.</li>
-      </ul>
-      <p>Στη συνέχεια, θα προχωρήσουμε στην εφαρμογή αυτής της γνώσης με δύο κουρέματα σε πραγματικά μοντέλα. Κατά τη διάρκεια της πρακτικής, θα εξηγώ κάθε βήμα, από την αρχή μέχρι το τέλος, ενώ θα έχετε τη δυνατότητα να θέσετε ερωτήσεις και να προσαρμόσουμε το περιεχόμενο στις ανάγκες και τους στόχους σας.</p>
-      <p>Η επιλογή των μοντέλων θα γίνει σε συνεργασία, με βάση το τι θέλετε να δείτε ως αποτέλεσμα, ώστε το σεμινάριο να είναι όσο το δυνατόν πιο στοχευμένο και ωφέλιμο.</p>
-      <div style="margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);text-align:center">
-        <button class="btn btn-g" onclick="closeModal('seminar');openModal('seminar-form')" style="font-size:.78rem;padding:14px 36px;cursor:pointer">
-          Κλείστε Θέση
+    <button class="sp-close" onclick="closeModal('seminar')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      Πίσω στο site
+    </button>
+  </div>
+  <div class="sp-hero">
+    <div class="sp-hero-bg">
+      <img src="images/barber-1.jpg" alt="Seminar"/>
+    </div>
+    <div class="sp-hero-overlay"></div>
+    <div class="sp-hero-content">
+      <span class="eyebrow" style="color:rgba(255,255,255,.5)">Εκπαίδευση &amp; Κατάρτιση</span>
+      <h1 class="sp-title">Σεμινάρια<br>Κομμωτικής</h1>
+      <p class="sp-tagline">Look &amp; Learn — Θεωρία &amp; Πράξη</p>
+    </div>
+  </div>
+  <div class="sp-body">
+    <div class="sp-wrap">
+      <div class="sp-content">
+        <h2 class="sp-h2">Look &amp; Learn: Θεωρητική και Οπτική Κατάρτιση στην Κομμωτική</h2>
+        <p>Σε αυτό το εξειδικευμένο σεμινάριο, θα εστιάσουμε στο θεωρητικό υπόβαθρο της κομμωτικής, θέτοντας τις βάσεις για την επαγγελματική σας εξέλιξη. Θα αναλύσουμε τα βασικά θεμέλια της τέχνης της κομμωτικής, όπως:</p>
+        <div class="sp-points">
+          <div class="sp-point">
+            <div class="sp-point-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <p>Σωστή στάση σώματος και θέση χεριών, απαραίτητα για την ακρίβεια και την αποφυγή καταπόνησης.</p>
+          </div>
+          <div class="sp-point">
+            <div class="sp-point-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <p>Βασικές τεχνικές και εργαλεία, με έμφαση στις λεπτομέρειες που κάνουν τη διαφορά.</p>
+          </div>
+        </div>
+        <p>Στη συνέχεια, θα προχωρήσουμε στην εφαρμογή αυτής της γνώσης με δύο κουρέματα σε πραγματικά μοντέλα. Κατά τη διάρκεια της πρακτικής, θα εξηγώ κάθε βήμα, από την αρχή μέχρι το τέλος, ενώ θα έχετε τη δυνατότητα να θέσετε ερωτήσεις και να προσαρμόσουμε το περιεχόμενο στις ανάγκες και τους στόχους σας.</p>
+        <p>Η επιλογή των μοντέλων θα γίνει σε συνεργασία, με βάση το τι θέλετε να δείτε ως αποτέλεσμα, ώστε το σεμινάριο να είναι όσο το δυνατόν πιο στοχευμένο και ωφέλιμο.</p>
+      </div>
+      <div class="sp-cta-box">
+        <h3>Κλείστε τη θέση σας</h3>
+        <p>Οι θέσεις είναι περιορισμένες. Εκδηλώστε το ενδιαφέρον σας τώρα.</p>
+        <button class="btn btn-g" onclick="closeModal('seminar');openModal('seminar-form')" style="width:100%;justify-content:center;padding:16px;font-size:.78rem;cursor:pointer;margin-top:8px">
+          Κλείστε Θέση →
         </button>
+        <div class="sp-contact">
+          <p>Ή επικοινωνήστε απευθείας:</p>
+          <a href="tel:+306987033949">6987 033949</a>
+        </div>
       </div>
     </div>
   </div>
