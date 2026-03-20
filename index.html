@@ -253,6 +253,28 @@ ul{list-style:none}
 .call-menu a:first-child{border-bottom:1px solid rgba(255,255,255,.06)}
 .call-menu a span{display:flex;flex-direction:column;line-height:1.3}
 .call-menu a small{font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(240,235,224,.35)}
+/* ── SEMINAR FORM ── */
+.seminar-form{display:flex;flex-direction:column;gap:18px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group label{font-family:var(--f-body);font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.form-group input,.form-group textarea{background:#0a0a0a;border:1px solid rgba(255,255,255,.12);border-radius:2px;padding:12px 16px;color:#fff;font-family:var(--f-body);font-size:.9rem;font-weight:300;outline:none;transition:border-color .2s;resize:none}
+.form-group input:focus,.form-group textarea:focus{border-color:rgba(255,255,255,.4)}
+.form-group input::placeholder,.form-group textarea::placeholder{color:rgba(255,255,255,.2)}
+/* ── LEGAL MODAL ── */
+.legal-modal{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s ease;padding:20px}
+.legal-modal.open{opacity:1;pointer-events:all}
+.legal-box{background:#141414;border:1px solid rgba(255,255,255,.1);border-radius:4px;max-width:720px;width:100%;max-height:85vh;display:flex;flex-direction:column;transform:translateY(16px);transition:transform .3s ease}
+.legal-modal.open .legal-box{transform:translateY(0)}
+.legal-header{display:flex;align-items:center;justify-content:space-between;padding:24px 32px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
+.legal-header h3{font-family:var(--f-body);font-size:1rem;font-weight:500;color:#fff;letter-spacing:.04em}
+.legal-close{background:none;border:none;color:rgba(255,255,255,.4);font-size:1.4rem;cursor:pointer;line-height:1;transition:color .2s;padding:0}
+.legal-close:hover{color:#fff}
+.legal-body{padding:32px;overflow-y:auto;flex:1}
+.legal-body h4{font-family:var(--f-body);font-size:.78rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.5);margin:24px 0 8px}
+.legal-body h4:first-child{margin-top:0}
+.legal-body p{font-family:var(--f-body);font-size:.88rem;font-weight:300;color:rgba(240,235,224,.6);line-height:1.85;margin-bottom:12px}
+.legal-body ul{padding-left:20px;margin-bottom:12px}
+.legal-body ul li{font-family:var(--f-body);font-size:.88rem;font-weight:300;color:rgba(240,235,224,.6);line-height:1.85}
 @keyframes up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse{0%,100%{opacity:0;transform:scaleY(0);transform-origin:top}50%{opacity:1;transform:scaleY(1);transform-origin:top}}
 
@@ -313,7 +335,7 @@ ul{list-style:none}
       <a href="#contact">Επικοινωνία</a>
       <a href="#gallery">Gallery</a>
       <a href="#reviews">Κριτικές</a>
-      <a href="#seminars">Εκπαίδευση - Σεμινάρια</a>
+      <a href="#" onclick="openModal('seminar');return false;">Εκπαίδευση - Σεμινάρια</a>
     </nav>
     <div class="nav-right">
       <div class="nav-socials">
@@ -405,7 +427,7 @@ ul{list-style:none}
         <div class="srv-badge">POPULAR</div>
         <h3>Κούρεμα με Μούσι</h3>
         <span class="srv-sub">Hair Cut and Beard Trim</span>
-        <p>Η πλήρης ανδρική περιποίηση. Κούρεμα και διαμόρφωση γενιάς σε ένα session.</p>
+        <p>Η πλήρης ανδρική περιποίηση. Κούρεμα και διαμόρφωση γενιάδας σε ένα session.</p>
       </div>
       <div class="srv">
         <h3>Κούρεμα + Σχέδιο</h3>
@@ -415,7 +437,7 @@ ul{list-style:none}
       <div class="srv">
         <h3>Μούσι + Σχήμα</h3>
         <span class="srv-sub">Beard and Trim</span>
-        <p>Περιποίηση και σχηματισμός γενιάς με ακρίβεια για ένα καθαρό και δυναμικό αποτέλεσμα.</p>
+        <p>Περιποίηση και σχηματισμός γενιάδας με ακρίβεια για ένα καθαρό και δυναμικό αποτέλεσμα.</p>
       </div>
     </div>
   </div>
@@ -564,9 +586,9 @@ ul{list-style:none}
     </div>
     <div class="footer-col">
       <span class="footer-col-title">Νομικά</span>
-      <a href="#" class="footer-link">Πολιτική Cookies</a>
-      <a href="#" class="footer-link">Προσωπικά Δεδομένα</a>
-      <a href="#" class="footer-link">Πολιτική Απορρήτου</a>
+      <a href="#" class="footer-link" onclick="openModal('cookies');return false;">Πολιτική Cookies</a>
+      <a href="#" class="footer-link" onclick="openModal('data');return false;">Προσωπικά Δεδομένα</a>
+      <a href="#" class="footer-link" onclick="openModal('privacy');return false;">Πολιτική Απορρήτου</a>
     </div>
   </div>
   <div class="wrap footer-in">
@@ -591,6 +613,146 @@ ul{list-style:none}
   Powered by <a href="https://www.google.com/search?q=Service+%CE%A5%CF%80%CE%BF%CE%BB%CE%BF%CE%B3%CE%B9%CF%83%CF%84%CF%8E%CE%BD+Mantz" target="_blank">Service Mantz</a>
 </footer>
 
+<!-- SEMINAR MODAL -->
+<div class="legal-modal" id="modal-seminar">
+  <div class="legal-box" style="max-width:780px">
+    <div class="legal-header">
+      <div>
+        <p style="font-family:var(--f-body);font-size:.6rem;font-weight:500;letter-spacing:.4em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:6px">Εκπαίδευση</p>
+        <h3>Σεμινάρια Κομμωτικής</h3>
+      </div>
+      <button class="legal-close" onclick="closeModal('seminar')">✕</button>
+    </div>
+    <div class="legal-body">
+      <h4>Look &amp; Learn: Θεωρητική και Οπτική Κατάρτιση στην Κομμωτική</h4>
+      <p>Σε αυτό το εξειδικευμένο σεμινάριο, θα εστιάσουμε στο θεωρητικό υπόβαθρο της κομμωτικής, θέτοντας τις βάσεις για την επαγγελματική σας εξέλιξη. Θα αναλύσουμε τα βασικά θεμέλια της τέχνης της κομμωτικής, όπως:</p>
+      <ul>
+        <li>Σωστή στάση σώματος και θέση χεριών, απαραίτητα για την ακρίβεια και την αποφυγή καταπόνησης.</li>
+        <li>Βασικές τεχνικές και εργαλεία, με έμφαση στις λεπτομέρειες που κάνουν τη διαφορά.</li>
+      </ul>
+      <p>Στη συνέχεια, θα προχωρήσουμε στην εφαρμογή αυτής της γνώσης με δύο κουρέματα σε πραγματικά μοντέλα. Κατά τη διάρκεια της πρακτικής, θα εξηγώ κάθε βήμα, από την αρχή μέχρι το τέλος, ενώ θα έχετε τη δυνατότητα να θέσετε ερωτήσεις και να προσαρμόσουμε το περιεχόμενο στις ανάγκες και τους στόχους σας.</p>
+      <p>Η επιλογή των μοντέλων θα γίνει σε συνεργασία, με βάση το τι θέλετε να δείτε ως αποτέλεσμα, ώστε το σεμινάριο να είναι όσο το δυνατόν πιο στοχευμένο και ωφέλιμο.</p>
+      <div style="margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);text-align:center">
+        <button class="btn btn-g" onclick="closeModal('seminar');openModal('seminar-form')" style="font-size:.78rem;padding:14px 36px;cursor:pointer">
+          Κλείστε Θέση
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SEMINAR FORM MODAL -->
+<div class="legal-modal" id="modal-seminar-form">
+  <div class="legal-box" style="max-width:520px">
+    <div class="legal-header">
+      <div>
+        <p style="font-family:var(--f-body);font-size:.6rem;font-weight:500;letter-spacing:.4em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:6px">Εγγραφή</p>
+        <h3>Κλείστε Θέση</h3>
+      </div>
+      <button class="legal-close" onclick="closeModal('seminar-form')">✕</button>
+    </div>
+    <div class="legal-body">
+      <p style="margin-bottom:28px">Συμπληρώστε τα στοιχεία σας και θα επικοινωνήσουμε μαζί σας για να επιβεβαιώσουμε τη θέση σας.</p>
+      <form class="seminar-form" onsubmit="submitForm(event)">
+        <div class="form-group">
+          <label>Όνομα</label>
+          <input type="text" placeholder="Το όνομά σας" required/>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="email@example.com" required/>
+        </div>
+        <div class="form-group">
+          <label>Τηλέφωνο</label>
+          <input type="tel" placeholder="69XXXXXXXX" required/>
+        </div>
+        <div class="form-group">
+          <label>Μήνυμα</label>
+          <textarea placeholder="Πείτε μας λίγα λόγια για εσάς και τους στόχους σας..." rows="4"></textarea>
+        </div>
+        <div style="margin-top:8px;text-align:center">
+          <button type="submit" class="btn btn-g" style="font-size:.78rem;padding:14px 40px;cursor:pointer;width:100%">
+            Αποστολή Αίτησης
+          </button>
+        </div>
+        <p id="form-success" style="display:none;text-align:center;margin-top:16px;color:#fff;font-size:.88rem;font-family:var(--f-body)">✓ Η αίτησή σας στάλθηκε! Θα επικοινωνήσουμε μαζί σας σύντομα.</p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- LEGAL MODALS -->
+<div class="legal-modal" id="modal-cookies">
+  <div class="legal-box">
+    <div class="legal-header">
+      <h3>Πολιτική Cookies</h3>
+      <button class="legal-close" onclick="closeModal('cookies')">✕</button>
+    </div>
+    <div class="legal-body">
+      <h4>Τι είναι τα cookies;</h4>
+      <p>Τα cookies είναι μικρά κομμάτια αρχείων σε μορφή κειμένου, τα οποία αποθηκεύονται στον περιηγητή (browser) του Χρήστη όταν επισκέπτεται έναν ιστότοπο. Οι πληροφορίες που αποθηκεύονται στον υπολογιστή του Χρήστη μπορεί να περιέχουν στοιχεία όπως ποιες είναι οι σελίδες που επισκέφτηκε ο Χρήστης, την ημερομηνία και την ώρα της επίσκεψης καθώς και κάποιον τυχαίο και μοναδικό αριθμό αναγνώρισης.</p>
+      <h4>Ποια cookies χρησιμοποιούμε;</h4>
+      <p>Χρησιμοποιούμε cookies για τη διαχείριση των περιόδων σύνδεσης, για την παροχή εξατομικευμένων ιστοσελίδων και για την προσαρμογή περιεχομένου ώστε να αντικατοπτρίζει τις ιδιαίτερες ανάγκες και τα ενδιαφέροντά σας.</p>
+      <h4>Κατηγορίες Cookies</h4>
+      <p><strong style="color:rgba(255,255,255,.7)">Αναγκαία cookies</strong> — Απαραίτητα για την ορθή λειτουργία του ιστότοπου.</p>
+      <p><strong style="color:rgba(255,255,255,.7)">Cookies Λειτουργικότητας</strong> — Επιτρέπουν στον ιστότοπο να θυμάται τις επιλογές του χρήστη.</p>
+      <p><strong style="color:rgba(255,255,255,.7)">Cookies Επιδόσεων</strong> — Συλλέγουν ανώνυμες πληροφορίες για τη βελτίωση του ιστότοπου.</p>
+      <p><strong style="color:rgba(255,255,255,.7)">Cookies Εμπορικής Προώθησης</strong> — Χρησιμοποιούνται για στοχευμένη διαφήμιση.</p>
+      <h4>Πώς να ελέγξετε τα cookies;</h4>
+      <p>Μπορείτε να τροποποιήσετε τις ρυθμίσεις του προγράμματος περιήγησης για να απορρίψετε ορισμένα ή και όλα τα cookies.</p>
+      <h4>Τα δικαιώματά σας</h4>
+      <ul>
+        <li>Πρόσβασης στα δεδομένα σας</li>
+        <li>Διόρθωσης ή Διαγραφής των δεδομένων σας</li>
+        <li>Φορητότητας των δεδομένων σας</li>
+        <li>Περιορισμού της επεξεργασίας</li>
+        <li>Εναντίωσης στην επεξεργασία</li>
+        <li>Άρσης της συγκατάθεσής σας</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="legal-modal" id="modal-data">
+  <div class="legal-box">
+    <div class="legal-header">
+      <h3>Προσωπικά Δεδομένα</h3>
+      <button class="legal-close" onclick="closeModal('data')">✕</button>
+    </div>
+    <div class="legal-body">
+      <h4>Συλλογή Δεδομένων</h4>
+      <p>Το Aggelos Manos Mens Salon συλλέγει προσωπικά δεδομένα μόνο όταν τα παρέχετε εθελοντικά, για παράδειγμα κατά την κράτηση ραντεβού μέσω της πλατφόρμας Setmore.</p>
+      <h4>Χρήση Δεδομένων</h4>
+      <p>Τα δεδομένα σας χρησιμοποιούνται αποκλειστικά για την επικοινωνία σχετικά με τα ραντεβού σας και τη βελτίωση των υπηρεσιών μας. Δεν μοιραζόμαστε τα δεδομένα σας με τρίτους χωρίς τη συγκατάθεσή σας.</p>
+      <h4>Ασφάλεια</h4>
+      <p>Λαμβάνουμε κατάλληλα τεχνικά και οργανωτικά μέτρα για την προστασία των προσωπικών σας δεδομένων από μη εξουσιοδοτημένη πρόσβαση, αποκάλυψη ή καταστροφή.</p>
+      <h4>Επικοινωνία</h4>
+      <p>Για οποιοδήποτε ερώτημα σχετικά με τα προσωπικά σας δεδομένα, μπορείτε να επικοινωνήσετε μαζί μας στο 2422 029600 ή 6987 033949.</p>
+    </div>
+  </div>
+</div>
+
+<div class="legal-modal" id="modal-privacy">
+  <div class="legal-box">
+    <div class="legal-header">
+      <h3>Πολιτική Απορρήτου</h3>
+      <button class="legal-close" onclick="closeModal('privacy')">✕</button>
+    </div>
+    <div class="legal-body">
+      <h4>Γενικές Αρχές</h4>
+      <p>Το Aggelos Manos Mens Salon δεσμεύεται να προστατεύει το απόρρητό σας. Η παρούσα πολιτική περιγράφει τον τρόπο με τον οποίο συλλέγουμε, χρησιμοποιούμε και προστατεύουμε τις πληροφορίες σας.</p>
+      <h4>Πληροφορίες που Συλλέγουμε</h4>
+      <p>Συλλέγουμε πληροφορίες που μας παρέχετε άμεσα, όπως όνομα και αριθμό τηλεφώνου κατά την κράτηση ραντεβού. Επίσης συλλέγουμε αυτόματα ορισμένες τεχνικές πληροφορίες κατά την επίσκεψή σας στον ιστότοπο.</p>
+      <h4>Διατήρηση Δεδομένων</h4>
+      <p>Διατηρούμε τα προσωπικά σας δεδομένα μόνο για όσο διάστημα είναι απαραίτητο για τους σκοπούς που περιγράφονται στην παρούσα πολιτική, εκτός εάν απαιτείται μεγαλύτερη περίοδος διατήρησης από τον νόμο.</p>
+      <h4>Τα Δικαιώματά σας</h4>
+      <p>Σύμφωνα με τον ΓΚΠΔ (GDPR), έχετε δικαίωμα πρόσβασης, διόρθωσης, διαγραφής και φορητότητας των δεδομένων σας. Για άσκηση των δικαιωμάτων σας επικοινωνήστε μαζί μας.</p>
+      <h4>Επικοινωνία</h4>
+      <p>Αθηνών 33, Αλμυρός 37100 &nbsp;·&nbsp; 2422 029600 &nbsp;·&nbsp; 6987 033949</p>
+    </div>
+  </div>
+</div>
+
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
   <button class="lb-close" onclick="closeLB()">✕</button>
@@ -600,6 +762,16 @@ ul{list-style:none}
 </div>
 
 <script>
+function submitForm(e){
+  e.preventDefault();
+  document.getElementById('form-success').style.display='block';
+  e.target.querySelector('button[type=submit]').style.display='none';
+  setTimeout(()=>{closeModal('seminar-form');document.getElementById('form-success').style.display='none';e.target.reset();e.target.querySelector('button[type=submit]').style.display='block'},3000);
+}
+function openModal(id){document.getElementById('modal-'+id).classList.add('open');document.body.style.overflow='hidden'}
+function closeModal(id){document.getElementById('modal-'+id).classList.remove('open');document.body.style.overflow=''}
+document.querySelectorAll('.legal-modal').forEach(m=>{m.addEventListener('click',function(e){if(e.target===this){const id=this.id.replace('modal-','');closeModal(id)}})});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.querySelectorAll('.legal-modal.open').forEach(m=>{const id=m.id.replace('modal-','');closeModal(id)})}});
 function toggleCall(e){e.stopPropagation();document.getElementById('callMenu').classList.toggle('open')}
 document.addEventListener('click',()=>{const m=document.getElementById('callMenu');if(m)m.classList.remove('open')});
 const lbImgs=['images/gallery-1.jpg','images/gallery-2.jpg','images/gallery-3.jpg','images/gallery-4.jpg'];
