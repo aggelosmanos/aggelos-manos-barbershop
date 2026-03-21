@@ -257,7 +257,7 @@ ul{list-style:none}
 .seminar-page{position:fixed;inset:0;background:var(--bg);z-index:9000;overflow-y:auto;opacity:0;pointer-events:none;transition:opacity .35s ease}
 .seminar-page.open{opacity:1;pointer-events:all}
 .sp-nav{position:sticky;top:0;background:rgba(10,10,10,.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08);padding:16px 5%;display:flex;align-items:center;justify-content:space-between;z-index:10}
-.sp-logo{display:flex;align-items:center;gap:11px}
+.sp-logo{display:flex;align-items:center;gap:11px;text-decoration:none;cursor:pointer}
 .sp-close{display:flex;align-items:center;gap:8px;background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);font-family:var(--f-body);font-size:.72rem;font-weight:400;letter-spacing:.12em;padding:8px 16px;border-radius:2px;cursor:pointer;transition:all .2s}
 .sp-close:hover{color:#fff;border-color:rgba(255,255,255,.4)}
 .sp-hero{position:relative;height:55vh;min-height:400px;display:flex;align-items:flex-end;overflow:hidden}
@@ -659,13 +659,13 @@ ul{list-style:none}
 <!-- SEMINAR MODAL -->
 <div class="seminar-page" id="modal-seminar">
   <div class="sp-nav">
-    <div class="sp-logo">
+    <a href="#hero" class="sp-logo" onclick="closeModal('seminar');closeModal('seminar-form')">
       <img src="images/logo.png" alt="AM Logo" style="width:36px;height:36px;object-fit:contain;border-radius:50%"/>
       <div>
         <span class="logo-n">AGGELOS MANOS</span>
         <span class="logo-s">Mens Salon</span>
       </div>
-    </div>
+    </a>
     <button class="sp-close" onclick="closeModal('seminar')">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       Πίσω στο site
@@ -718,13 +718,13 @@ ul{list-style:none}
 <!-- SEMINAR FORM FULLSCREEN -->
 <div class="seminar-page" id="modal-seminar-form">
   <div class="sp-nav">
-    <div class="sp-logo">
+    <a href="#hero" class="sp-logo" onclick="closeModal('seminar');closeModal('seminar-form')">
       <img src="images/logo.png" alt="AM Logo" style="width:36px;height:36px;object-fit:contain;border-radius:50%"/>
       <div>
         <span class="logo-n">AGGELOS MANOS</span>
         <span class="logo-s">Mens Salon</span>
       </div>
-    </div>
+    </a>
     <button class="sp-close" onclick="closeModal('seminar-form');openModal('seminar')">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       Πίσω στα Σεμινάρια
@@ -752,7 +752,7 @@ ul{list-style:none}
         </div>
       </div>
       <div class="sf-right">
-        <form class="seminar-form" onsubmit="submitForm(event)">
+        <form class="seminar-form" onsubmit="submitForm(event)" action="https://formspree.io/f/xdawvkrq" method="POST">
           <div class="form-group">
             <label>Όνομα</label>
             <input type="text" placeholder="Το όνομά σας" required/>
@@ -864,9 +864,28 @@ ul{list-style:none}
 <script>
 function submitForm(e){
   e.preventDefault();
-  document.getElementById('form-success').style.display='block';
-  e.target.querySelector('button[type=submit]').style.display='none';
-  setTimeout(()=>{closeModal('seminar-form');document.getElementById('form-success').style.display='none';e.target.reset();e.target.querySelector('button[type=submit]').style.display='block'},3000);
+  const form = e.target;
+  const btn = form.querySelector('button[type=submit]');
+  const success = document.getElementById('form-success');
+  btn.textContent = 'Αποστολή...';
+  btn.disabled = true;
+  fetch('https://formspree.io/f/xdawvkrq', {
+    method: 'POST',
+    body: new FormData(form),
+    headers: {'Accept': 'application/json'}
+  }).then(r => {
+    if(r.ok){
+      success.style.display = 'block';
+      btn.style.display = 'none';
+      form.reset();
+    } else {
+      btn.textContent = 'Σφάλμα — Δοκιμάστε ξανά';
+      btn.disabled = false;
+    }
+  }).catch(() => {
+    btn.textContent = 'Σφάλμα — Δοκιμάστε ξανά';
+    btn.disabled = false;
+  });
 }
 function openModal(id){document.getElementById('modal-'+id).classList.add('open');document.body.style.overflow='hidden'}
 function closeModal(id){document.getElementById('modal-'+id).classList.remove('open');document.body.style.overflow=''}
