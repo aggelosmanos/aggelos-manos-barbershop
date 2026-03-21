@@ -1127,12 +1127,14 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLB();if
 window.addEventListener('scroll',()=>nav.classList.toggle('s',scrollY>60),{passive:true});
 const burger=document.getElementById('burger');
 // Deep links — άνοιγμα σελίδας από URL hash
-window.addEventListener('load', () => {
+function checkDeepLink(){
   const hash = window.location.hash;
-  if(hash === '#seminars') openModal('seminar');
-  if(hash === '#booking-seminar') openModal('seminar-form');
-  if(hash === '#gallery-full') openGallery();
-});
+  if(hash === '#seminars') setTimeout(()=>openModal('seminar'), 400);
+  if(hash === '#booking-seminar') setTimeout(()=>openModal('seminar-form'), 400);
+  if(hash === '#gallery-full') setTimeout(()=>openGallery(), 400);
+}
+document.addEventListener('DOMContentLoaded', checkDeepLink);
+window.addEventListener('load', checkDeepLink);
 
 const nl=document.getElementById('navLinks');
 burger.addEventListener('click',()=>{
