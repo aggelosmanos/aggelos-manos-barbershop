@@ -643,13 +643,13 @@ ul{list-style:none}
       <h2 class="h2">Gallery</h2>
     </div>
     <div class="gallery-grid">
-      <div class="g-item" onclick="openGallery(0)"><img src="images/gallery-1.jpg" alt="Haircut 1"/></div>
-      <div class="g-item" onclick="openGallery(1)"><img src="images/gallery-2.jpg" alt="Haircut 2"/></div>
-      <div class="g-item" onclick="openGallery(2)"><img src="images/gallery-3.jpg" alt="Haircut 3"/></div>
-      <div class="g-item" onclick="openGallery(3)"><img src="images/gallery-4.jpg" alt="Haircut 4"/></div>
+      <div class="g-item" onclick="openGallery()"><img src="images/gallery-1.jpg" alt="Haircut 1"/></div>
+      <div class="g-item" onclick="openGallery()"><img src="images/gallery-2.jpg" alt="Haircut 2"/></div>
+      <div class="g-item" onclick="openGallery()"><img src="images/gallery-3.jpg" alt="Haircut 3"/></div>
+      <div class="g-item" onclick="openGallery()"><img src="images/gallery-4.jpg" alt="Haircut 4"/></div>
     </div>
     <div style="text-align:center;margin-top:28px">
-      <button onclick="openGallery(0)" class="btn btn-o" style="cursor:pointer">Δες όλες τις φωτογραφίες →</button>
+      <button onclick="openGallery()" class="btn btn-o" style="cursor:pointer">Δες όλες τις φωτογραφίες →</button>
     </div>
   </div>
 </section>
@@ -1069,10 +1069,9 @@ document.querySelectorAll('.legal-modal').forEach(m=>{m.addEventListener('click'
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.querySelectorAll('.legal-modal.open').forEach(m=>{const id=m.id.replace('modal-','');closeModal(id)})}});
 function toggleCall(e){e.stopPropagation();document.getElementById('callMenu').classList.toggle('open')}
 document.addEventListener('click',()=>{const m=document.getElementById('callMenu');if(m)m.classList.remove('open')});
-function openGallery(idx){
+function openGallery(){
   document.getElementById('gallery-page').classList.add('open');
   document.body.style.overflow='hidden';
-  if(idx !== undefined) setTimeout(()=>openLB(idx), 300);
 }
 function closeGallery(){
   document.getElementById('gallery-page').classList.remove('open');
@@ -1080,8 +1079,8 @@ function closeGallery(){
 }
 const lbImgs=['images/gallery-1.jpg','images/gallery-2.jpg','images/gallery-3.jpg','images/gallery-4.jpg','images/gallery-5.jpg','images/gallery-6.jpg','images/gallery-7.jpg','images/gallery-8.jpg'];
 let lbIdx=0;
-function openLB(i){lbIdx=i;document.getElementById('lb-img').src=lbImgs[i];document.getElementById('lightbox').classList.add('open');document.body.style.overflow='hidden'}
-function closeLB(){document.getElementById('lightbox').classList.remove('open');document.body.style.overflow=''}
+function openLB(i){lbIdx=i;document.getElementById('lb-img').src=lbImgs[i];document.getElementById('lightbox').classList.add('open')}
+function closeLB(){document.getElementById('lightbox').classList.remove('open')}
 function changeLB(d){lbIdx=(lbIdx+d+lbImgs.length)%lbImgs.length;document.getElementById('lb-img').src=lbImgs[lbIdx]}
 document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===this)closeLB()});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLB();if(e.key==='ArrowLeft')changeLB(-1);if(e.key==='ArrowRight')changeLB(1)});
