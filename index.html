@@ -264,6 +264,7 @@ ul{list-style:none}
 .seminar-page{position:fixed;inset:0;background:var(--bg);z-index:9000;overflow-y:auto;opacity:0;pointer-events:none;transition:opacity .35s ease}
 .seminar-page.open{opacity:1;pointer-events:all}
 .sp-nav{position:sticky;top:0;background:rgba(10,10,10,.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08);padding:16px 5%;display:flex;align-items:center;justify-content:space-between;z-index:10}
+.sp-divider-section{width:100%;height:1px;background:rgba(255,255,255,.1);margin:40px 0}
 .sp-logo{display:flex;align-items:center;gap:11px;text-decoration:none;cursor:pointer}
 .sp-close{display:flex;align-items:center;gap:8px;background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);font-family:var(--f-body);font-size:.72rem;font-weight:400;letter-spacing:.12em;padding:8px 16px;border-radius:2px;cursor:pointer;transition:all .2s}
 .sp-close:hover{color:#fff;border-color:rgba(255,255,255,.4)}
@@ -327,7 +328,9 @@ ul{list-style:none}
 .seminar-form{display:flex;flex-direction:column;gap:18px}
 .form-group{display:flex;flex-direction:column;gap:6px}
 .form-group label{font-family:var(--f-body);font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4)}
-.form-group input,.form-group textarea{background:#0a0a0a;border:1px solid rgba(255,255,255,.12);border-radius:2px;padding:12px 16px;color:#fff;font-family:var(--f-body);font-size:.9rem;font-weight:300;outline:none;transition:border-color .2s;resize:none}
+.form-group input,.form-group textarea,.form-group select{background:#0a0a0a;border:1px solid rgba(255,255,255,.12);border-radius:2px;padding:12px 16px;color:#fff;font-family:var(--f-body);font-size:.9rem;font-weight:300;outline:none;transition:border-color .2s;resize:none;width:100%;-webkit-appearance:none;appearance:none}
+.form-group select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.4)' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;cursor:pointer}
+.form-group select option{background:#1a1a1a;color:#fff}
 .form-group input:focus,.form-group textarea:focus{border-color:rgba(255,255,255,.4)}
 .form-group input::placeholder,.form-group textarea::placeholder{color:rgba(255,255,255,.2)}
 /* ── LEGAL MODAL ── */
@@ -792,6 +795,37 @@ ul{list-style:none}
         </div>
         <p>Στη συνέχεια, θα προχωρήσουμε στην εφαρμογή αυτής της γνώσης με δύο κουρέματα σε πραγματικά μοντέλα. Κατά τη διάρκεια της πρακτικής, θα εξηγώ κάθε βήμα, από την αρχή μέχρι το τέλος, ενώ θα έχετε τη δυνατότητα να θέσετε ερωτήσεις και να προσαρμόσουμε το περιεχόμενο στις ανάγκες και τους στόχους σας.</p>
         <p>Η επιλογή των μοντέλων θα γίνει σε συνεργασία, με βάση το τι θέλετε να δείτε ως αποτέλεσμα, ώστε το σεμινάριο να είναι όσο το δυνατόν πιο στοχευμένο και ωφέλιμο.</p>
+
+        <div class="sp-divider-section"></div>
+
+        <h2 class="sp-h2" style="margin-top:8px">Workshop Κομμωτικής: Εστιάζοντας στην Πρακτική Εξάσκηση</h2>
+        <p>Το workshop αυτό είναι σχεδιασμένο για να προσφέρει μια ολοκληρωμένη εμπειρία πρακτικής εκπαίδευσης. Ξεκινάμε με τη θεωρία, καλύπτοντας:</p>
+        <div class="sp-points">
+          <div class="sp-point">
+            <div class="sp-point-icon"></div>
+            <p>Σωστή στάση σώματος για αποτελεσματική εργασία και αποφυγή τραυματισμών.</p>
+          </div>
+          <div class="sp-point">
+            <div class="sp-point-icon"></div>
+            <p>Θέση χεριών για ακρίβεια στις κινήσεις.</p>
+          </div>
+          <div class="sp-point">
+            <div class="sp-point-icon"></div>
+            <p>Σχήματα και τεχνικές που αποτελούν τα θεμέλια της κομμωτικής τέχνης.</p>
+          </div>
+        </div>
+        <p>Στη συνέχεια, θα προχωρήσουμε στην εφαρμογή με δύο κουρέματα, τα οποία μπορούν να πραγματοποιηθούν είτε σε αληθινά μοντέλα είτε σε ειδικές κούκλες εξάσκησης. Κατά τη διάρκεια του workshop:</p>
+        <div class="sp-points">
+          <div class="sp-point">
+            <div class="sp-point-icon"></div>
+            <p>Θα έχεις πλήρη πρόσβαση στη διαδικασία, με την καθοδήγησή μου σε κάθε βήμα.</p>
+          </div>
+          <div class="sp-point">
+            <div class="sp-point-icon"></div>
+            <p>Τα κουρέματα θα επιλεχθούν εκ των προτέρων από εσένα, με βάση τις προτιμήσεις σου, τις ανάγκες σου, ή τις τεχνικές που σε δυσκολεύουν και επιθυμείς να βελτιώσεις.</p>
+          </div>
+        </div>
+        <p>Αυτό το workshop είναι ιδανικό για όσους επιθυμούν να εξελίξουν την πρακτική τους και να αποκτήσουν μεγαλύτερη αυτοπεποίθηση στις δεξιότητές τους.</p>
       </div>
       <div class="sp-cta-box">
         <h3>Κλείστε τη θέση σας</h3>
@@ -846,6 +880,14 @@ ul{list-style:none}
       </div>
       <div class="sf-right">
         <form class="seminar-form" onsubmit="submitForm(event)" action="https://formspree.io/f/xdawvkrq" method="POST">
+          <div class="form-group">
+            <label>Επιλογή Σεμιναρίου</label>
+            <select name="seminar" required>
+              <option value="" disabled selected>Επιλέξτε σεμινάριο...</option>
+              <option value="Look & Learn">Look &amp; Learn — Θεωρητική &amp; Οπτική Κατάρτιση</option>
+              <option value="Workshop">Workshop Κομμωτικής — Πρακτική Εξάσκηση</option>
+            </select>
+          </div>
           <div class="form-group">
             <label>Όνομα</label>
             <input type="text" name="name" placeholder="Το όνομά σας" required/>
@@ -1071,6 +1113,7 @@ function openGallery(){
   document.body.style.overflow='hidden';
 }
 function closeGallery(){
+  closeLB();
   document.getElementById('gallery-page').classList.remove('open');
   document.body.style.overflow='';
 }
