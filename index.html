@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<script>if(history.scrollRestoration)history.scrollRestoration='manual';</script>
 <title>Aggelos Manos Mens Salon – Αλμυρός</title>
 <meta name="description" content="Aggelos Manos Mens Salon – Αθηνών 33, Αλμυρός 37100 · 2422 029600"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -218,7 +219,7 @@ ul{list-style:none}
 /* ── REVIEWS SLIDER ── */
 .reviews{background:var(--s1)}
 .rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.06);margin-top:56px}
-.rev-card{background:var(--s2);padding:36px 32px;position:relative;flex:0 0 100%;min-width:100%;box-sizing:border-box}
+.rev-card{background:var(--s2);padding:36px 32px;position:relative;flex:0 0 33.333%;min-width:33.333%;box-sizing:border-box;border-right:1px solid rgba(255,255,255,.06)}
 .rev-slider-wrap{overflow:hidden;margin-top:40px;width:100%;position:relative}
 .rev-slider{display:flex;flex-wrap:nowrap;transition:transform .5s cubic-bezier(.4,0,.2,1)}
 .rev-stars{display:flex;gap:3px;margin-bottom:18px}
@@ -444,7 +445,7 @@ ul{list-style:none}
   .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:repeat(2,160px)}
 
   /* REVIEWS */
-  .rev-card{padding:28px 22px}
+  .rev-card{flex:0 0 33.333%;min-width:33.333%;padding:28px 16px}
 
   /* CONTACT */
   .ct-grid{grid-template-columns:1fr;gap:32px}
@@ -474,7 +475,7 @@ ul{list-style:none}
   .hero-h1 .main{font-size:clamp(1.8rem,9vw,2.8rem)}
   .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:repeat(2,140px)}
   .rev-grid{grid-template-columns:1fr}
-  .rev-card{padding:24px 18px}
+  .rev-card{flex:0 0 33.333%;min-width:33.333%;padding:20px 12px;font-size:.8rem}
   .sp-hero{height:35vh}
   .sp-title{font-size:1.8rem}
   .sp-hero-content{padding:0 5% 36px}
@@ -884,7 +885,7 @@ ul{list-style:none}
         <div class="sf-info">
           <div class="sf-info-item">
             <span class="sf-info-label">Σεμινάριο</span>
-            <span class="sf-info-val">Look &amp; Learn — Κομμωτική</span>
+            <span class="sf-info-val">Look &amp; Learn — Workshop</span>
           </div>
           <div class="sf-info-item">
             <span class="sf-info-label">Επικοινωνία</span>
@@ -902,11 +903,9 @@ ul{list-style:none}
             <label>Επιλογή Σεμιναρίου</label>
             <select name="seminar" id="seminarSelect" onchange="updateTotal()" required>
               <option value="" disabled selected>Επιλέξτε σεμινάριο...</option>
-              <option value="Look & Learn — 100€" data-price="100">Look &amp; Learn — Θεωρητική &amp; Οπτική Κατάρτιση · 100€</option>
-              <option value="Workshop Κομμωτικής — 300€" data-price="300">Workshop Κομμωτικής — Πρακτική Εξάσκηση · 300€</option>
-              <optgroup label="──── Guest Barbers ────">
-                <option value="Επερχόμενος Guest — Σύντομα" data-price="">Επερχόμενος Guest · Σύντομα</option>
-              </optgroup>
+              <option value="Look & Learn — 100€" data-price="100">Look &amp; Learn · 100€</option>
+              <option value="Workshop — Πρακτική Εξάσκηση — 300€" data-price="300">Workshop — Πρακτική Εξάσκηση · 300€</option>
+              <option value="Look & Learn & Workshop — 370€" data-price="370">Look &amp; Learn &amp; Workshop · 370€</option>
             </select>
           </div>
           <div class="form-total" id="formTotal" style="display:none">
@@ -1181,9 +1180,10 @@ function updateTotal(){
     totalBox.style.display='none';
   }
 }
-// Scroll to top on refresh
-if(history.scrollRestoration) history.scrollRestoration = 'manual';
-window.scrollTo(0,0);
+// Force scroll to top
+history.scrollRestoration = 'manual';
+window.onbeforeunload = ()=>{ window.scrollTo(0,0); };
+window.addEventListener('load', ()=>{ setTimeout(()=>window.scrollTo(0,0), 10); });
 
 // Scroll to top on refresh
 if(history.scrollRestoration) history.scrollRestoration = 'manual';
@@ -1201,7 +1201,7 @@ window.scrollTo(0,0);
   const cards = slider.querySelectorAll('.rev-card');
   const total = cards.length;
   let cur = 0;
-  let perView = 1;
+  let perView = 3;
 
   // Build dots
   for(let i=0;i<total;i++){
@@ -1222,7 +1222,7 @@ window.scrollTo(0,0);
   }
 
   window.addEventListener('resize',()=>{
-    perView = 1;
+    perView = 3;
     goTo(0);
   });
 
