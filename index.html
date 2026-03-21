@@ -308,6 +308,9 @@ ul{list-style:none}
 .sf-pay-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:15px;background:#0047BA;color:#fff;font-family:var(--f-body);font-size:.82rem;font-weight:500;letter-spacing:.06em;border-radius:2px;transition:all .2s;text-decoration:none}
 .sf-pay-btn:hover{background:#0055d4;transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,71,186,.35)}
 .sf-pay-secure{font-family:var(--f-body);font-size:.65rem;color:rgba(255,255,255,.25);margin-top:10px;display:flex;align-items:center;justify-content:center;gap:5px;letter-spacing:.04em}
+.form-total{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:2px;margin-top:-8px}
+.form-total-label{font-family:var(--f-body);font-size:.65rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.form-total-price{font-family:var(--f-body);font-size:1.3rem;font-weight:600;color:#ffffff}
 /* ── SEMINAR FORM FULLSCREEN ── */
 .sf-body{min-height:calc(100vh - 68px);display:flex;align-items:center;background:var(--bg);padding:60px 0}
 .sf-wrap{max-width:1000px;margin:0 auto;padding:0 8%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
@@ -882,11 +885,15 @@ ul{list-style:none}
         <form class="seminar-form" onsubmit="submitForm(event)" action="https://formspree.io/f/xdawvkrq" method="POST">
           <div class="form-group">
             <label>Επιλογή Σεμιναρίου</label>
-            <select name="seminar" required>
+            <select name="seminar" id="seminarSelect" onchange="updateTotal()" required>
               <option value="" disabled selected>Επιλέξτε σεμινάριο...</option>
-              <option value="Look & Learn">Look &amp; Learn — Θεωρητική &amp; Οπτική Κατάρτιση</option>
-              <option value="Workshop">Workshop Κομμωτικής — Πρακτική Εξάσκηση</option>
+              <option value="Look & Learn — 100€" data-price="100">Look &amp; Learn — Θεωρητική &amp; Οπτική Κατάρτιση · 100€</option>
+              <option value="Workshop Κομμωτικής — 300€" data-price="300">Workshop Κομμωτικής — Πρακτική Εξάσκηση · 300€</option>
             </select>
+          </div>
+          <div class="form-total" id="formTotal" style="display:none">
+            <span class="form-total-label">Σύνολο</span>
+            <span class="form-total-price" id="formTotalPrice">0€</span>
           </div>
           <div class="form-group">
             <label>Όνομα</label>
@@ -1126,6 +1133,19 @@ document.getElementById('lightbox').addEventListener('click',function(e){if(e.ta
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLB();if(e.key==='ArrowLeft')changeLB(-1);if(e.key==='ArrowRight')changeLB(1)});
 window.addEventListener('scroll',()=>nav.classList.toggle('s',scrollY>60),{passive:true});
 const burger=document.getElementById('burger');
+function updateTotal(){
+  const sel = document.getElementById('seminarSelect');
+  const opt = sel.options[sel.selectedIndex];
+  const price = opt ? opt.getAttribute('data-price') : null;
+  const totalBox = document.getElementById('formTotal');
+  const totalPrice = document.getElementById('formTotalPrice');
+  if(price){
+    totalBox.style.display='flex';
+    totalPrice.textContent = price + '€';
+  } else {
+    totalBox.style.display='none';
+  }
+}
 // Deep links — άνοιγμα σελίδας από URL hash
 function checkDeepLink(){
   const hash = window.location.hash;
