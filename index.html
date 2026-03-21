@@ -855,19 +855,19 @@ ul{list-style:none}
         <form class="seminar-form" onsubmit="submitForm(event)" action="https://formspree.io/f/xdawvkrq" method="POST">
           <div class="form-group">
             <label>Όνομα</label>
-            <input type="text" placeholder="Το όνομά σας" required/>
+            <input type="text" name="name" placeholder="Το όνομά σας" required/>
           </div>
           <div class="form-group">
             <label>Email</label>
-            <input type="email" placeholder="email@example.com" required/>
+            <input type="email" name="email" placeholder="email@example.com" required/>
           </div>
           <div class="form-group">
             <label>Τηλέφωνο</label>
-            <input type="tel" placeholder="69XXXXXXXX" required/>
+            <input type="tel" name="phone" placeholder="69XXXXXXXX" required/>
           </div>
           <div class="form-group">
             <label>Μήνυμα</label>
-            <textarea placeholder="Πείτε μας λίγα λόγια για εσάς και τους στόχους σας..." rows="5"></textarea>
+            <textarea name="message" placeholder="Πείτε μας λίγα λόγια για εσάς και τους στόχους σας..." rows="5"></textarea>
           </div>
           <button type="submit" class="btn btn-g" style="font-size:.8rem;padding:16px;cursor:pointer;width:100%;margin-top:8px;justify-content:center">
             Αποστολή Αίτησης →
@@ -984,22 +984,25 @@ function submitForm(e){
   const form = e.target;
   const btn = form.querySelector('button[type=submit]');
   const success = document.getElementById('form-success');
-  const data = new FormData(form);
   btn.textContent = 'Αποστολή...';
   btn.disabled = true;
+  const data = Object.fromEntries(new FormData(form));
   fetch('https://formspree.io/f/xdawvkrq', {
     method: 'POST',
-    body: data,
-    headers: {'Accept': 'application/json'}
-  }).then(r => r.json()).then(data => {
-    if(data.ok){
+    body: JSON.stringify(data),
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+  }).then(r => r.json()).then(res => {
+    if(res.ok){
       success.style.display = 'block';
       btn.style.display = 'none';
       form.reset();
     } else {
       btn.textContent = 'Αποστολή Αίτησης →';
       btn.disabled = false;
-      alert('Σφάλμα: ' + (data.error || 'Δοκιμάστε ξανά'));
+      alert('Σφάλμα: ' + (res.error || 'Δοκιμάστε ξανά'));
     }
   }).catch(() => {
     btn.textContent = 'Αποστολή Αίτησης →';
