@@ -264,6 +264,21 @@ ul{list-style:none}
 .seminar-page{position:fixed;inset:0;background:var(--bg);z-index:9000;overflow-y:auto;opacity:0;pointer-events:none;transition:opacity .35s ease}
 .seminar-page.open{opacity:1;pointer-events:all}
 .sp-nav{position:sticky;top:0;background:rgba(10,10,10,.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08);padding:16px 5%;display:flex;align-items:center;justify-content:space-between;z-index:10}
+/* ── GUEST BARBERS ── */
+.guest-section{}
+.guest-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:8px}
+.guest-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:2px;overflow:hidden;transition:border-color .3s,transform .3s}
+.guest-card:hover{border-color:rgba(255,255,255,.3);transform:translateY(-3px)}
+.guest-photo{width:100%;aspect-ratio:3/4;overflow:hidden;background:var(--s3)}
+.guest-photo img{width:100%;height:100%;object-fit:cover;object-position:top;filter:grayscale(20%);transition:filter .4s,transform .5s}
+.guest-card:hover .guest-photo img{filter:grayscale(0%);transform:scale(1.04)}
+.guest-initials{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--f-title);font-size:2rem;font-weight:600;color:rgba(255,255,255,.15);letter-spacing:.1em;aspect-ratio:3/4}
+.guest-info{padding:18px 20px 22px}
+.guest-name{font-family:var(--f-body);font-size:1rem;font-weight:600;color:#fff;display:block;margin-bottom:4px}
+.guest-title{font-family:var(--f-body);font-size:.75rem;font-weight:300;color:rgba(255,255,255,.45);letter-spacing:.06em;display:block;margin-bottom:8px}
+.guest-date{display:inline-block;font-family:var(--f-body);font-size:.58rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);padding:4px 10px;border:1px solid rgba(255,255,255,.12);border-radius:2px}
+.guest-card.coming .guest-initials{font-size:1.2rem}
+@media(max-width:480px){.guest-grid{grid-template-columns:1fr}}
 .sp-divider-section{width:100%;height:1px;background:rgba(255,255,255,.1);margin:40px 0}
 .sp-logo{display:flex;align-items:center;gap:11px;text-decoration:none;cursor:pointer}
 .sp-close{display:flex;align-items:center;gap:8px;background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);font-family:var(--f-body);font-size:.72rem;font-weight:400;letter-spacing:.12em;padding:8px 16px;border-radius:2px;cursor:pointer;transition:all .2s}
@@ -829,6 +844,25 @@ ul{list-style:none}
           </div>
         </div>
         <p>Αυτό το workshop είναι ιδανικό για όσους επιθυμούν να εξελίξουν την πρακτική τους και να αποκτήσουν μεγαλύτερη αυτοπεποίθηση στις δεξιότητές τους.</p>
+
+        <div class="sp-divider-section"></div>
+
+        <div class="guest-section">
+          <span class="eyebrow" style="color:rgba(255,255,255,.35)">Προσκεκλημένοι</span>
+          <h2 class="sp-h2" style="margin-top:10px;margin-bottom:24px">Guest Barbers</h2>
+          <div class="guest-grid">
+            <div class="guest-card coming">
+              <div class="guest-photo">
+                <div class="guest-initials">Soon</div>
+              </div>
+              <div class="guest-info">
+                <span class="guest-name">Επερχόμενος Guest</span>
+                <span class="guest-title">Master Barber</span>
+                <span class="guest-date">Σύντομα</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="sp-cta-box">
         <h3>Κλείστε τη θέση σας</h3>
@@ -889,6 +923,9 @@ ul{list-style:none}
               <option value="" disabled selected>Επιλέξτε σεμινάριο...</option>
               <option value="Look & Learn — 100€" data-price="100">Look &amp; Learn — Θεωρητική &amp; Οπτική Κατάρτιση · 100€</option>
               <option value="Workshop Κομμωτικής — 300€" data-price="300">Workshop Κομμωτικής — Πρακτική Εξάσκηση · 300€</option>
+              <optgroup label="──── Guest Barbers ────">
+                <option value="Επερχόμενος Guest — Σύντομα" data-price="">Επερχόμενος Guest · Σύντομα</option>
+              </optgroup>
             </select>
           </div>
           <div class="form-total" id="formTotal" style="display:none">
