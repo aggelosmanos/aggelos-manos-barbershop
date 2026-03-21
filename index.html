@@ -218,7 +218,9 @@ ul{list-style:none}
 /* ── REVIEWS SLIDER ── */
 .reviews{background:var(--s1)}
 .rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.06);margin-top:56px}
-.rev-card{background:var(--s2);padding:36px 32px;position:relative}
+.rev-card{background:var(--s2);padding:36px 32px;position:relative;flex:0 0 100%;min-width:100%;box-sizing:border-box}
+.rev-slider-wrap{overflow:hidden;margin-top:40px;width:100%;position:relative}
+.rev-slider{display:flex;flex-wrap:nowrap;transition:transform .5s cubic-bezier(.4,0,.2,1)}
 .rev-stars{display:flex;gap:3px;margin-bottom:18px}
 .rev-stars span{color:#fff;font-size:1rem;line-height:1}
 .rev-text{font-family:var(--f-body);font-size:.95rem;font-weight:400;color:#ffffff;line-height:1.75;margin-bottom:22px}
@@ -442,7 +444,7 @@ ul{list-style:none}
   .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:repeat(2,160px)}
 
   /* REVIEWS */
-  .rev-card{flex:0 0 50%;min-width:50%;padding:28px 22px}
+  .rev-card{padding:28px 22px}
 
   /* CONTACT */
   .ct-grid{grid-template-columns:1fr;gap:32px}
@@ -1183,6 +1185,14 @@ function updateTotal(){
 if(history.scrollRestoration) history.scrollRestoration = 'manual';
 window.scrollTo(0,0);
 
+// Scroll to top on refresh
+if(history.scrollRestoration) history.scrollRestoration = 'manual';
+window.scrollTo(0, 0);
+
+// Scroll to top on refresh
+if(history.scrollRestoration) history.scrollRestoration = 'manual';
+window.scrollTo(0,0);
+
 // Reviews Slider
 (function(){
   const slider = document.getElementById('revSlider');
@@ -1191,7 +1201,7 @@ window.scrollTo(0,0);
   const cards = slider.querySelectorAll('.rev-card');
   const total = cards.length;
   let cur = 0;
-  let perView = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
+  let perView = 1;
 
   // Build dots
   for(let i=0;i<total;i++){
@@ -1212,7 +1222,7 @@ window.scrollTo(0,0);
   }
 
   window.addEventListener('resize',()=>{
-    perView = window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3;
+    perView = 1;
     goTo(0);
   });
 
