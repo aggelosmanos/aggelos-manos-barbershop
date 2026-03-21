@@ -246,8 +246,8 @@ ul{list-style:none}
 
 /* ── CALL DROPDOWN ── */
 .call-dropdown{position:relative;display:inline-block}
-.call-menu{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(-6px);background:#1a1a1a;border:1px solid rgba(255,255,255,.12);border-radius:4px;overflow:hidden;min-width:200px;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;z-index:100}
-.call-menu.open{opacity:1;pointer-events:all;transform:translateX(-50%) translateY(0)}
+.call-menu{position:absolute;top:calc(100% + 10px);right:0;left:auto;transform:translateY(-6px);background:#1a1a1a;border:1px solid rgba(255,255,255,.12);border-radius:4px;overflow:hidden;min-width:210px;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;z-index:600}
+.call-menu.open{opacity:1;pointer-events:all;transform:translateY(0)}
 .call-menu a{display:flex;align-items:center;gap:12px;padding:14px 18px;color:rgba(240,235,224,.8);font-family:var(--f-body);font-size:.88rem;font-weight:400;transition:background .2s}
 .call-menu a:hover{background:rgba(255,255,255,.06);color:#fff}
 .call-menu a:first-child{border-bottom:1px solid rgba(255,255,255,.06)}
@@ -312,6 +312,10 @@ ul{list-style:none}
 .sf-info-val{font-family:var(--f-body);font-size:.88rem;font-weight:400;color:rgba(255,255,255,.88)}
 .sf-right{background:var(--s2);border:1px solid rgba(255,255,255,.08);padding:36px;border-radius:2px}
 @media(max-width:768px){.sf-wrap{grid-template-columns:1fr;gap:40px}.sf-body{padding:40px 0}}
+.pay-box{margin-top:24px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:2px;padding:24px}
+.pay-box-title{font-family:var(--f-body);font-size:.62rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.pay-divider{display:flex;align-items:center;gap:12px;margin:16px 0;color:rgba(255,255,255,.2);font-family:var(--f-body);font-size:.72rem;letter-spacing:.08em}
+.pay-divider::before,.pay-divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08)}
 /* ── SEMINAR FORM ── */
 .seminar-form{display:flex;flex-direction:column;gap:18px}
 .form-group{display:flex;flex-direction:column;gap:6px}
@@ -653,7 +657,7 @@ ul{list-style:none}
           <svg width="20" height="20" viewBox="0 0 24 24" fill="#4285F4"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
         </div>
         <div class="rev-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-        <p class="rev-text">Εξαιρετική δουλειά! Ο Άγγελος ξέρει ακριβώς τι κάνει. Πηγαίνω εδώ εδώ και χρόνια και πάντα φεύγω ευχαριστημένος.</p>
+        <p class="rev-text">Εξαιρετική εμπειρία! Ο Άγγελος είναι πραγματικός επαγγελματίας, κατανοεί ακριβώς τι θέλεις και το αποτέλεσμα είναι πάντα τέλειο. Το συστήνω ανεπιφύλακτα!</p>
         <div class="rev-author">
           <div class="rev-avatar">ΔΚ</div>
           <div>
@@ -667,7 +671,7 @@ ul{list-style:none}
           <svg width="20" height="20" viewBox="0 0 24 24" fill="#4285F4"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
         </div>
         <div class="rev-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-        <p class="rev-text">Επαγγελματισμός σε κάθε λεπτομέρεια. Το καλύτερο κουρείο στον Αλμυρό. Το προτείνω ανεπιφύλακτα σε όλους!</p>
+        <p class="rev-text">Το καλύτερο κουρείο στον Αλμυρό χωρίς καμία αμφιβολία. Άψογη δουλειά, καθαρός χώρος και υπέροχη ατμόσφαιρα. Δεν πηγαίνω πουθενά αλλού!</p>
         <div class="rev-author">
           <div class="rev-avatar">ΓΠ</div>
           <div>
@@ -681,7 +685,7 @@ ul{list-style:none}
           <svg width="20" height="20" viewBox="0 0 24 24" fill="#4285F4"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
         </div>
         <div class="rev-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-        <p class="rev-text">Πολύ ωραία ατμόσφαιρα, καθαρό χώρο και άψογη εξυπηρέτηση. Το κούρεμα ήταν ακριβώς αυτό που ήθελα. Σίγουρα θα ξαναπάω!</p>
+        <p class="rev-text">Μπήκα για πρώτη φορά και έφυγα ενθουσιασμένος. Ο Άγγελος είναι σχολαστικός με κάθε λεπτομέρεια. Σπάνια βρίσκεις τέτοιο επίπεδο σε μικρή πόλη!</p>
         <div class="rev-author">
           <div class="rev-avatar">ΝΑ</div>
           <div>
@@ -692,7 +696,7 @@ ul{list-style:none}
       </div>
     </div>
     <div class="rev-cta">
-      <a href="https://g.page/r/review" target="_blank" class="btn btn-o">Άφησε κι εσύ κριτική →</a>
+      <a href="https://www.google.com/maps/search/Aggelos+Manos+Mens+Salon+Almyros" target="_blank" class="btn btn-o">Άφησε κι εσύ κριτική →</a>
     </div>
   </div>
 </section>
@@ -722,7 +726,7 @@ ul{list-style:none}
       </div>
     </div>
     <p class="ft-copy">© 2025 Aggelos Manos Mens Salon &nbsp;·&nbsp; Αθηνών 33, Αλμυρός 37100</p>
-    <p class="ft-copy">2422 029600 &nbsp;|&nbsp; 6987 033949</p>
+    <p class="ft-copy">2422 029600 &nbsp;·&nbsp; 6987 033949</p>
     <p class="ft-tag">We don't cut hair — we create character</p>
   </div>
 </footer>
@@ -829,27 +833,6 @@ ul{list-style:none}
             <span class="sf-info-val">Αθηνών 33, Αλμυρός</span>
           </div>
         </div>
-        <div class="sf-payment">
-          <p class="sf-payment-title">Τρόποι Πληρωμής</p>
-          <p class="sf-payment-sub">Κατάθεση σε έναν από τους παρακάτω λογαριασμούς</p>
-          <div class="sf-ibans">
-            <div class="sf-iban-item">
-              <span class="sf-iban-bank">Τράπεζα 1</span>
-              <span class="sf-iban-num">GR00 0000 0000 0000 0000 0000 000</span>
-              <span class="sf-iban-name">Άγγελος Μάνος</span>
-            </div>
-            <div class="sf-iban-item">
-              <span class="sf-iban-bank">Τράπεζα 2</span>
-              <span class="sf-iban-num">GR00 0000 0000 0000 0000 0000 000</span>
-              <span class="sf-iban-name">Άγγελος Μάνος</span>
-            </div>
-            <div class="sf-iban-item">
-              <span class="sf-iban-bank">Τράπεζα 3</span>
-              <span class="sf-iban-num">GR00 0000 0000 0000 0000 0000 000</span>
-              <span class="sf-iban-name">Άγγελος Μάνος</span>
-            </div>
-          </div>
-        </div>
       </div>
       <div class="sf-right">
         <form class="seminar-form" onsubmit="submitForm(event)" action="https://formspree.io/f/xdawvkrq" method="POST">
@@ -878,21 +861,43 @@ ul{list-style:none}
           </p>
         </form>
 
-        <div class="sf-divider">
-          <span>ή</span>
-        </div>
+        <!-- ΤΡΟΠΟΙ ΠΛΗΡΩΜΗΣ -->
+        <div class="pay-box">
+          <p class="pay-box-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            Τρόποι Πληρωμής
+          </p>
 
-        <div class="sf-pay-section">
-          <p class="sf-pay-label">Άμεση Πληρωμή</p>
-          <p class="sf-pay-desc">Κλείστε τη θέση σας άμεσα με ασφαλή online πληρωμή μέσω Viva Wallet.</p>
+          <!-- Viva Wallet -->
           <a href="#" class="sf-pay-btn" id="vivaPayBtn">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-            Πληρωμή με Viva Wallet
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            Online Πληρωμή — Viva Wallet
           </a>
           <p class="sf-pay-secure">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             Ασφαλής πληρωμή · Visa · Mastercard · IRIS
           </p>
+
+          <div class="pay-divider"><span>ή κατάθεση σε λογαριασμό</span></div>
+
+          <!-- IBANs -->
+          <div class="sf-ibans">
+            <div class="sf-iban-item">
+              <span class="sf-iban-bank">Τράπεζα 1</span>
+              <span class="sf-iban-num">GR00 0000 0000 0000 0000 0000 000</span>
+              <span class="sf-iban-name">Άγγελος Μάνος</span>
+            </div>
+            <div class="sf-iban-item">
+              <span class="sf-iban-bank">Τράπεζα 2</span>
+              <span class="sf-iban-num">GR00 0000 0000 0000 0000 0000 000</span>
+              <span class="sf-iban-name">Άγγελος Μάνος</span>
+            </div>
+            <div class="sf-iban-item">
+              <span class="sf-iban-bank">Τράπεζα 3</span>
+              <span class="sf-iban-num">GR00 0000 0000 0000 0000 0000 000</span>
+              <span class="sf-iban-name">Άγγελος Μάνος</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
