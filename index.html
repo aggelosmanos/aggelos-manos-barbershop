@@ -887,27 +887,6 @@ ul{list-style:none}
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
             Ασφαλής πληρωμή · Visa · Mastercard · IRIS
           </p>
-
-          <div class="pay-divider"><span>ή κατάθεση σε λογαριασμό</span></div>
-
-          <!-- IBANs -->
-          <div class="sf-ibans">
-            <div class="sf-iban-item">
-              <span class="sf-iban-bank">Τράπεζα 1</span>
-              <span class="sf-iban-num">GR00 0000 0000 0000 0000 0000 000</span>
-              <span class="sf-iban-name">Άγγελος Μάνος</span>
-            </div>
-            <div class="sf-iban-item">
-              <span class="sf-iban-bank">Τράπεζα 2</span>
-              <span class="sf-iban-num">GR00 0000 0000 0000 0000 0000 000</span>
-              <span class="sf-iban-name">Άγγελος Μάνος</span>
-            </div>
-            <div class="sf-iban-item">
-              <span class="sf-iban-bank">Τράπεζα 3</span>
-              <span class="sf-iban-num">GR00 0000 0000 0000 0000 0000 000</span>
-              <span class="sf-iban-name">Άγγελος Μάνος</span>
-            </div>
-          </div>
         </div>
       </div>
     </div>
@@ -1035,7 +1014,13 @@ function submitForm(e){
   const success = document.getElementById('form-success');
   btn.textContent = 'Αποστολή...';
   btn.disabled = true;
+
+  // Δημιουργία μοναδικού κωδικού κράτησης
+  const code = 'AM-' + Date.now().toString(36).toUpperCase().slice(-4) + '-' + Math.random().toString(36).toUpperCase().slice(2,5);
+
   const data = Object.fromEntries(new FormData(form));
+  data['Κωδικός Κράτησης'] = code;
+
   fetch('https://formspree.io/f/xdawvkrq', {
     method: 'POST',
     body: JSON.stringify(data),
@@ -1045,13 +1030,25 @@ function submitForm(e){
     }
   }).then(r => r.json()).then(res => {
     if(res.ok){
+      // Εμφάνιση κωδικού
+      success.innerHTML = `
+        <div style="margin-bottom:16px">
+          ✓ Η αίτησή σας στάλθηκε!
+        </div>
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.2);border-radius:2px;padding:16px;margin-bottom:12px">
+          <p style="font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px;font-family:var(--f-body)">Κωδικός Κράτησής σας</p>
+          <p style="font-family:'Courier New',monospace;font-size:1.3rem;font-weight:700;color:#fff;letter-spacing:.12em">${code}</p>
+        </div>
+        <p style="font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.7;font-family:var(--f-body)">
+          ⚠️ Προσθέστε τον κωδικό αυτό στις <strong style="color:#fff">σημειώσεις της πληρωμής</strong> στο Viva Wallet για να επιβεβαιωθεί η κράτησή σας.
+        </p>
+      `;
       success.style.display = 'block';
       btn.style.display = 'none';
       form.reset();
-      // Αυτόματη μετάβαση στην πληρωμή μετά από 1.5 δευτερόλεπτα
       setTimeout(() => {
         window.open('https://www.vivapayments.com/web/checkout?ref=PLACEHOLDER', '_blank');
-      }, 1500);
+      }, 2500);
     } else {
       btn.textContent = 'Αποστολή Αίτησης →';
       btn.disabled = false;
