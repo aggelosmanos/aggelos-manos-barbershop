@@ -284,6 +284,22 @@ ul{list-style:none}
 .sp-contact a{font-family:var(--f-body);font-size:.92rem;font-weight:400;color:rgba(255,255,255,.7);transition:color .2s}
 .sp-contact a:hover{color:#fff}
 @media(max-width:768px){.sp-wrap{grid-template-columns:1fr}.sp-cta-box{position:static}}
+.sf-payment{margin-top:24px}
+.sf-payment-title{font-family:var(--f-body);font-size:.62rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:4px}
+.sf-payment-sub{font-family:var(--f-body);font-size:.78rem;font-weight:300;color:rgba(255,255,255,.35);margin-bottom:14px}
+.sf-ibans{display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
+.sf-iban-item{display:flex;flex-direction:column;gap:3px;padding:14px 18px;background:var(--s2)}
+.sf-iban-bank{font-family:var(--f-body);font-size:.6rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35)}
+.sf-iban-num{font-family:'Courier New',monospace;font-size:.85rem;font-weight:600;color:#fff;letter-spacing:.04em}
+.sf-iban-name{font-family:var(--f-body);font-size:.72rem;font-weight:300;color:rgba(255,255,255,.4)}
+.sf-divider{display:flex;align-items:center;gap:16px;margin:24px 0;color:rgba(255,255,255,.2);font-family:var(--f-body);font-size:.75rem;letter-spacing:.1em}
+.sf-divider::before,.sf-divider::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.08)}
+.sf-pay-section{text-align:center}
+.sf-pay-label{font-family:var(--f-body);font-size:.62rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:8px}
+.sf-pay-desc{font-family:var(--f-body);font-size:.82rem;font-weight:300;color:rgba(255,255,255,.45);margin-bottom:16px;line-height:1.6}
+.sf-pay-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:15px;background:#0047BA;color:#fff;font-family:var(--f-body);font-size:.82rem;font-weight:500;letter-spacing:.06em;border-radius:2px;transition:all .2s;text-decoration:none}
+.sf-pay-btn:hover{background:#0055d4;transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,71,186,.35)}
+.sf-pay-secure{font-family:var(--f-body);font-size:.65rem;color:rgba(255,255,255,.25);margin-top:10px;display:flex;align-items:center;justify-content:center;gap:5px;letter-spacing:.04em}
 /* ── SEMINAR FORM FULLSCREEN ── */
 .sf-body{min-height:calc(100vh - 68px);display:flex;align-items:center;background:var(--bg);padding:60px 0}
 .sf-wrap{max-width:1000px;margin:0 auto;padding:0 8%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
@@ -331,32 +347,95 @@ ul{list-style:none}
   .srv-grid{grid-template-columns:1fr 1fr}
 }
 @media(max-width:768px){
-  .gallery-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(2,180px)}
-  .rev-grid{grid-template-columns:1fr}
-  .social-strip{flex-direction:column;align-items:center}
-  .social-card{max-width:100%;width:100%}
-  .sec{padding:80px 0}
+  /* NAV */
   .burger{display:flex}
-  .nav-links{position:fixed;inset:0 0 0 auto;width:270px;background:rgba(10,10,10,.98);backdrop-filter:blur(20px);flex-direction:column;align-items:flex-start;padding:90px 36px 36px;gap:24px;transform:translateX(100%);transition:transform .4s ease;border-left:1px solid rgba(255,255,255,.08)}
+  .nav-links{
+    position:fixed;
+    top:0;right:0;bottom:0;left:auto;
+    width:80%;
+    max-width:300px;
+    background:rgba(10,10,10,.99);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    flex-direction:column;
+    align-items:flex-start;
+    padding:80px 32px 40px;
+    gap:0;
+    transform:translateX(100%);
+    transition:transform .35s ease;
+    border-left:1px solid rgba(255,255,255,.08);
+    overflow-y:auto;
+    z-index:499;
+  }
   .nav-links.open{transform:translateX(0)}
-  .nav-links a{font-size:.9rem}
+  .nav-links a{
+    font-size:.85rem;
+    padding:14px 0;
+    width:100%;
+    border-bottom:1px solid rgba(255,255,255,.05);
+    letter-spacing:.12em;
+    color:rgba(255,255,255,.75);
+  }
+  .nav-links a:last-child{border-bottom:none}
   .nav-phone{display:none}
   .nav-socials{display:none}
-  .hero-cta{flex-direction:column;align-items:center}
-  .btn{width:100%;justify-content:center;max-width:260px}
+  .nav-right{display:none}
+
+  /* HERO */
+  .hero-cta{flex-direction:column;align-items:center;gap:12px}
+  .btn{width:100%;justify-content:center;max-width:280px}
+  .hero-h1 .main{font-size:clamp(2rem,10vw,3.5rem);letter-spacing:.05em}
+  .hero-h1 .sub{letter-spacing:.3em;font-size:.65rem}
+
+  /* SECTIONS */
+  .sec{padding:64px 0}
+  .wrap{width:92%}
   .about-img-wrap img{height:260px}
-  .stats{gap:20px}
+  .stats{gap:24px;flex-wrap:wrap}
+  .stat-n{font-size:1.6rem}
+
+  /* SERVICES */
   .srv-grid{grid-template-columns:1fr}
-  .price-row{flex-wrap:wrap;gap:6px}
-  .pdots{display:none}
-  .price-l{flex:1}
-  .hours-wrap{min-width:auto;width:100%;max-width:340px}
+  .srv{padding:36px 24px}
+
+  /* GALLERY */
+  .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:repeat(2,160px)}
+
+  /* REVIEWS */
+  .rev-grid{grid-template-columns:1fr}
+  .rev-card{padding:28px 22px}
+
+  /* CONTACT */
+  .ct-grid{grid-template-columns:1fr;gap:32px}
+  .ct-map iframe{height:280px}
+
+  /* FOOTER */
+  .footer-top{flex-direction:column;gap:32px;padding:36px 0 28px}
+  .footer-in{padding:24px 0}
   .footer-in .logo-n,.footer-in .logo-s{text-align:center}
-  .fab{bottom:52px;right:16px;width:46px;height:46px;font-size:1.1rem}
+
+  /* CALL DROPDOWN */
+  .call-menu{min-width:180px}
+
+  /* FAB */
+  .fab{bottom:52px;right:16px;width:46px;height:46px}
+
+  /* SEMINAR PAGE */
+  .sp-hero{height:40vh;min-height:280px}
+  .sp-title{font-size:2.2rem}
+  .sp-wrap{grid-template-columns:1fr;gap:32px;padding:0 5%}
+  .sp-cta-box{position:static}
+  .sf-wrap{grid-template-columns:1fr;gap:32px;padding:0 5%}
+  .sf-body{padding:32px 0}
+  .sf-title{font-size:2rem}
 }
 @media(max-width:480px){
-  .hero-h1 .main{letter-spacing:.05em}
-  .bk-btns{flex-direction:column;align-items:center}
+  .hero-h1 .main{font-size:clamp(1.8rem,9vw,2.8rem)}
+  .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:repeat(2,140px)}
+  .rev-card{padding:24px 18px}
+  .sp-hero{height:35vh}
+  .sp-title{font-size:1.8rem}
+  .sp-hero-content{padding:0 5% 36px}
 }
 </style>
 </head>
@@ -750,6 +829,27 @@ ul{list-style:none}
             <span class="sf-info-val">Αθηνών 33, Αλμυρός</span>
           </div>
         </div>
+        <div class="sf-payment">
+          <p class="sf-payment-title">Τρόποι Πληρωμής</p>
+          <p class="sf-payment-sub">Κατάθεση σε έναν από τους παρακάτω λογαριασμούς</p>
+          <div class="sf-ibans">
+            <div class="sf-iban-item">
+              <span class="sf-iban-bank">Τράπεζα 1</span>
+              <span class="sf-iban-num">GR00 0000 0000 0000 0000 0000 000</span>
+              <span class="sf-iban-name">Άγγελος Μάνος</span>
+            </div>
+            <div class="sf-iban-item">
+              <span class="sf-iban-bank">Τράπεζα 2</span>
+              <span class="sf-iban-num">GR00 0000 0000 0000 0000 0000 000</span>
+              <span class="sf-iban-name">Άγγελος Μάνος</span>
+            </div>
+            <div class="sf-iban-item">
+              <span class="sf-iban-bank">Τράπεζα 3</span>
+              <span class="sf-iban-num">GR00 0000 0000 0000 0000 0000 000</span>
+              <span class="sf-iban-name">Άγγελος Μάνος</span>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="sf-right">
         <form class="seminar-form" onsubmit="submitForm(event)" action="https://formspree.io/f/xdawvkrq" method="POST">
@@ -776,6 +876,23 @@ ul{list-style:none}
             ✓ Η αίτησή σας στάλθηκε!<br>Θα επικοινωνήσουμε μαζί σας σύντομα.
           </p>
         </form>
+
+        <div class="sf-divider">
+          <span>ή</span>
+        </div>
+
+        <div class="sf-pay-section">
+          <p class="sf-pay-label">Άμεση Πληρωμή</p>
+          <p class="sf-pay-desc">Κλείστε τη θέση σας άμεσα με ασφαλή online πληρωμή μέσω Viva Wallet.</p>
+          <a href="#" class="sf-pay-btn" id="vivaPayBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            Πληρωμή με Viva Wallet
+          </a>
+          <p class="sf-pay-secure">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            Ασφαλής πληρωμή · Visa · Mastercard · IRIS
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -903,8 +1020,22 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLB();if
 window.addEventListener('scroll',()=>nav.classList.toggle('s',scrollY>60),{passive:true});
 const burger=document.getElementById('burger');
 const nl=document.getElementById('navLinks');
-burger.addEventListener('click',()=>{nl.classList.toggle('open');burger.classList.toggle('a')});
-nl.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nl.classList.remove('open');burger.classList.remove('a')}));
+burger.addEventListener('click',()=>{
+  nl.classList.toggle('open');
+  burger.classList.toggle('a');
+  document.body.style.overflow = nl.classList.contains('open') ? 'hidden' : '';
+  // overlay
+  let ov = document.getElementById('nav-overlay');
+  if(!ov){ov=document.createElement('div');ov.id='nav-overlay';ov.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:498;display:none';ov.onclick=()=>{nl.classList.remove('open');burger.classList.remove('a');document.body.style.overflow='';ov.style.display='none'};document.body.appendChild(ov)}
+  ov.style.display = nl.classList.contains('open') ? 'block' : 'none';
+});
+nl.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  nl.classList.remove('open');
+  burger.classList.remove('a');
+  document.body.style.overflow='';
+  const ov=document.getElementById('nav-overlay');
+  if(ov)ov.style.display='none';
+}));
 document.addEventListener('click',e=>{if(!nav.contains(e.target)){nl.classList.remove('open');burger.classList.remove('a')}});
 const bs=document.createElement('style');
 bs.textContent='.burger.a span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}.burger.a span:nth-child(2){opacity:0}.burger.a span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}';
