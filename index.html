@@ -193,6 +193,13 @@ ul{list-style:none}
 /* ── GALLERY / TIKTOK ── */
 .gallery{background:var(--bg)}
 .gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(2,320px);gap:3px;margin-top:56px}
+/* ── GALLERY FULLSCREEN PAGE ── */
+.gp-body{padding:48px 0 80px;background:var(--bg)}
+.gp-header{max-width:1200px;margin:0 auto;padding:0 5% 40px}
+.gp-masonry{max-width:1200px;margin:0 auto;padding:0 5%;columns:3;column-gap:6px}
+.gp-item{break-inside:avoid;margin-bottom:6px;overflow:hidden;cursor:zoom-in}
+.gp-item img{width:100%;display:block;filter:grayscale(15%) brightness(.88);transition:filter .4s ease,transform .5s ease}
+.gp-item:hover img{filter:grayscale(0%) brightness(1);transform:scale(1.03)}
 /* ── LIGHTBOX ── */
 .lightbox{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:8000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s ease}
 .lightbox.open{opacity:1;pointer-events:all}
@@ -636,10 +643,13 @@ ul{list-style:none}
       <h2 class="h2">Gallery</h2>
     </div>
     <div class="gallery-grid">
-      <div class="g-item" onclick="openLB(0)"><img src="images/gallery-1.jpg" alt="Haircut 1"/></div>
-      <div class="g-item" onclick="openLB(1)"><img src="images/gallery-2.jpg" alt="Haircut 2"/></div>
-      <div class="g-item" onclick="openLB(2)"><img src="images/gallery-3.jpg" alt="Haircut 3"/></div>
-      <div class="g-item" onclick="openLB(3)"><img src="images/gallery-4.jpg" alt="Haircut 4"/></div>
+      <div class="g-item" onclick="openGallery(0)"><img src="images/gallery-1.jpg" alt="Haircut 1"/></div>
+      <div class="g-item" onclick="openGallery(1)"><img src="images/gallery-2.jpg" alt="Haircut 2"/></div>
+      <div class="g-item" onclick="openGallery(2)"><img src="images/gallery-3.jpg" alt="Haircut 3"/></div>
+      <div class="g-item" onclick="openGallery(3)"><img src="images/gallery-4.jpg" alt="Haircut 4"/></div>
+    </div>
+    <div style="text-align:center;margin-top:28px">
+      <button onclick="openGallery(0)" class="btn btn-o" style="cursor:pointer">Δες όλες τις φωτογραφίες →</button>
     </div>
   </div>
 </section>
@@ -976,6 +986,39 @@ ul{list-style:none}
   </div>
 </div>
 
+<!-- GALLERY FULLSCREEN -->
+<div class="seminar-page" id="gallery-page">
+  <div class="sp-nav">
+    <a href="#gallery" class="sp-logo" onclick="closeGallery()">
+      <img src="images/logo.png" alt="AM Logo" style="width:36px;height:36px;object-fit:contain;border-radius:50%"/>
+      <div>
+        <span class="logo-n">AGGELOS MANOS</span>
+        <span class="logo-s">Mens Salon</span>
+      </div>
+    </a>
+    <button class="sp-close" onclick="closeGallery()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      Πίσω στο site
+    </button>
+  </div>
+  <div class="gp-body">
+    <div class="gp-header">
+      <span class="eyebrow" style="color:rgba(255,255,255,.4)">Οι δουλειές μας</span>
+      <h1 class="sf-title" style="margin:10px 0 0">Gallery</h1>
+    </div>
+    <div class="gp-masonry">
+      <div class="gp-item" onclick="openLB(0)"><img src="images/gallery-1.jpg" alt=""/></div>
+      <div class="gp-item" onclick="openLB(1)"><img src="images/gallery-2.jpg" alt=""/></div>
+      <div class="gp-item" onclick="openLB(2)"><img src="images/gallery-3.jpg" alt=""/></div>
+      <div class="gp-item" onclick="openLB(3)"><img src="images/gallery-4.jpg" alt=""/></div>
+      <div class="gp-item" onclick="openLB(4)"><img src="images/gallery-5.jpg" alt=""/></div>
+      <div class="gp-item" onclick="openLB(5)"><img src="images/gallery-6.jpg" alt=""/></div>
+      <div class="gp-item" onclick="openLB(6)"><img src="images/gallery-7.jpg" alt=""/></div>
+      <div class="gp-item" onclick="openLB(7)"><img src="images/gallery-8.jpg" alt=""/></div>
+    </div>
+  </div>
+</div>
+
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
   <button class="lb-close" onclick="closeLB()">✕</button>
@@ -1026,7 +1069,16 @@ document.querySelectorAll('.legal-modal').forEach(m=>{m.addEventListener('click'
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.querySelectorAll('.legal-modal.open').forEach(m=>{const id=m.id.replace('modal-','');closeModal(id)})}});
 function toggleCall(e){e.stopPropagation();document.getElementById('callMenu').classList.toggle('open')}
 document.addEventListener('click',()=>{const m=document.getElementById('callMenu');if(m)m.classList.remove('open')});
-const lbImgs=['images/gallery-1.jpg','images/gallery-2.jpg','images/gallery-3.jpg','images/gallery-4.jpg'];
+function openGallery(idx){
+  document.getElementById('gallery-page').classList.add('open');
+  document.body.style.overflow='hidden';
+  if(idx !== undefined) setTimeout(()=>openLB(idx), 300);
+}
+function closeGallery(){
+  document.getElementById('gallery-page').classList.remove('open');
+  document.body.style.overflow='';
+}
+const lbImgs=['images/gallery-1.jpg','images/gallery-2.jpg','images/gallery-3.jpg','images/gallery-4.jpg','images/gallery-5.jpg','images/gallery-6.jpg','images/gallery-7.jpg','images/gallery-8.jpg'];
 let lbIdx=0;
 function openLB(i){lbIdx=i;document.getElementById('lb-img').src=lbImgs[i];document.getElementById('lightbox').classList.add('open');document.body.style.overflow='hidden'}
 function closeLB(){document.getElementById('lightbox').classList.remove('open');document.body.style.overflow=''}
