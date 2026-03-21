@@ -270,9 +270,7 @@ ul{list-style:none}
   .seminar-page{-webkit-overflow-scrolling:touch;transform:translateZ(0)}
 }
 .sp-nav{position:sticky;top:0;background:rgba(10,10,10,.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08);padding:16px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;z-index:10}
-.sp-scroll-arrow{margin-top:24px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:none;border:1px solid rgba(255,255,255,.3);border-radius:50%;cursor:pointer;color:rgba(255,255,255,.7);transition:all .25s;animation:bounce-arr 2s ease infinite}
-.sp-scroll-arrow:hover{border-color:#fff;color:#fff}
-@keyframes bounce-arr{0%,100%{transform:translateY(0)}60%{transform:translateY(5px)}}
+
 /* ── SEMINAR NAV BOOK BUTTON ── */
 .sp-book-btn{width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:none;border:1px solid rgba(255,255,255,.25);border-radius:50%;cursor:pointer;color:rgba(255,255,255,.7);transition:all .25s;flex-shrink:0}
 .sp-book-btn:hover{border-color:#fff;color:#fff;transform:translateY(2px)}
@@ -797,11 +795,6 @@ ul{list-style:none}
       <span class="eyebrow" style="color:rgba(255,255,255,.5)">Εκπαίδευση &amp; Κατάρτιση</span>
       <h1 class="sp-title">Σεμινάρια<br>Κομμωτικής</h1>
       <p class="sp-tagline">Look &amp; Learn — Workshop</p>
-      <button onclick="document.getElementById('modal-seminar').scrollTo({top:document.querySelector('#modal-seminar .sp-cta-box').offsetTop - 80,behavior:'smooth'})" class="sp-scroll-arrow" title="Κλείστε Θέση">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
-      </button>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
-      </button>
     </div>
   </div>
   <div class="sp-body">
@@ -1112,9 +1105,14 @@ function submitForm(e){
       success.style.display = 'block';
       btn.style.display = 'none';
       form.reset();
-      setTimeout(() => {
-        window.open('https://www.vivapayments.com/web/checkout?ref=PLACEHOLDER', '_blank');
-      }, 2500);
+        setTimeout(() => {
+          const vivaBtn = document.getElementById('vivaPayBtn');
+          if(vivaBtn && vivaBtn.href && vivaBtn.href !== '#') {
+            window.open(vivaBtn.href, '_blank');
+          } else {
+            vivaBtn && vivaBtn.scrollIntoView({behavior:'smooth', block:'center'});
+          }
+        }, 2500);
     } else {
       btn.textContent = 'Αποστολή Αίτησης →';
       btn.disabled = false;
