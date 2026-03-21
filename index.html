@@ -1126,6 +1126,14 @@ document.getElementById('lightbox').addEventListener('click',function(e){if(e.ta
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLB();if(e.key==='ArrowLeft')changeLB(-1);if(e.key==='ArrowRight')changeLB(1)});
 window.addEventListener('scroll',()=>nav.classList.toggle('s',scrollY>60),{passive:true});
 const burger=document.getElementById('burger');
+// Deep links — άνοιγμα σελίδας από URL hash
+window.addEventListener('load', () => {
+  const hash = window.location.hash;
+  if(hash === '#seminars') openModal('seminar');
+  if(hash === '#booking-seminar') openModal('seminar-form');
+  if(hash === '#gallery-full') openGallery();
+});
+
 const nl=document.getElementById('navLinks');
 burger.addEventListener('click',()=>{
   nl.classList.toggle('open');
