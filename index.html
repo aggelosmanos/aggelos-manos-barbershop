@@ -2,6 +2,8 @@
 <html lang="el">
 <head>
 <meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<script>if(history.scrollRestoration)history.scrollRestoration='manual';</script>
 <link rel="icon" type="image/x-icon" href="images/favicon.ico"/>
 <link rel="icon" type="image/png" sizes="32x32" href="images/logo.png"/>
 <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png"/>
@@ -58,7 +60,7 @@ ul{list-style:none}
 /* ── HERO ── */
 .hero{position:relative;height:100vh;min-height:680px;display:flex;align-items:center;justify-content:center;overflow:hidden}
 .hero-bg{position:absolute;inset:0}
-.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:grayscale(100%) brightness(.55) contrast(1.1);transform:scale(1.04);transition:transform 9s ease}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center center;filter:grayscale(100%) brightness(.55) contrast(1.1);transform:scale(1.04);transition:transform 9s ease}
 .hero:hover .hero-bg img{transform:scale(1)}
 .hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,10,10,.2) 0%,rgba(10,10,10,.5) 55%,rgba(10,10,10,1) 100%)}
 .hero-inner{position:relative;z-index:2;text-align:center;padding:0 24px}
@@ -425,8 +427,8 @@ ul{list-style:none}
   .nav-right{display:none}
 
   /* HERO */
-  .hero-cta{flex-direction:column;align-items:center;gap:12px}
-  .btn{width:100%;justify-content:center;max-width:280px}
+  .hero-cta{flex-direction:row;align-items:center;gap:12px;flex-wrap:wrap}
+  .btn{width:auto;justify-content:center;max-width:none;padding:12px 20px;font-size:.68rem}
   .hero-h1 .main{font-size:clamp(2rem,10vw,3.5rem);letter-spacing:.05em}
   .hero-h1 .sub{letter-spacing:.3em;font-size:.65rem}
 
