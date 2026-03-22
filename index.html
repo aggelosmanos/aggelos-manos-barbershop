@@ -7,7 +7,6 @@
 <link rel="icon" type="image/x-icon" href="images/favicon.ico"/>
 <link rel="icon" type="image/png" sizes="32x32" href="images/logo.png"/>
 <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png"/>
-<script>if(history.scrollRestoration)history.scrollRestoration='manual';</script>
 <title>Aggelos Manos Mens Salon – Αλμυρός</title>
 <meta name="description" content="Aggelos Manos Mens Salon – Αθηνών 33, Αλμυρός 37100 · 2422 029600"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -1182,13 +1181,18 @@ function updateTotal(){
     totalBox.style.display='none';
   }
 }
-// Force scroll to top (μόνο αν δεν υπάρχει deep link)
+// Scroll to top on refresh — λειτουργεί και σε iOS/Android
 const _hasDeepLink = ['#seminars','#booking-seminar','#gallery-full'].includes(window.location.hash);
 if(!_hasDeepLink){
-  history.scrollRestoration = 'manual';
-  window.onbeforeunload = ()=>{ window.scrollTo(0,0); };
-  window.addEventListener('load', ()=>{ setTimeout(()=>window.scrollTo(0,0), 10); });
+  if(history.scrollRestoration) history.scrollRestoration = 'manual';
+  window.addEventListener('beforeunload', ()=>{ window.scrollTo(0,0); });
   window.scrollTo(0,0);
+  document.addEventListener('DOMContentLoaded', ()=>{ window.scrollTo(0,0); });
+  window.addEventListener('load', ()=>{
+    window.scrollTo(0,0);
+    setTimeout(()=>{ window.scrollTo({top:0,left:0,behavior:'instant'}); }, 50);
+    setTimeout(()=>{ window.scrollTo({top:0,left:0,behavior:'instant'}); }, 200);
+  });
 }
 
 // Reviews Slider

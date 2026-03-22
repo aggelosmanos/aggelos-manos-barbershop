@@ -7,7 +7,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="images/logo.png"/>
 <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png"/>
 <title>Σεμινάρια Κομμωτικής – Aggelos Manos Mens Salon</title>
-<meta name="description" content="Σεμινάρια & Workshops Κομμωτικής από τον Άγγελο Μάνο – Look & Learn, Πρακτική Εξάσκηση. Αλμυρός · 6987 033949"/>
+<meta name="description" content="Σεμινάρια & Workshops Κομμωτικής από τον Άγγελο Μάνο. Look & Learn, Πρακτική Εξάσκηση. Αλμυρός · 6987 033949"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&family=Cinzel:wght@400;600&display=swap" rel="stylesheet"/>
@@ -26,180 +26,116 @@ html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--txt);font-family:var(--f-body);line-height:1.7;overflow-x:hidden;padding-bottom:40px}
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
-
-/* ── NAVBAR ── */
-.sp-nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 5%;background:rgba(10,10,10,.96);border-bottom:1px solid rgba(255,255,255,.1);backdrop-filter:blur(12px)}
-.sp-logo{display:flex;align-items:center;gap:11px}
-.sp-logo img{width:36px;height:36px;object-fit:contain;border-radius:50%}
+ul{list-style:none}
+.sp-nav{position:sticky;top:0;background:rgba(10,10,10,.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08);padding:16px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;z-index:10}
+.sp-logo{display:flex;align-items:center;gap:11px;text-decoration:none}
 .logo-n{font-family:var(--f-title);font-size:.72rem;font-weight:600;letter-spacing:.22em;color:var(--txt);display:block}
 .logo-s{font-family:var(--f-body);font-size:.52rem;font-weight:300;letter-spacing:.38em;color:var(--gold);display:block;text-transform:uppercase}
-.sp-back{display:flex;align-items:center;gap:8px;font-family:var(--f-body);font-size:.68rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.15);padding:8px 16px;border-radius:2px;transition:all var(--tr)}
-.sp-back:hover{color:#fff;border-color:rgba(255,255,255,.4)}
-
-/* ── HERO ── */
-.sp-hero{position:relative;height:60vh;min-height:420px;display:flex;align-items:flex-end;padding-bottom:60px;margin-top:var(--nav-h)}
-.sp-hero-bg{position:absolute;inset:0;overflow:hidden}
-.sp-hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:grayscale(60%) brightness(.45)}
-.sp-hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,10,10,.1) 0%,rgba(10,10,10,.7) 70%,rgba(10,10,10,1) 100%)}
-.sp-hero-content{position:relative;z-index:2;padding:0 8%;max-width:1100px;margin:0 auto;width:100%}
+.sp-close{display:flex;align-items:center;gap:8px;background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);font-family:var(--f-body);font-size:.72rem;font-weight:400;letter-spacing:.12em;padding:8px 16px;border-radius:2px;cursor:pointer;transition:all .2s;text-decoration:none}
+.sp-close:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+.sp-hero{position:relative;height:55vh;min-height:400px;display:flex;align-items:flex-end;overflow:hidden}
+.sp-hero-bg{position:absolute;inset:0}
+.sp-hero-bg img{width:100%;height:100%;object-fit:cover;filter:grayscale(100%) brightness(.45)}
+.sp-hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,10,10,.2) 0%,rgba(10,10,10,.85) 100%)}
+.sp-hero-content{position:relative;z-index:2;padding:0 8% 56px}
 .eyebrow{font-family:var(--f-body);font-size:.6rem;font-weight:500;letter-spacing:.45em;text-transform:uppercase;color:rgba(255,255,255,.5);display:block;margin-bottom:14px}
-.sp-title{font-family:var(--f-title);font-size:clamp(2.8rem,6vw,5rem);font-weight:600;color:#fff;line-height:1.05;letter-spacing:.06em;margin:10px 0 16px}
-.sp-tagline{font-family:var(--f-display);font-size:clamp(.9rem,1.8vw,1.15rem);font-weight:300;color:rgba(255,255,255,.65);letter-spacing:.14em}
-
-/* ── TABS NAV ── */
-.tabs-nav{background:var(--s1);border-bottom:1px solid rgba(255,255,255,.08);position:sticky;top:var(--nav-h);z-index:400}
-.tabs-inner{max-width:1100px;margin:0 auto;padding:0 8%;display:flex;gap:0}
-.tab-btn{font-family:var(--f-body);font-size:.68rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.5);padding:18px 24px;border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;transition:all var(--tr);white-space:nowrap}
-.tab-btn.active,.tab-btn:hover{color:#fff;border-bottom-color:#fff}
-
-/* ── MAIN CONTENT ── */
-.seminars-body{max-width:1100px;margin:0 auto;padding:64px 8% 80px}
-
-/* ── GUEST SECTION ── */
-.guest-section{margin-bottom:56px}
-.sp-h2{font-family:var(--f-display);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:400;color:#fff;line-height:1.2;margin-bottom:20px}
-.guest-card{display:flex;align-items:center;gap:20px;background:var(--s2);border:1px solid rgba(255,255,255,.08);padding:24px;border-radius:2px}
-.guest-card.coming{opacity:.6}
-.guest-photo{width:64px;height:64px;border-radius:50%;background:var(--s3);border:1px solid rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.guest-initials{font-family:var(--f-body);font-size:.75rem;font-weight:500;letter-spacing:.1em;color:rgba(255,255,255,.4)}
-.guest-info{display:flex;flex-direction:column;gap:3px}
-.guest-name{font-family:var(--f-body);font-size:.92rem;font-weight:500;color:#fff}
-.guest-title{font-family:var(--f-body);font-size:.72rem;font-weight:300;color:rgba(255,255,255,.5);letter-spacing:.08em}
-.guest-date{font-family:var(--f-body);font-size:.65rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-top:4px}
-
-/* ── SEMINAR CONTENT ── */
-.seminar-section{margin-bottom:64px;padding-bottom:64px;border-bottom:1px solid rgba(255,255,255,.07)}
-.seminar-section:last-of-type{border-bottom:none}
-.seminar-section p{font-family:var(--f-body);font-size:.95rem;font-weight:300;color:rgba(255,255,255,.78);line-height:1.9;margin-bottom:18px}
-.sp-points{display:flex;flex-direction:column;gap:14px;margin:20px 0 24px;padding:22px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:2px}
+.sp-title{font-family:var(--f-title);font-size:clamp(2.8rem,6vw,5rem);font-weight:600;color:#fff;line-height:1.05;letter-spacing:.06em;margin:12px 0 16px}
+.sp-tagline{font-family:var(--f-body);font-size:.8rem;font-weight:300;letter-spacing:.35em;color:rgba(255,255,255,.4);text-transform:uppercase}
+.sp-body{background:var(--s1);padding:80px 0}
+.sp-wrap{max-width:1100px;margin:0 auto;padding:0 8%;display:grid;grid-template-columns:1fr 340px;gap:80px;align-items:start}
+.sp-h2{font-family:var(--f-body);font-size:1.1rem;font-weight:600;color:#fff;line-height:1.4;margin-bottom:28px;letter-spacing:.01em}
+.sp-content p{font-family:var(--f-body);font-size:.95rem;font-weight:400;color:rgba(255,255,255,.9);line-height:1.9;margin-bottom:20px}
+.sp-points{display:flex;flex-direction:column;gap:16px;margin:24px 0 28px;padding:24px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:2px}
 .sp-point{display:flex;gap:14px;align-items:flex-start}
-.sp-point-icon{width:6px;height:6px;background:#fff;border-radius:50%;flex-shrink:0;margin-top:10px}
-.sp-point p{font-family:var(--f-body);font-size:.92rem;font-weight:400;color:rgba(255,255,255,.85);line-height:1.75;margin:0}
-
-/* ── CTA BOX ── */
-.cta-box{background:var(--s2);border:1px solid rgba(255,255,255,.1);padding:40px;border-radius:2px;text-align:center;margin-bottom:64px}
-.cta-box h3{font-family:var(--f-title);font-size:1.1rem;font-weight:600;letter-spacing:.1em;color:#fff;margin-bottom:10px}
-.cta-box p{font-family:var(--f-body);font-size:.88rem;font-weight:300;color:rgba(255,255,255,.55);line-height:1.7;margin-bottom:28px}
-.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-body);font-size:.7rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;padding:14px 32px;border:1px solid transparent;cursor:pointer;transition:all var(--tr);white-space:nowrap;border-radius:2px;text-decoration:none}
+.sp-point-icon{width:8px;height:8px;background:#fff;border-radius:50%;flex-shrink:0;margin-top:8px}
+.sp-point p{font-family:var(--f-body);font-size:.95rem;font-weight:500;color:#ffffff;line-height:1.75;margin:0}
+.sp-cta-box{background:var(--s2);border:1px solid rgba(255,255,255,.08);padding:32px;border-radius:2px;position:sticky;top:90px}
+.sp-cta-box h3{font-family:var(--f-body);font-size:.95rem;font-weight:500;color:#fff;margin-bottom:10px}
+.sp-cta-box p{font-family:var(--f-body);font-size:.82rem;font-weight:300;color:rgba(240,235,224,.5);line-height:1.7;margin-bottom:0}
+.sp-contact{margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,.06);text-align:center}
+.sp-contact p{font-family:var(--f-body);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:8px}
+.sp-contact a{font-family:var(--f-body);font-size:.92rem;font-weight:400;color:rgba(255,255,255,.7);transition:color .2s}
+.sp-contact a:hover{color:#fff}
+.sp-divider-section{width:100%;height:1px;background:rgba(255,255,255,.1);margin:40px 0}
+.guest-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:8px}
+.guest-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:2px;overflow:hidden;transition:border-color .3s,transform .3s}
+.guest-card:hover{border-color:rgba(255,255,255,.3);transform:translateY(-3px)}
+.guest-photo{width:100%;aspect-ratio:3/4;overflow:hidden;background:var(--s3)}
+.guest-initials{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--f-title);font-size:2rem;font-weight:600;color:rgba(255,255,255,.15);letter-spacing:.1em;aspect-ratio:3/4}
+.guest-info{padding:18px 20px 22px}
+.guest-name{font-family:var(--f-body);font-size:1rem;font-weight:600;color:#fff;display:block;margin-bottom:4px}
+.guest-title{font-family:var(--f-body);font-size:.75rem;font-weight:300;color:rgba(255,255,255,.45);letter-spacing:.06em;display:block;margin-bottom:8px}
+.guest-date{display:inline-block;font-family:var(--f-body);font-size:.58rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);padding:4px 10px;border:1px solid rgba(255,255,255,.12);border-radius:2px}
+.guest-card.coming .guest-initials{font-size:1.2rem}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-body);font-size:.7rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;padding:13px 28px;border:1px solid transparent;cursor:pointer;transition:all var(--tr);white-space:nowrap;text-decoration:none}
 .btn-g{background:#ffffff;color:#0a0a0a;border-color:#ffffff}
-.btn-g:hover{background:var(--gold-l);border-color:var(--gold-l);transform:translateY(-2px);box-shadow:0 8px 28px rgba(255,255,255,.2)}
-.cta-phone{font-family:var(--f-body);font-size:.8rem;font-weight:300;color:rgba(255,255,255,.4);margin-top:16px;letter-spacing:.04em}
-.cta-phone a{color:rgba(255,255,255,.65);transition:color var(--tr)}
-.cta-phone a:hover{color:#fff}
-
-/* ── FORM SECTION ── */
-.form-section{background:var(--s1);border-radius:2px;border:1px solid rgba(255,255,255,.08);padding:48px}
-.form-section-title{font-family:var(--f-title);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:600;color:#fff;letter-spacing:.08em;margin-bottom:8px}
-.form-section-sub{font-family:var(--f-body);font-size:.88rem;font-weight:300;color:rgba(255,255,255,.5);line-height:1.7;margin-bottom:36px}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
-.sf-info{display:flex;flex-direction:column;gap:0;border:1px solid rgba(255,255,255,.08);border-radius:2px;overflow:hidden;margin-bottom:28px}
-.sf-info-item{display:flex;flex-direction:column;gap:4px;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.06)}
-.sf-info-item:last-child{border-bottom:none}
-.sf-info-label{font-family:var(--f-body);font-size:.58rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.3)}
-.sf-info-val{font-family:var(--f-body);font-size:.88rem;font-weight:400;color:rgba(255,255,255,.88)}
-.seminar-form{display:flex;flex-direction:column;gap:18px}
-.form-group{display:flex;flex-direction:column;gap:6px}
-.form-group label{font-family:var(--f-body);font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4)}
-.form-group input,.form-group textarea,.form-group select{background:#0a0a0a;border:1px solid rgba(255,255,255,.12);border-radius:2px;padding:12px 16px;color:#fff;font-family:var(--f-body);font-size:.9rem;font-weight:300;outline:none;transition:border-color .2s;resize:none;width:100%;-webkit-appearance:none;appearance:none}
-.form-group select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.4)' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;cursor:pointer}
-.form-group select option{background:#1a1a1a;color:#fff}
-.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:rgba(255,255,255,.4)}
-.form-group input::placeholder,.form-group textarea::placeholder{color:rgba(255,255,255,.2)}
-.form-total{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:2px;margin-top:-8px}
-.form-total-label{font-family:var(--f-body);font-size:.65rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5)}
-.form-total-price{font-family:var(--f-body);font-size:1.3rem;font-weight:600;color:#ffffff}
-.pay-box{margin-top:24px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:2px;padding:24px}
-.pay-box-title{font-family:var(--f-body);font-size:.62rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.sf-pay-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:15px;background:#0047BA;color:#fff;font-family:var(--f-body);font-size:.82rem;font-weight:500;letter-spacing:.06em;border-radius:2px;transition:all .2s;text-decoration:none}
-.sf-pay-btn:hover{background:#0055d4;transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,71,186,.35)}
-.sf-pay-secure{font-family:var(--f-body);font-size:.65rem;color:rgba(255,255,255,.25);margin-top:10px;display:flex;align-items:center;justify-content:center;gap:5px;letter-spacing:.04em}
-
-/* ── FOOTER ── */
-.footer{background:var(--s1);border-top:1px solid rgba(255,255,255,.08);padding:32px 5%;text-align:center;margin-top:80px}
-.footer p{font-family:var(--f-body);font-size:.72rem;font-weight:300;color:rgba(255,255,255,.3);letter-spacing:.06em}
-.footer a{color:rgba(255,255,255,.5);transition:color var(--tr)}
-.footer a:hover{color:#fff}
+.btn-g:hover{background:var(--gold-l);border-color:var(--gold-l);transform:translateY(-2px);box-shadow:0 8px 28px rgba(255,255,255,.25)}
 .powered{text-align:center;padding:9px 0;background:#f0f0f0;color:#444;position:fixed;bottom:0;left:0;width:100%;font-size:12px;font-family:var(--f-body);font-weight:400;letter-spacing:.04em;z-index:9999;box-shadow:0 -1px 12px rgba(0,0,0,.12)}
 .powered a{color:#333}
-
-/* ── RESPONSIVE ── */
-@media(max-width:768px){
-  .form-grid{grid-template-columns:1fr;gap:32px}
-  .form-section{padding:28px 20px}
-  .seminars-body{padding:40px 5% 80px}
-  .sp-hero-content{padding:0 5%}
-  .tabs-inner{padding:0 5%;overflow-x:auto}
-}
+.powered a:hover{text-decoration:underline}
+@media(max-width:1024px){.sp-wrap{grid-template-columns:1fr!important;gap:32px!important}.sp-cta-box{position:static!important}}
+@media(max-width:480px){.guest-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav class="sp-nav">
+<div class="sp-nav">
   <a href="/" class="sp-logo">
-    <img src="images/logo.png" alt="AM Logo"/>
+    <img src="images/logo.png" alt="AM Logo" style="width:36px;height:36px;object-fit:contain;border-radius:50%"/>
     <div>
       <span class="logo-n">AGGELOS MANOS</span>
       <span class="logo-s">Mens Salon</span>
     </div>
   </a>
-  <a href="/" class="sp-back">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  <a href="/" class="sp-close">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
     Πίσω στο site
   </a>
-</nav>
+</div>
 
-<!-- HERO -->
 <div class="sp-hero">
   <div class="sp-hero-bg">
     <img src="images/barber-1.jpg" alt="Seminar"/>
   </div>
+  <div class="sp-hero-overlay"></div>
   <div class="sp-hero-content">
-    <span class="eyebrow">Εκπαίδευση &amp; Κατάρτιση</span>
+    <span class="eyebrow" style="color:rgba(255,255,255,.5)">Εκπαίδευση &amp; Κατάρτιση</span>
     <h1 class="sp-title">Σεμινάρια<br>Κομμωτικής</h1>
     <p class="sp-tagline">Look &amp; Learn — Workshop</p>
   </div>
 </div>
 
-<!-- TABS -->
-<div class="tabs-nav">
-  <div class="tabs-inner">
-    <button class="tab-btn active" onclick="showTab('info')">Πληροφορίες</button>
-    <button class="tab-btn" onclick="showTab('form')">Εγγραφή</button>
-  </div>
-</div>
-
-<!-- MAIN -->
-<div class="seminars-body">
-
-  <!-- TAB: INFO -->
-  <div id="tab-info">
-
-    <!-- Guest Barbers -->
+<div class="sp-body">
+  <div class="sp-wrap" style="grid-template-columns:1fr;gap:32px;max-width:720px;margin:0 auto">
     <div class="guest-section">
       <span class="eyebrow" style="color:rgba(255,255,255,.35)">Προσκεκλημένοι</span>
-      <h2 class="sp-h2" style="margin-top:10px">Guest Barbers</h2>
-      <div class="guest-card coming">
-        <div class="guest-photo"><div class="guest-initials">Soon</div></div>
-        <div class="guest-info">
-          <span class="guest-name">Επερχόμενος Guest</span>
-          <span class="guest-title">Master Barber</span>
-          <span class="guest-date">Σύντομα</span>
+      <h2 class="sp-h2" style="margin-top:10px;margin-bottom:24px">Guest Barbers</h2>
+      <div class="guest-grid" style="grid-template-columns:1fr">
+        <div class="guest-card coming">
+          <div class="guest-photo">
+            <div class="guest-initials">Soon</div>
+          </div>
+          <div class="guest-info">
+            <span class="guest-name">Επερχόμενος Guest</span>
+            <span class="guest-title">Master Barber</span>
+            <span class="guest-date">Σύντομα</span>
+          </div>
         </div>
       </div>
     </div>
-
-    <!-- CTA -->
-    <div class="cta-box">
-      <h3>Κλείστε τη Θέση σας</h3>
+    <div class="sp-cta-box" style="position:static">
+      <h3>Κλείστε τη θέση σας</h3>
       <p>Οι θέσεις είναι περιορισμένες. Εκδηλώστε το ενδιαφέρον σας τώρα.</p>
-      <button class="btn btn-g" onclick="showTab('form')">Κλείστε Θέση →</button>
-      <p class="cta-phone">Ή επικοινωνήστε απευθείας: <a href="tel:+306987033949">6987 033949</a></p>
+      <a href="/booking.html" class="btn btn-g" style="width:100%;justify-content:center;padding:16px;font-size:.78rem;margin-top:8px">
+        Κλείστε Θέση →
+      </a>
+      <div class="sp-contact">
+        <p>Ή επικοινωνήστε απευθείας:</p>
+        <a href="tel:+306987033949">6987 033949</a>
+      </div>
     </div>
-
-    <!-- Look & Learn -->
-    <div class="seminar-section">
-      <h2 class="sp-h2">Look &amp; Learn: Θεωρητική και Οπτική Κατάρτιση</h2>
+    <div class="sp-content">
+      <h2 class="sp-h2">Look &amp; Learn: Θεωρητική και Οπτική Κατάρτιση στην Κομμωτική</h2>
       <p>Σε αυτό το εξειδικευμένο σεμινάριο, θα εστιάσουμε στο θεωρητικό υπόβαθρο της κομμωτικής, θέτοντας τις βάσεις για την επαγγελματική σας εξέλιξη. Θα αναλύσουμε τα βασικά θεμέλια της τέχνης της κομμωτικής, όπως:</p>
       <div class="sp-points">
         <div class="sp-point"><div class="sp-point-icon"></div><p>Σωστή στάση σώματος και θέση χεριών, απαραίτητα για την ακρίβεια και την αποφυγή καταπόνησης.</p></div>
@@ -207,11 +143,8 @@ a{color:inherit;text-decoration:none}
       </div>
       <p>Στη συνέχεια, θα προχωρήσουμε στην εφαρμογή αυτής της γνώσης με δύο κουρέματα σε πραγματικά μοντέλα. Κατά τη διάρκεια της πρακτικής, θα εξηγώ κάθε βήμα, από την αρχή μέχρι το τέλος, ενώ θα έχετε τη δυνατότητα να θέσετε ερωτήσεις και να προσαρμόσουμε το περιεχόμενο στις ανάγκες και τους στόχους σας.</p>
       <p>Η επιλογή των μοντέλων θα γίνει σε συνεργασία, με βάση το τι θέλετε να δείτε ως αποτέλεσμα, ώστε το σεμινάριο να είναι όσο το δυνατόν πιο στοχευμένο και ωφέλιμο.</p>
-    </div>
-
-    <!-- Workshop -->
-    <div class="seminar-section">
-      <h2 class="sp-h2">Workshop Κομμωτικής: Πρακτική Εξάσκηση</h2>
+      <div class="sp-divider-section"></div>
+      <h2 class="sp-h2" style="margin-top:8px">Workshop Κομμωτικής: Εστιάζοντας στην Πρακτική Εξάσκηση</h2>
       <p>Το workshop αυτό είναι σχεδιασμένο για να προσφέρει μια ολοκληρωμένη εμπειρία πρακτικής εκπαίδευσης. Ξεκινάμε με τη θεωρία, καλύπτοντας:</p>
       <div class="sp-points">
         <div class="sp-point"><div class="sp-point-icon"></div><p>Σωστή στάση σώματος για αποτελεσματική εργασία και αποφυγή τραυματισμών.</p></div>
@@ -225,136 +158,11 @@ a{color:inherit;text-decoration:none}
       </div>
       <p>Αυτό το workshop είναι ιδανικό για όσους επιθυμούν να εξελίξουν την πρακτική τους και να αποκτήσουν μεγαλύτερη αυτοπεποίθηση στις δεξιότητές τους.</p>
     </div>
-
-  </div><!-- end tab-info -->
-
-  <!-- TAB: FORM -->
-  <div id="tab-form" style="display:none">
-    <div class="form-section">
-      <h2 class="form-section-title">Κλείστε τη Θέση σας</h2>
-      <p class="form-section-sub">Συμπληρώστε τα στοιχεία σας και θα επικοινωνήσουμε μαζί σας για να επιβεβαιώσουμε τη θέση σας στο σεμινάριο.</p>
-      <div class="form-grid">
-        <div>
-          <div class="sf-info">
-            <div class="sf-info-item">
-              <span class="sf-info-label">Σεμινάριο</span>
-              <span class="sf-info-val">Look &amp; Learn — Workshop</span>
-            </div>
-            <div class="sf-info-item">
-              <span class="sf-info-label">Επικοινωνία</span>
-              <span class="sf-info-val"><a href="tel:+306987033949" style="color:rgba(255,255,255,.88)">6987 033949</a></span>
-            </div>
-            <div class="sf-info-item">
-              <span class="sf-info-label">Τοποθεσία</span>
-              <span class="sf-info-val">Αθηνών 33, Αλμυρός</span>
-            </div>
-          </div>
-          <p style="font-family:var(--f-body);font-size:.8rem;font-weight:300;color:rgba(255,255,255,.35);line-height:1.8">Για οποιαδήποτε ερώτηση σχετικά με τα σεμινάρια μπορείτε να επικοινωνήσετε απευθείας στο <a href="tel:+306987033949" style="color:rgba(255,255,255,.6)">6987 033949</a>.</p>
-        </div>
-        <div>
-          <form class="seminar-form" onsubmit="submitForm(event)" action="https://formspree.io/f/xdawvkrq" method="POST">
-            <div class="form-group">
-              <label>Επιλογή Σεμιναρίου</label>
-              <select name="seminar" id="seminarSelect" onchange="updateTotal()" required>
-                <option value="" disabled selected>Επιλέξτε σεμινάριο...</option>
-                <option value="Look & Learn — 100€" data-price="100">Look &amp; Learn · 100€</option>
-                <option value="Workshop — Πρακτική Εξάσκηση — 300€" data-price="300">Workshop — Πρακτική Εξάσκηση · 300€</option>
-                <option value="Look & Learn & Workshop — 370€" data-price="370">Look &amp; Learn &amp; Workshop · 370€</option>
-              </select>
-            </div>
-            <div class="form-total" id="formTotal" style="display:none">
-              <span class="form-total-label">Σύνολο</span>
-              <span class="form-total-price" id="formTotalPrice">0€</span>
-            </div>
-            <div class="form-group">
-              <label>Όνομα</label>
-              <input type="text" name="name" placeholder="Το όνομά σας" required/>
-            </div>
-            <div class="form-group">
-              <label>Email</label>
-              <input type="email" name="email" placeholder="email@example.com" required/>
-            </div>
-            <div class="form-group">
-              <label>Τηλέφωνο</label>
-              <input type="tel" name="phone" placeholder="69XXXXXXXX" required/>
-            </div>
-            <div class="form-group">
-              <label>Μήνυμα</label>
-              <textarea name="message" placeholder="Πείτε μας λίγα λόγια για εσάς και τους στόχους σας..." rows="4"></textarea>
-            </div>
-            <button type="submit" class="btn btn-g" style="font-size:.8rem;padding:16px;cursor:pointer;width:100%;justify-content:center">
-              Αποστολή Αίτησης →
-            </button>
-            <p id="form-success" style="display:none;text-align:center;margin-top:20px;color:#fff;font-size:.9rem;font-family:var(--f-body);padding:16px;border:1px solid rgba(255,255,255,.15);border-radius:2px;line-height:1.7">
-              ✓ Η αίτησή σας στάλθηκε!<br>
-              <span style="font-size:.78rem;color:rgba(255,255,255,.6)">Θα επικοινωνήσουμε μαζί σας σύντομα.</span>
-            </p>
-          </form>
-          <div class="pay-box">
-            <p class="pay-box-title">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-              Τρόποι Πληρωμής
-            </p>
-            <a href="#" class="sf-pay-btn">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-              Online Πληρωμή — Viva Wallet
-            </a>
-            <p class="sf-pay-secure">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              Ασφαλής πληρωμή · Visa · Mastercard · IRIS
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div><!-- end tab-form -->
-
-</div><!-- end seminars-body -->
-
-<footer class="footer">
-  <p>© 2025 Aggelos Manos Mens Salon · Αθηνών 33, Αλμυρός 37100 · <a href="tel:+306987033949">6987 033949</a></p>
-</footer>
-
-<div class="powered">
-  Powered by <a href="https://www.google.com/search?q=Service+%CE%A5%CF%80%CE%BF%CE%BB%CE%BF%CE%B3%CE%B9%CF%83%CF%84%CF%8E%CE%BD+Mantz" target="_blank">Service Mantz</a>
+  </div>
 </div>
 
-<script>
-function showTab(tab){
-  document.getElementById('tab-info').style.display = tab==='info' ? 'block' : 'none';
-  document.getElementById('tab-form').style.display = tab==='form' ? 'block' : 'none';
-  document.querySelectorAll('.tab-btn').forEach((b,i)=>{
-    b.classList.toggle('active', (i===0&&tab==='info')||(i===1&&tab==='form'));
-  });
-  if(tab==='form') window.scrollTo({top:0,behavior:'smooth'});
-}
-
-function updateTotal(){
-  const sel = document.getElementById('seminarSelect');
-  const opt = sel.options[sel.selectedIndex];
-  const price = opt ? opt.getAttribute('data-price') : null;
-  const totalBox = document.getElementById('formTotal');
-  const totalPrice = document.getElementById('formTotalPrice');
-  if(price){ totalBox.style.display='flex'; totalPrice.textContent=price+'€'; }
-  else { totalBox.style.display='none'; }
-}
-
-function submitForm(e){
-  e.preventDefault();
-  const form = e.target;
-  fetch(form.action,{method:'POST',body:new FormData(form),headers:{'Accept':'application/json'}})
-    .then(r=>{
-      if(r.ok){
-        document.getElementById('form-success').style.display='block';
-        form.reset();
-        document.getElementById('formTotal').style.display='none';
-      }
-    })
-    .catch(()=>{});
-}
-
-// Αν έρθει με ?tab=form στο URL, άνοιξε κατευθείαν την εγγραφή
-if(new URLSearchParams(window.location.search).get('tab')==='form') showTab('form');
-</script>
+<footer class="powered">
+  Powered by <a href="https://www.google.com/search?q=Service+%CE%A5%CF%80%CE%BF%CE%BB%CE%BF%CE%B3%CE%B9%CF%83%CF%84%CF%8E%CE%BD+Mantz" target="_blank">Service Mantz</a>
+</footer>
 </body>
 </html>

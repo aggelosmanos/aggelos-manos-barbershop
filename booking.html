@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<link rel="icon" type="image/x-icon" href="images/favicon.ico"/>
+<link rel="icon" type="image/png" sizes="32x32" href="images/logo.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png"/>
+<title>Εγγραφή Σεμιναρίου – Aggelos Manos Mens Salon</title>
+<meta name="description" content="Κλείστε τη θέση σας στα σεμινάρια κομμωτικής του Άγγελου Μάνου. Αλμυρός · 6987 033949"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&family=Cinzel:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --gold:#ffffff;--gold-l:#e0e0e0;--gold-d:#aaaaaa;
+  --bg:#0a0a0a;--s1:#111;--s2:#181818;--s3:#202020;
+  --txt:#f0ebe0;--txt2:rgba(240,235,224,.55);--txt3:rgba(240,235,224,.3);
+  --f-display:'Cormorant Garamond',serif;
+  --f-title:'Cinzel',serif;
+  --f-body:'Outfit',sans-serif;
+  --nav-h:72px;--tr:.3s ease;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font-family:var(--f-body);line-height:1.7;overflow-x:hidden;padding-bottom:40px}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+.sp-nav{position:sticky;top:0;background:rgba(10,10,10,.96);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08);padding:16px 5%;display:flex;align-items:center;justify-content:space-between;gap:16px;z-index:10}
+.sp-logo{display:flex;align-items:center;gap:11px;text-decoration:none}
+.logo-n{font-family:var(--f-title);font-size:.72rem;font-weight:600;letter-spacing:.22em;color:var(--txt);display:block}
+.logo-s{font-family:var(--f-body);font-size:.52rem;font-weight:300;letter-spacing:.38em;color:var(--gold);display:block;text-transform:uppercase}
+.sp-close{display:flex;align-items:center;gap:8px;background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);font-family:var(--f-body);font-size:.72rem;font-weight:400;letter-spacing:.12em;padding:8px 16px;border-radius:2px;cursor:pointer;transition:all .2s;text-decoration:none}
+.sp-close:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+.eyebrow{font-family:var(--f-body);font-size:.6rem;font-weight:500;letter-spacing:.45em;text-transform:uppercase;color:rgba(255,255,255,.4);display:block;margin-bottom:14px}
+.sf-body{min-height:calc(100vh - 68px);display:flex;align-items:center;background:var(--bg);padding:60px 0}
+.sf-wrap{max-width:1000px;margin:0 auto;padding:0 8%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.sf-title{font-family:var(--f-title);font-size:clamp(2.2rem,5vw,3.8rem);font-weight:600;color:#fff;line-height:1.05;letter-spacing:.06em;margin:14px 0 20px}
+.sf-desc{font-family:var(--f-body);font-size:.9rem;font-weight:300;color:rgba(255,255,255,.65);line-height:1.85;margin-bottom:36px}
+.sf-info{display:flex;flex-direction:column;gap:0;border:1px solid rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
+.sf-info-item{display:flex;flex-direction:column;gap:4px;padding:16px 20px;border-bottom:1px solid rgba(255,255,255,.06)}
+.sf-info-item:last-child{border-bottom:none}
+.sf-info-label{font-family:var(--f-body);font-size:.58rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.sf-info-val{font-family:var(--f-body);font-size:.88rem;font-weight:400;color:rgba(255,255,255,.88)}
+.sf-right{background:var(--s2);border:1px solid rgba(255,255,255,.08);padding:36px;border-radius:2px}
+.seminar-form{display:flex;flex-direction:column;gap:18px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group label{font-family:var(--f-body);font-size:.62rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.form-group input,.form-group textarea,.form-group select{background:#0a0a0a;border:1px solid rgba(255,255,255,.12);border-radius:2px;padding:12px 16px;color:#fff;font-family:var(--f-body);font-size:.9rem;font-weight:300;outline:none;transition:border-color .2s;resize:none;width:100%;-webkit-appearance:none;appearance:none}
+.form-group select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.4)' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;cursor:pointer}
+.form-group select option{background:#1a1a1a;color:#fff}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:rgba(255,255,255,.4)}
+.form-group input::placeholder,.form-group textarea::placeholder{color:rgba(255,255,255,.2)}
+.form-total{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);border-radius:2px;margin-top:-8px}
+.form-total-label{font-family:var(--f-body);font-size:.65rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.form-total-price{font-family:var(--f-body);font-size:1.3rem;font-weight:600;color:#ffffff}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-body);font-size:.7rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;padding:13px 28px;border:1px solid transparent;cursor:pointer;transition:all var(--tr);white-space:nowrap}
+.btn-g{background:#ffffff;color:#0a0a0a;border-color:#ffffff}
+.btn-g:hover{background:var(--gold-l);border-color:var(--gold-l);transform:translateY(-2px);box-shadow:0 8px 28px rgba(255,255,255,.25)}
+.pay-box{margin-top:24px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:2px;padding:24px}
+.pay-box-title{font-family:var(--f-body);font-size:.62rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.sf-pay-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:15px;background:#0047BA;color:#fff;font-family:var(--f-body);font-size:.82rem;font-weight:500;letter-spacing:.06em;border-radius:2px;transition:all .2s;text-decoration:none}
+.sf-pay-btn:hover{background:#0055d4;transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,71,186,.35)}
+.sf-pay-secure{font-family:var(--f-body);font-size:.65rem;color:rgba(255,255,255,.25);margin-top:10px;display:flex;align-items:center;justify-content:center;gap:5px;letter-spacing:.04em}
+.powered{text-align:center;padding:9px 0;background:#f0f0f0;color:#444;position:fixed;bottom:0;left:0;width:100%;font-size:12px;font-family:var(--f-body);font-weight:400;letter-spacing:.04em;z-index:9999;box-shadow:0 -1px 12px rgba(0,0,0,.12)}
+.powered a{color:#333}
+.powered a:hover{text-decoration:underline}
+@media(max-width:768px){.sf-wrap{grid-template-columns:1fr;gap:40px}.sf-body{padding:40px 0}}
+</style>
+</head>
+<body>
+
+<div class="sp-nav">
+  <a href="/seminars.html" class="sp-logo">
+    <img src="images/logo.png" alt="AM Logo" style="width:36px;height:36px;object-fit:contain;border-radius:50%"/>
+    <div>
+      <span class="logo-n">AGGELOS MANOS</span>
+      <span class="logo-s">Mens Salon</span>
+    </div>
+  </a>
+  <a href="/seminars.html" class="sp-close">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    Πίσω στα Σεμινάρια
+  </a>
+</div>
+
+<div class="sf-body">
+  <div class="sf-wrap">
+    <div class="sf-left">
+      <span class="eyebrow">Εγγραφή</span>
+      <h1 class="sf-title">Κλείστε<br>τη Θέση σας</h1>
+      <p class="sf-desc">Συμπληρώστε τα στοιχεία σας και θα επικοινωνήσουμε μαζί σας για να επιβεβαιώσουμε τη θέση σας στο σεμινάριο.</p>
+      <div class="sf-info">
+        <div class="sf-info-item">
+          <span class="sf-info-label">Σεμινάριο</span>
+          <span class="sf-info-val">Look &amp; Learn — Workshop</span>
+        </div>
+        <div class="sf-info-item">
+          <span class="sf-info-label">Επικοινωνία</span>
+          <span class="sf-info-val">6987 033949</span>
+        </div>
+        <div class="sf-info-item">
+          <span class="sf-info-label">Τοποθεσία</span>
+          <span class="sf-info-val">Αθηνών 33, Αλμυρός</span>
+        </div>
+      </div>
+    </div>
+    <div class="sf-right">
+      <form class="seminar-form" onsubmit="submitForm(event)" action="https://formspree.io/f/xdawvkrq" method="POST">
+        <div class="form-group">
+          <label>Επιλογή Σεμιναρίου</label>
+          <select name="seminar" id="seminarSelect" onchange="updateTotal()" required>
+            <option value="" disabled selected>Επιλέξτε σεμινάριο...</option>
+            <option value="Look & Learn — 100€" data-price="100">Look &amp; Learn · 100€</option>
+            <option value="Workshop — Πρακτική Εξάσκηση — 300€" data-price="300">Workshop — Πρακτική Εξάσκηση · 300€</option>
+            <option value="Look & Learn & Workshop — 370€" data-price="370">Look &amp; Learn &amp; Workshop · 370€</option>
+          </select>
+        </div>
+        <div class="form-total" id="formTotal" style="display:none">
+          <span class="form-total-label">Σύνολο</span>
+          <span class="form-total-price" id="formTotalPrice">0€</span>
+        </div>
+        <div class="form-group">
+          <label>Όνομα</label>
+          <input type="text" name="name" placeholder="Το όνομά σας" required/>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="email@example.com" required/>
+        </div>
+        <div class="form-group">
+          <label>Τηλέφωνο</label>
+          <input type="tel" name="phone" placeholder="69XXXXXXXX" required/>
+        </div>
+        <div class="form-group">
+          <label>Μήνυμα</label>
+          <textarea name="message" placeholder="Πείτε μας λίγα λόγια για εσάς και τους στόχους σας..." rows="5"></textarea>
+        </div>
+        <button type="submit" class="btn btn-g" style="font-size:.8rem;padding:16px;cursor:pointer;width:100%;margin-top:8px;justify-content:center">
+          Αποστολή Αίτησης →
+        </button>
+        <p id="form-success" style="display:none;text-align:center;margin-top:20px;color:#fff;font-size:.9rem;font-family:var(--f-body);padding:16px;border:1px solid rgba(255,255,255,.15);border-radius:2px;line-height:1.7"></p>
+      </form>
+      <div class="pay-box">
+        <p class="pay-box-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          Τρόποι Πληρωμής
+        </p>
+        <a href="#" class="sf-pay-btn" id="vivaPayBtn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          Online Πληρωμή — Viva Wallet
+        </a>
+        <p class="sf-pay-secure">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Ασφαλής πληρωμή · Visa · Mastercard · IRIS
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="powered">
+  Powered by <a href="https://www.google.com/search?q=Service+%CE%A5%CF%80%CE%BF%CE%BB%CE%BF%CE%B3%CE%B9%CF%83%CF%84%CF%8E%CE%BD+Mantz" target="_blank">Service Mantz</a>
+</footer>
+
+<script>
+function updateTotal(){
+  const sel = document.getElementById('seminarSelect');
+  const opt = sel.options[sel.selectedIndex];
+  const price = opt ? opt.getAttribute('data-price') : null;
+  const totalBox = document.getElementById('formTotal');
+  const totalPrice = document.getElementById('formTotalPrice');
+  if(price){ totalBox.style.display='flex'; totalPrice.textContent=price+'€'; }
+  else { totalBox.style.display='none'; }
+}
+
+function submitForm(e){
+  e.preventDefault();
+  const form = e.target;
+  const btn = form.querySelector('button[type=submit]');
+  const success = document.getElementById('form-success');
+  btn.textContent = 'Αποστολή...';
+  btn.disabled = true;
+
+  const code = 'AM-' + Date.now().toString(36).toUpperCase().slice(-4) + '-' + Math.random().toString(36).toUpperCase().slice(2,5);
+  const data = Object.fromEntries(new FormData(form));
+  data['Κωδικός Κράτησης'] = code;
+
+  fetch('https://formspree.io/f/xdawvkrq', {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' }
+  }).then(r => r.json()).then(res => {
+    if(res.ok){
+      success.innerHTML = `
+        <div style="margin-bottom:16px">✓ Η αίτησή σας στάλθηκε!</div>
+        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.2);border-radius:2px;padding:16px;margin-bottom:12px">
+          <p style="font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px;font-family:var(--f-body)">Κωδικός Κράτησής σας</p>
+          <p style="font-family:'Courier New',monospace;font-size:1.3rem;font-weight:700;color:#fff;letter-spacing:.12em">${code}</p>
+        </div>
+        <p style="font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.7;font-family:var(--f-body)">
+          ⚠️ Προσθέστε τον κωδικό αυτό στις <strong style="color:#fff">σημειώσεις της πληρωμής</strong> στο Viva Wallet για να επιβεβαιωθεί η κράτησή σας.
+        </p>
+      `;
+      success.style.display = 'block';
+      btn.style.display = 'none';
+      form.reset();
+      document.getElementById('formTotal').style.display = 'none';
+      setTimeout(() => {
+        const vivaBtn = document.getElementById('vivaPayBtn');
+        if(vivaBtn && vivaBtn.href && vivaBtn.href !== '#') { window.open(vivaBtn.href, '_blank'); }
+        else { vivaBtn && vivaBtn.scrollIntoView({behavior:'smooth', block:'center'}); }
+      }, 2500);
+    } else {
+      btn.textContent = 'Αποστολή Αίτησης →';
+      btn.disabled = false;
+      alert('Σφάλμα: ' + (res.error || 'Δοκιμάστε ξανά'));
+    }
+  }).catch(() => {
+    btn.textContent = 'Αποστολή Αίτησης →';
+    btn.disabled = false;
+    alert('Παρακαλώ ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.');
+  });
+}
+</script>
+</body>
+</html>
