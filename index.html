@@ -1182,18 +1182,14 @@ function updateTotal(){
     totalBox.style.display='none';
   }
 }
-// Force scroll to top
-history.scrollRestoration = 'manual';
-window.onbeforeunload = ()=>{ window.scrollTo(0,0); };
-window.addEventListener('load', ()=>{ setTimeout(()=>window.scrollTo(0,0), 10); });
-
-// Scroll to top on refresh
-if(history.scrollRestoration) history.scrollRestoration = 'manual';
-window.scrollTo(0, 0);
-
-// Scroll to top on refresh
-if(history.scrollRestoration) history.scrollRestoration = 'manual';
-window.scrollTo(0,0);
+// Force scroll to top (μόνο αν δεν υπάρχει deep link)
+const _hasDeepLink = ['#seminars','#booking-seminar','#gallery-full'].includes(window.location.hash);
+if(!_hasDeepLink){
+  history.scrollRestoration = 'manual';
+  window.onbeforeunload = ()=>{ window.scrollTo(0,0); };
+  window.addEventListener('load', ()=>{ setTimeout(()=>window.scrollTo(0,0), 10); });
+  window.scrollTo(0,0);
+}
 
 // Reviews Slider
 (function(){
