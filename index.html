@@ -978,12 +978,12 @@ ul{list-style:none}
             <label>Επιλογή Σεμιναρίου</label>
             <select name="seminar" id="seminarSelect" onchange="updateTotal()" required>
               <option value="" disabled selected>Επιλέξτε σεμινάριο...</option>
-              <option value="Look & Learn — 100€" data-price="100">Look &amp; Learn · 100€</option>
-              <option value="Workshop — Πρακτική Εξάσκηση — 300€" data-price="300">Workshop — Πρακτική Εξάσκηση · 300€</option>
-              <option value="Look & Learn & Workshop — 370€" data-price="370">Look &amp; Learn &amp; Workshop · 370€</option>
+              <option value="Look & Learn" data-price="">Look &amp; Learn</option>
+              <option value="Workshop — Πρακτική Εξάσκηση" data-price="">Workshop — Πρακτική Εξάσκηση</option>
+              <option value="Look & Learn & Workshop" data-price="">Look &amp; Learn &amp; Workshop</option>
             </select>
           </div>
-          <div class="form-total" id="formTotal" style="display:none">
+          <div class="form-total" id="formTotal" style="display:none!important">
             <span class="form-total-label">Σύνολο</span>
             <span class="form-total-price" id="formTotalPrice">0€</span>
           </div>
