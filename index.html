@@ -21,7 +21,7 @@
 <!-- Open Graph -->
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="https://aggelosmanosmenssalon.gr/"/>
-<meta property="og:title" content="Aggelos Manos Mens Salon – Κουρείο Αλμυρός"/>
+<meta property="og:title" content="Aggelos Manos Mens Salon"/>
 <meta property="og:description" content="Επαγγελματικά κουρέματα & φροντίδα γενειάδας στον Αλμυρό. Κλείσε ραντεβού online ή κάλεσε 6987 033949."/>
 <meta property="og:image" content="https://aggelosmanosmenssalon.gr/images/hero-bg.jpg"/>
 <meta property="og:locale" content="el_GR"/>
@@ -29,7 +29,7 @@
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="Aggelos Manos Mens Salon – Κουρείο Αλμυρός"/>
+<meta name="twitter:title" content="Aggelos Manos Mens Salon"/>
 <meta name="twitter:description" content="Επαγγελματικά κουρέματα & φροντίδα γενειάδας στον Αλμυρό. Κλείσε ραντεβού online ή κάλεσε 6987 033949."/>
 <meta name="twitter:image" content="https://aggelosmanosmenssalon.gr/images/hero-bg.jpg"/>
 
@@ -1332,26 +1332,6 @@ document.querySelectorAll('.srv,.price-row,.ct-item,.stat-n').forEach(el=>{el.st
 const secs=document.querySelectorAll('section[id]');
 const nas=document.querySelectorAll('.nav-links a');
 window.addEventListener('scroll',()=>{let c='';secs.forEach(s=>{if(scrollY>=s.offsetTop-100)c=s.id});nas.forEach(a=>{a.style.color=a.getAttribute('href')==='#'+c?'var(--gold)':''})},{passive:true});
-
-// ── SEAT AVAILABILITY POLLING ──────────────────────────────────────────────
-const API_BASE='';
-async function fetchAvailability(){
-  try{
-    const r=await fetch(API_BASE+'/api/availability');
-    if(!r.ok)return;
-    const d=await r.json();
-    const el=document.getElementById('seatsAvailable');
-    if(!el)return;
-    el.textContent=d.available;
-    el.className=d.available===0?'empty':d.available<20?'low':'';
-    const sb=document.querySelector('.seminar-form button[type=submit]');
-    if(sb&&d.available===0){sb.disabled=true;sb.textContent='Δεν υπάρχουν διαθέσιμες θέσεις';sb.style.opacity='.5';}
-  }catch(e){}
-}
-fetchAvailability();
-setInterval(fetchAvailability,15000);
-const _origOpen=window.openModal;
-if(typeof _origOpen==='function'){window.openModal=function(id){_origOpen(id);if(id==='seminar-form')fetchAvailability();};}
 
 // ── SEAT AVAILABILITY POLLING ──────────────────────────────────────────────
 var _lastAvail = null;
