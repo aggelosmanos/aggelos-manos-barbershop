@@ -1,6 +1,8 @@
 /**
- * Aggelos Manos Mens Salon — Booking Backend v2
- * Seat management · Race condition protection · Real-time polling
+ * Aggelos Manos Mens Salon — Booking Backend v3
+ * Δύο σεμινάρια με cross-decrement λογική:
+ *   - Look & Learn:          150 θέσεις
+ *   - Look & Learn Workshop:   6 θέσεις (κάθε κράτηση -1 και από τα 150)
  *
  * npm install express stripe better-sqlite3 nodemailer dotenv cors
  */
@@ -19,19 +21,51 @@ const db     = new Database('bookings.db');
 
 // ─── CONFIGURATION ────────────────────────────────────────────────────────────
 const CONFIG = {
-  TOTAL_SEATS:     150,
   TIMEOUT_MINUTES: 10,
-  FRONTEND_URL:    process.env.FRONTEND_URL,
+  FRONTEND_URL: process.env.FRONTEND_URL,
 };
 
-const SEMINAR_PRICES = {
-  'Look & Learn':                 { amount: 15000, label: 'Look & Learn' },
-  'Workshop — Πρακτική Εξάσκηση': { amount: 20000, label: 'Workshop' },
-  'Look & Learn & Workshop':      { amount: 30000, label: 'Look & Learn + Workshop' },
+/**
+ * SEMINAR DEFINITIONS
+ *
+ * seats_key:        το inventory row που αφαιρείται όταν κάποιος κλείσει αυτό το σεμινάριο
+ * also_decrements:  επιπλέον inventory rows που αφαιρούνται ταυτόχρονα (cross-decrement)
+ *
+ * Look & Learn Workshop κρατάει 1 από τις 6 workshop θέσεις
+ * ΚΑΙ 1 από τις 150 look-and-learn θέσεις.
+ */
+const SEMINARS = {
+  'Look & Learn': {
+    label:           'Look & Learn',
+    amount:          15000,          // 150.00€ — αλλάξτε εδώ
+    seats_key:       'look_and_learn',
+    also_decrements: [],             // μόνο το δικό του pool
+  },
+  'Look & Learn Workshop': {
+    label:           'Look & Learn Workshop',
+    amount:          30000,          // 300.00€ — αλλάξτε εδώ
+    seats_key:       'workshop',
+    also_decrements: ['look_and_learn'], // αφαιρεί και από τα 150
+  },
 };
 
 // ─── DATABASE SETUP ───────────────────────────────────────────────────────────
 db.exec(`
+  -- Inventory: ένα row ανά pool θέσεων
+  -- id = 'look_and_learn' | 'workshop'
+  CREATE TABLE IF NOT EXISTS seat_pools (
+    id          TEXT    PRIMARY KEY,
+    label       TEXT    NOT NULL,
+    total_seats INTEGER NOT NULL,
+    version     INTEGER NOT NULL DEFAULT 0
+  );
+
+  -- Seed αρχικά pools
+  INSERT OR IGNORE INTO seat_pools (id, label, total_seats) VALUES
+    ('look_and_learn', 'Look & Learn',          150),
+    ('workshop',       'Look & Learn Workshop',   6);
+
+  -- Κρατήσεις
   CREATE TABLE IF NOT EXISTS bookings (
     id                TEXT    PRIMARY KEY,
     name              TEXT    NOT NULL,
@@ -41,26 +75,29 @@ db.exec(`
     message           TEXT,
     amount_cents      INTEGER NOT NULL,
     status            TEXT    NOT NULL DEFAULT 'pending',
+    -- status: pending | confirmed | cancelled
     stripe_session_id TEXT,
     created_at        INTEGER NOT NULL,
     expires_at        INTEGER NOT NULL,
     confirmed_at      INTEGER,
     cancelled_at      INTEGER,
     cancel_reason     TEXT
+    -- cancel_reason: timeout | stripe_error | stripe_expired
+  );
+
+  -- Καταγραφή ποια pools αφαιρέθηκαν για κάθε κράτηση
+  -- (χρειάζεται για σωστό rollback σε ακύρωση)
+  CREATE TABLE IF NOT EXISTS booking_seat_locks (
+    booking_id TEXT NOT NULL,
+    pool_id    TEXT NOT NULL,
+    PRIMARY KEY (booking_id, pool_id),
+    FOREIGN KEY (booking_id) REFERENCES bookings(id),
+    FOREIGN KEY (pool_id)    REFERENCES seat_pools(id)
   );
 
   CREATE INDEX IF NOT EXISTS idx_bookings_status  ON bookings(status);
   CREATE INDEX IF NOT EXISTS idx_bookings_email   ON bookings(email, seminar, status);
   CREATE INDEX IF NOT EXISTS idx_bookings_expires ON bookings(expires_at) WHERE status='pending';
-
-  -- Ένα και μόνο row για το inventory — προστατεύεται από transactions
-  CREATE TABLE IF NOT EXISTS seat_inventory (
-    id          INTEGER PRIMARY KEY CHECK (id = 1),
-    total_seats INTEGER NOT NULL DEFAULT 150,
-    version     INTEGER NOT NULL DEFAULT 0
-  );
-
-  INSERT OR IGNORE INTO seat_inventory (id, total_seats, version) VALUES (1, 150, 0);
 `);
 
 // ─── HELPERS ──────────────────────────────────────────────────────────────────
@@ -68,41 +105,73 @@ function generateBookingId() {
   return 'AM-' + crypto.randomBytes(3).toString('hex').toUpperCase();
 }
 
-function getAvailableSeats() {
-  const inv = db.prepare('SELECT total_seats FROM seat_inventory WHERE id = 1').get();
-  const now = Date.now();
+/**
+ * Υπολογισμός διαθέσιμων θέσεων για ένα pool.
+ * available = total - confirmed - active_pending
+ * Τρέχει ΜΕΣΑ σε transaction για consistency.
+ */
+function getPoolAvailability(poolId) {
+  const pool = db.prepare('SELECT * FROM seat_pools WHERE id = ?').get(poolId);
+  const now  = Date.now();
 
+  // Πόσες pending κρατήσεις κρατούν θέση σε αυτό το pool (μέσω booking_seat_locks)
   const pending = db.prepare(`
-    SELECT COUNT(*) as cnt FROM bookings
-    WHERE status = 'pending' AND expires_at > ?
-  `).get(now).cnt;
+    SELECT COUNT(*) as cnt
+    FROM bookings b
+    JOIN booking_seat_locks l ON l.booking_id = b.id
+    WHERE l.pool_id = ? AND b.status = 'pending' AND b.expires_at > ?
+  `).get(poolId, now).cnt;
 
+  // Πόσες confirmed κρατήσεις κρατούν θέση σε αυτό το pool
   const confirmed = db.prepare(`
-    SELECT COUNT(*) as cnt FROM bookings WHERE status = 'confirmed'
-  `).get().cnt;
+    SELECT COUNT(*) as cnt
+    FROM bookings b
+    JOIN booking_seat_locks l ON l.booking_id = b.id
+    WHERE l.pool_id = ? AND b.status = 'confirmed'
+  `).get(poolId).cnt;
 
   return {
-    total:     inv.total_seats,
+    id:        poolId,
+    label:     pool.label,
+    total:     pool.total_seats,
     confirmed,
     pending,
-    available: Math.max(0, inv.total_seats - confirmed - pending),
+    available: Math.max(0, pool.total_seats - confirmed - pending),
   };
 }
 
 /**
  * Atomic reservation με SQLite transaction.
- * Το transaction lock εγγυάται ότι 2 ταυτόχρονα requests
- * δεν μπορούν να πάρουν την ίδια θέση.
+ *
+ * Για "Look & Learn Workshop":
+ *   - Ελέγχει ότι υπάρχει θέση στο 'workshop' pool (6)
+ *   - Ελέγχει ότι υπάρχει θέση στο 'look_and_learn' pool (150)
+ *   - Αφαιρεί και από τα δύο atomically
+ *
+ * Για "Look & Learn":
+ *   - Ελέγχει και αφαιρεί μόνο από το 'look_and_learn' pool
  */
-const reserveSeat = db.transaction((bookingId, name, email, phone, seminar, message, amount, expiresAt) => {
-  const now = Date.now();
+const reserveSeats = db.transaction((bookingId, name, email, phone, seminar, message, amount, expiresAt) => {
+  const now        = Date.now();
+  const seminarDef = SEMINARS[seminar];
 
-  // Read-then-write ΜΕΣΑ στο transaction = atomic
-  const seats = getAvailableSeats();
-  if (seats.available <= 0) {
-    return { ok: false, reason: 'no_seats' };
+  // Όλα τα pools που πρέπει να ελεγχθούν και αφαιρεθούν
+  const poolsToLock = [seminarDef.seats_key, ...seminarDef.also_decrements];
+
+  // 1. Ελέγχουμε διαθεσιμότητα ΣΕ ΟΛΑ τα pools atomically
+  for (const poolId of poolsToLock) {
+    const avail = getPoolAvailability(poolId);
+    if (avail.available <= 0) {
+      return {
+        ok:     false,
+        reason: 'no_seats',
+        pool:   poolId,
+        label:  avail.label,
+      };
+    }
   }
 
+  // 2. Anti-double-booking check
   const existing = db.prepare(`
     SELECT id FROM bookings
     WHERE email = ? AND seminar = ? AND status IN ('pending','confirmed')
@@ -113,13 +182,21 @@ const reserveSeat = db.transaction((bookingId, name, email, phone, seminar, mess
     return { ok: false, reason: 'duplicate', bookingId: existing.id };
   }
 
+  // 3. Insert κράτηση
   db.prepare(`
     INSERT INTO bookings
       (id, name, email, phone, seminar, message, amount_cents, status, created_at, expires_at)
     VALUES (?, ?, ?, ?, ?, ?, ?, 'pending', ?, ?)
   `).run(bookingId, name, email, phone, seminar, message || '', amount, now, expiresAt);
 
-  return { ok: true };
+  // 4. Καταγράφουμε ποια pools κλειδώθηκαν (για rollback)
+  for (const poolId of poolsToLock) {
+    db.prepare(`
+      INSERT INTO booking_seat_locks (booking_id, pool_id) VALUES (?, ?)
+    `).run(bookingId, poolId);
+  }
+
+  return { ok: true, lockedPools: poolsToLock };
 });
 
 async function sendConfirmationEmail(booking) {
@@ -130,7 +207,7 @@ async function sendConfirmationEmail(booking) {
   });
   await transporter.sendMail({
     from: `"Aggelos Manos Mens Salon" <${process.env.EMAIL_USER}>`,
-    to: booking.email,
+    to:   booking.email,
     subject: `✓ Επιβεβαίωση Κράτησης ${booking.id}`,
     html: `
       <div style="font-family:sans-serif;max-width:500px;margin:0 auto;padding:32px;background:#0a0a0a;color:#f0ebe0;border:1px solid #333">
@@ -148,6 +225,9 @@ async function sendConfirmationEmail(booking) {
 }
 
 // ─── CLEANUP JOB ──────────────────────────────────────────────────────────────
+// Κάθε λεπτό: ακυρώνει expired pending → θέσεις επιστρέφουν αυτόματα
+// (δεν χρειάζεται manual rollback γιατί η getPoolAvailability
+//  υπολογίζει live: total - confirmed - active_pending)
 function cleanupExpiredBookings() {
   const now    = Date.now();
   const result = db.prepare(`
@@ -157,34 +237,29 @@ function cleanupExpiredBookings() {
   `).run(now, now);
 
   if (result.changes > 0) {
-    console.log(`[cleanup] ${result.changes} expired booking(s) → seats returned to pool`);
+    console.log(`[cleanup] ${result.changes} expired booking(s) → seats returned to all pools`);
   }
 }
 
-setInterval(cleanupExpiredBookings, 60_000); // κάθε 1 λεπτό
-cleanupExpiredBookings();                    // αμέσως στο boot
+setInterval(cleanupExpiredBookings, 60_000);
+cleanupExpiredBookings();
 
 // ─── MIDDLEWARE ───────────────────────────────────────────────────────────────
 app.use('/api/webhook', express.raw({ type: 'application/json' }));
-app.use(express.json({ limit: '10kb' }));   // limit για safety
+app.use(express.json({ limit: '10kb' }));
 app.use(cors({ origin: CONFIG.FRONTEND_URL, methods: ['GET', 'POST'] }));
 
-// Simple rate limiter (χωρίς εξωτερικό package)
-const rateLimitMap = new Map();
+// Simple rate limiter
+const _rl = new Map();
 function rateLimit(windowMs, max) {
   return (req, res, next) => {
-    const ip  = req.ip || req.connection.remoteAddress;
-    const key = `${ip}:${req.path}`;
+    const key = `${req.ip}:${req.path}`;
     const now = Date.now();
-    const rec = rateLimitMap.get(key) || { count: 0, resetAt: now + windowMs };
-
+    const rec = _rl.get(key) || { count: 0, resetAt: now + windowMs };
     if (now > rec.resetAt) { rec.count = 0; rec.resetAt = now + windowMs; }
     rec.count++;
-    rateLimitMap.set(key, rec);
-
-    if (rec.count > max) {
-      return res.status(429).json({ error: 'Πολλές αιτήσεις. Δοκιμάστε σε λίγο.' });
-    }
+    _rl.set(key, rec);
+    if (rec.count > max) return res.status(429).json({ error: 'Πολλές αιτήσεις. Δοκιμάστε σε λίγο.' });
     next();
   };
 }
@@ -193,20 +268,31 @@ function rateLimit(windowMs, max) {
 
 /**
  * GET /api/availability
- * Polling από frontend κάθε 15 δευτερόλεπτα
- * { total: 150, confirmed: 45, pending: 3, available: 102 }
+ * Επιστρέφει διαθεσιμότητα και για τα δύο pools.
+ *
+ * Response:
+ * {
+ *   look_and_learn: { total: 150, confirmed: 10, pending: 2, available: 138 },
+ *   workshop:       { total: 6,   confirmed: 1,  pending: 1, available: 4  }
+ * }
  */
-app.get('/api/availability', rateLimit(10_000, 10), (req, res) => {
+app.get('/api/availability', rateLimit(10_000, 20), (req, res) => {
   try {
-    res.json(getAvailableSeats());
+    res.json({
+      look_and_learn: getPoolAvailability('look_and_learn'),
+      workshop:       getPoolAvailability('workshop'),
+    });
   } catch (err) {
+    console.error('[availability]', err);
     res.status(500).json({ error: 'Server error' });
   }
 });
 
 /**
  * POST /api/create-booking
- * Δημιουργεί pending κράτηση + Stripe Checkout Session
+ * Atomic κράτηση + Stripe Checkout Session
+ *
+ * Body: { name, email, phone, seminar, message }
  */
 app.post('/api/create-booking', rateLimit(60_000, 5), async (req, res) => {
   try {
@@ -219,27 +305,27 @@ app.post('/api/create-booking', rateLimit(60_000, 5), async (req, res) => {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return res.status(400).json({ error: 'Μη έγκυρο email.' });
     }
-    if (!/^[0-9\s\+\-\(\)]{7,15}$/.test(phone.trim())) {
-      return res.status(400).json({ error: 'Μη έγκυρο τηλέφωνο.' });
-    }
 
-    const seminarData = SEMINAR_PRICES[seminar];
-    if (!seminarData) {
+    const seminarDef = SEMINARS[seminar];
+    if (!seminarDef) {
       return res.status(400).json({ error: 'Άκυρο σεμινάριο.' });
     }
 
     const bookingId = generateBookingId();
     const expiresAt = Date.now() + CONFIG.TIMEOUT_MINUTES * 60_000;
 
-    // Atomic seat reservation
-    const result = reserveSeat(
+    // Atomic reservation (transaction)
+    const result = reserveSeats(
       bookingId, name.trim(), email.trim(), phone.trim(),
-      seminar, message?.trim(), seminarData.amount, expiresAt
+      seminar, message?.trim(), seminarDef.amount, expiresAt
     );
 
     if (!result.ok) {
       if (result.reason === 'no_seats') {
-        return res.status(409).json({ error: 'Δεν υπάρχουν διαθέσιμες θέσεις.' });
+        const msg = result.pool === 'workshop'
+          ? 'Δεν υπάρχουν διαθέσιμες θέσεις για το Workshop.'
+          : 'Δεν υπάρχουν διαθέσιμες θέσεις για το Look & Learn.';
+        return res.status(409).json({ error: msg });
       }
       if (result.reason === 'duplicate') {
         return res.status(409).json({
@@ -258,10 +344,10 @@ app.post('/api/create-booking', rateLimit(60_000, 5), async (req, res) => {
           price_data: {
             currency: 'eur',
             product_data: {
-              name: `Σεμινάριο: ${seminarData.label}`,
+              name: `Σεμινάριο: ${seminarDef.label}`,
               description: `Κράτηση #${bookingId} — Aggelos Manos Mens Salon`,
             },
-            unit_amount: seminarData.amount,
+            unit_amount: seminarDef.amount,
           },
           quantity: 1,
         }],
@@ -276,7 +362,7 @@ app.post('/api/create-booking', rateLimit(60_000, 5), async (req, res) => {
         },
       });
     } catch (stripeErr) {
-      // Stripe απέτυχε — ελευθέρωσε αμέσως τη θέση
+      // Stripe απέτυχε → ακύρωσε αμέσως (θέσεις ελευθερώνονται αυτόματα)
       db.prepare(`
         UPDATE bookings SET status='cancelled', cancelled_at=?, cancel_reason='stripe_error'
         WHERE id=?
@@ -288,7 +374,7 @@ app.post('/api/create-booking', rateLimit(60_000, 5), async (req, res) => {
     db.prepare('UPDATE bookings SET stripe_session_id = ? WHERE id = ?')
       .run(session.id, bookingId);
 
-    console.log(`[create-booking] ${bookingId} | ${seminar} | ${email}`);
+    console.log(`[create-booking] ${bookingId} | ${seminar} | pools: ${result.lockedPools.join(', ')}`);
     res.json({ sessionUrl: session.url, bookingId });
 
   } catch (err) {
@@ -299,7 +385,7 @@ app.post('/api/create-booking', rateLimit(60_000, 5), async (req, res) => {
 
 /**
  * POST /api/webhook
- * Stripe webhook — η μόνη αξιόπιστη επιβεβαίωση πληρωμής
+ * Stripe webhook — μοναδικό σημείο επιβεβαίωσης πληρωμής
  */
 app.post('/api/webhook', async (req, res) => {
   let event;
@@ -315,38 +401,26 @@ app.post('/api/webhook', async (req, res) => {
   }
 
   if (event.type === 'checkout.session.completed') {
-    const session   = event.data.object;
-    const bookingId = session.metadata?.bookingId;
+    const bookingId = event.data.object.metadata?.bookingId;
     if (!bookingId) return res.json({ received: true });
 
     const booking = db.prepare('SELECT * FROM bookings WHERE id = ?').get(bookingId);
-    if (!booking) {
-      console.error(`[webhook] Booking not found: ${bookingId}`);
-      return res.json({ received: true });
-    }
-
-    if (booking.status === 'confirmed') {
-      return res.json({ received: true }); // idempotent
-    }
+    if (!booking) return res.json({ received: true });
+    if (booking.status === 'confirmed') return res.json({ received: true }); // idempotent
 
     if (booking.status === 'cancelled') {
-      // Πληρώθηκε αλλά η κράτηση είχε ήδη ακυρωθεί — χρειάζεται refund
-      console.warn(`[webhook] ALERT: Payment for cancelled booking ${bookingId} — issue refund manually`);
-      // Uncomment για αυτόματο refund:
-      // await stripe.refunds.create({ payment_intent: session.payment_intent });
+      // Πληρώθηκε αλλά είχε λήξει — χρειάζεται manual refund
+      console.warn(`[webhook] ALERT: Payment for cancelled booking ${bookingId}`);
+      // await stripe.refunds.create({ payment_intent: event.data.object.payment_intent });
       return res.json({ received: true });
     }
 
-    // Confirm — χρησιμοποιούμε AND status='pending' για extra safety
-    const updated = db.prepare(`
-      UPDATE bookings SET status='confirmed', confirmed_at=?
-      WHERE id=? AND status='pending'
+    db.prepare(`
+      UPDATE bookings SET status='confirmed', confirmed_at=? WHERE id=? AND status='pending'
     `).run(Date.now(), bookingId);
 
-    if (updated.changes > 0) {
-      console.log(`[webhook] Confirmed: ${bookingId} — 1 seat locked permanently`);
-      try { await sendConfirmationEmail(booking); } catch (e) { console.error('[webhook] Email error:', e.message); }
-    }
+    console.log(`[webhook] Confirmed: ${bookingId} | seminar: ${booking.seminar}`);
+    try { await sendConfirmationEmail(booking); } catch (e) { console.error('[webhook] Email error:', e.message); }
   }
 
   if (event.type === 'checkout.session.expired') {
@@ -356,7 +430,7 @@ app.post('/api/webhook', async (req, res) => {
         UPDATE bookings SET status='cancelled', cancelled_at=?, cancel_reason='stripe_expired'
         WHERE id=? AND status='pending'
       `).run(Date.now(), bookingId);
-      console.log(`[webhook] Stripe session expired → ${bookingId} cancelled`);
+      console.log(`[webhook] Stripe expired → ${bookingId} cancelled`);
     }
   }
 
@@ -368,19 +442,20 @@ app.post('/api/webhook', async (req, res) => {
  * Polling από success.html
  */
 app.get('/api/booking-status/:id', rateLimit(10_000, 20), (req, res) => {
-  const id      = req.params.id.replace(/[^A-Z0-9\-]/g, '').slice(0, 20);
-  const booking = db.prepare(`
+  const id = req.params.id.replace(/[^A-Z0-9\-]/g, '').slice(0, 20);
+  const b  = db.prepare(`
     SELECT id, name, seminar, status, confirmed_at, amount_cents FROM bookings WHERE id = ?
   `).get(id);
-
-  if (!booking) return res.status(404).json({ error: 'Not found' });
-  res.json(booking);
+  if (!b) return res.status(404).json({ error: 'Not found' });
+  res.json(b);
 });
 
 // ─── START ────────────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`✓ Server on port ${PORT}`);
-  const seats = getAvailableSeats();
-  console.log(`✓ Available seats: ${seats.available}/${seats.total}`);
+  const ll = getPoolAvailability('look_and_learn');
+  const ws = getPoolAvailability('workshop');
+  console.log(`✓ Look & Learn:          ${ll.available}/${ll.total} θέσεις`);
+  console.log(`✓ Look & Learn Workshop: ${ws.available}/${ws.total} θέσεις`);
 });

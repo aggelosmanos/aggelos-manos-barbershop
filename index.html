@@ -569,6 +569,15 @@ ul{list-style:none}
 #seatsAvailable.low{color:#f59e0b}
 #seatsAvailable.empty{color:#ef4444}
 .seat-counter-total{color:rgba(255,255,255,.3)}
+
+/* ── SEAT COUNTER ── */
+.seat-counter{margin-top:20px;padding:14px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:2px;display:flex;flex-direction:column;gap:10px}
+.sc-row{display:flex;align-items:center;gap:8px;font-family:var(--f-body);font-size:.78rem;color:rgba(255,255,255,.6);letter-spacing:.04em}
+.sc-row svg{color:rgba(255,255,255,.35);flex-shrink:0}
+.sc-row strong{font-weight:700;color:#fff;font-size:.95rem;min-width:22px;text-align:center}
+.sc-row strong.low{color:#f59e0b}
+.sc-row strong.empty{color:#ef4444}
+.sc-total{color:rgba(255,255,255,.3);font-size:.72rem}
 </style>
 </head>
 <body>
@@ -980,19 +989,29 @@ ul{list-style:none}
             <span class="sf-info-val">Αθηνών 33, Αλμυρός</span>
           </div>
         <!-- SEAT COUNTER -->
-        <div class="seat-counter" id="seatCounter">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-          Υπολειπόμενες θέσεις:&nbsp;<span id="seatsAvailable">—</span><span class="seat-counter-total">&nbsp;/ 150</span>
+        <div class="seat-counter" id="seatCounter" style="display:none">
+          <div class="sc-row">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>Look &amp; Learn:</span>
+            <strong id="seats-look-and-learn">—</strong>
+            <span class="sc-total">/ 150</span>
+          </div>
+          <div class="sc-row">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>Workshop:</span>
+            <strong id="seats-workshop">—</strong>
+            <span class="sc-total">/ 6</span>
+          </div>
         </div>
       </div>
       <div class="sf-right">
         <form class="seminar-form" onsubmit="submitForm(event)">
           <div class="form-group">
             <label>Επιλογή Σεμιναρίου</label>
-            <select name="seminar" id="seminarSelect" onchange="updateTotal()" required>
+            <select name="seminar" id="seminarSelect" required>
               <option value="" disabled selected>Επιλέξτε σεμινάριο...</option>
               <option value="Look & Learn">Look &amp; Learn</option>
-              <option value="Look & Learn & Workshop">Look &amp; Learn &amp; Workshop</option>
+              <option value="Look & Learn Workshop">Look &amp; Learn &amp; Workshop</option>
             </select>
           </div>
           <div class="form-total" id="formTotal" style="display:none!important">
@@ -1151,37 +1170,18 @@ ul{list-style:none}
 <script>
 function submitForm(e){
   e.preventDefault();
-  const form=e.target;
-  const btn=form.querySelector('button[type=submit]');
-  const success=document.getElementById('form-success');
-  btn.textContent='Επεξεργασία...';
-  btn.disabled=true;
-  success.style.display='none';
-  const data=Object.fromEntries(new FormData(form));
-  fetch('/api/create-booking',{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(data)
-  })
-  .then(r=>r.json().then(json=>({ok:r.ok,json})))
-  .then(({ok,json})=>{
-    if(!ok){
-      alert('⚠️ '+(json.error||'Παρουσιάστηκε σφάλμα. Δοκιμάστε ξανά.'));
-      btn.textContent='Ολοκλήρωση Κράτησης →';
-      btn.disabled=false;
-      fetchAvailability();
-      return;
-    }
+  var form=e.target,btn=form.querySelector('button[type=submit]'),success=document.getElementById('form-success');
+  btn.textContent='Επεξεργασία...';btn.disabled=true;success.style.display='none';
+  var data=Object.fromEntries(new FormData(form));
+  fetch('/api/create-booking',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
+  .then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j}})})
+  .then(function(res){
+    if(!res.ok){alert('⚠️ '+(res.j.error||'Σφάλμα. Δοκιμάστε ξανά.'));btn.textContent='Ολοκλήρωση Κράτησης →';btn.disabled=false;fetchAvailability();return;}
     success.innerHTML='<div style="margin-bottom:6px">✓ Κράτηση δημιουργήθηκε!</div><span style="font-size:.78rem;color:rgba(255,255,255,.55)">Μεταφορά στη σελίδα πληρωμής...</span>';
-    success.style.display='block';
-    btn.style.display='none';
-    setTimeout(()=>{window.location.replace(json.sessionUrl);},700);
+    success.style.display='block';btn.style.display='none';
+    setTimeout(function(){window.location.replace(res.j.sessionUrl);},700);
   })
-  .catch(()=>{
-    alert('Σφάλμα σύνδεσης. Ελέγξτε το internet σας και δοκιμάστε ξανά.');
-    btn.textContent='Ολοκλήρωση Κράτησης →';
-    btn.disabled=false;
-  });
+  .catch(function(){alert('Σφάλμα σύνδεσης. Δοκιμάστε ξανά.');btn.textContent='Ολοκλήρωση Κράτησης →';btn.disabled=false;});
 }
 function openModal(id){
   const el = document.getElementById('modal-'+id);
@@ -1223,17 +1223,7 @@ function changeLB(d){lbIdx=(lbIdx+d+lbImgs.length)%lbImgs.length;document.getEle
 document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===this)closeLB()});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLB();if(e.key==='ArrowLeft')changeLB(-1);if(e.key==='ArrowRight')changeLB(1)});
 window.addEventListener('scroll',()=>nav.classList.toggle('s',scrollY>60),{passive:true});
-const burger=document.getElementById('burger');
-function updateTotal(){
-  const sel = document.getElementById('seminarSelect');
-  const opt = sel.options[sel.selectedIndex];
-  const price = opt ? opt.getAttribute('data-price') : null;
-  const totalBox = document.getElementById('formTotal');
-  const totalPrice = document.getElementById('formTotalPrice');
-  if(price){
-    totalBox.style.display='flex';
-    totalPrice.textContent = price + '€';
-  } else {
+const burger=document.getElementById('burger'); else {
     totalBox.style.display='none';
   }
 }
@@ -1362,6 +1352,67 @@ fetchAvailability();
 setInterval(fetchAvailability,15000);
 const _origOpen=window.openModal;
 if(typeof _origOpen==='function'){window.openModal=function(id){_origOpen(id);if(id==='seminar-form')fetchAvailability();};}
+
+// ── SEAT AVAILABILITY POLLING ──────────────────────────────────────────────
+var _lastAvail = null;
+function fetchAvailability(){
+  fetch('/api/availability')
+  .then(function(r){return r.json()})
+  .then(function(d){
+    _lastAvail = d;
+    var sc = document.getElementById('seatCounter');
+    if(sc) sc.style.display = 'flex';
+
+    function setEl(id, val, max){
+      var el = document.getElementById(id);
+      if(!el) return;
+      el.textContent = val;
+      el.className = val === 0 ? 'empty' : val <= Math.ceil(max*0.13) ? 'low' : '';
+    }
+    setEl('seats-look-and-learn', d.look_and_learn.available, 150);
+    setEl('seats-workshop',       d.workshop.available,       6);
+
+    // Ενημέρωσε το submit button ανάλογα με το επιλεγμένο σεμινάριο
+    updateSubmitState();
+  })
+  .catch(function(){});
+}
+
+function updateSubmitState(){
+  if(!_lastAvail) return;
+  var sel = document.getElementById('seminarSelect');
+  var btn = document.querySelector('.seminar-form button[type=submit]');
+  if(!sel || !btn) return;
+  var val = sel.value;
+  var avail = 999;
+  if(val === 'Look & Learn') avail = _lastAvail.look_and_learn.available;
+  if(val === 'Look & Learn Workshop') avail = Math.min(_lastAvail.workshop.available, _lastAvail.look_and_learn.available);
+  if(avail <= 0){
+    btn.disabled = true;
+    btn.textContent = 'Δεν υπάρχουν διαθέσιμες θέσεις';
+    btn.style.opacity = '.5';
+  } else {
+    btn.disabled = false;
+    btn.textContent = 'Ολοκλήρωση Κράτησης →';
+    btn.style.opacity = '1';
+  }
+}
+
+// Κάλεσε updateSubmitState όταν αλλάξει το select
+var _selEl = document.getElementById('seminarSelect');
+if(_selEl) _selEl.addEventListener('change', function(){ updateSubmitState(); fetchAvailability(); });
+
+fetchAvailability();
+setInterval(fetchAvailability, 15000);
+
+// Ανανέωσε όταν ανοίξει η φόρμα
+var _origOpenModal = window.openModal;
+if(typeof _origOpenModal === 'function'){
+  window.openModal = function(id){
+    _origOpenModal(id);
+    if(id === 'seminar-form') fetchAvailability();
+  };
+}
 </script>
 </body>
 </html>
