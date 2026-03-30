@@ -21,7 +21,7 @@ const db     = new Database('bookings.db');
 
 // ─── CONFIGURATION ────────────────────────────────────────────────────────────
 const CONFIG = {
-  TIMEOUT_MINUTES: 10,
+  TIMEOUT_MINUTES: 30,
   FRONTEND_URL: process.env.FRONTEND_URL,
 };
 
