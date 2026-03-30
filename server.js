@@ -247,7 +247,14 @@ cleanupExpiredBookings();
 // ─── MIDDLEWARE ───────────────────────────────────────────────────────────────
 app.use('/api/webhook', express.raw({ type: 'application/json' }));
 app.use(express.json({ limit: '10kb' }));
-app.use(cors({ origin: CONFIG.FRONTEND_URL, methods: ['GET', 'POST'] }));
+const ALLOWED_ORIGINS = ['https://aggelosmanosmenssalon.gr','https://www.aggelosmanosmenssalon.gr','https://aggelosmanos.github.io',CONFIG.FRONTEND_URL].filter(Boolean);
+app.use(cors({
+  origin: function(origin, callback) {
+    if (!origin || ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+    callback(new Error('Not allowed by CORS'));
+  },
+  methods: ['GET', 'POST']
+}));
 
 // Simple rate limiter
 const _rl = new Map();
