@@ -37,7 +37,7 @@ const CONFIG = {
 const SEMINARS = {
   'Look & Learn': {
     label:           'Look & Learn',
-    amount:          10000,          // 150.00€ — αλλάξτε εδώ
+    amount:          100,          // 150.00€ — αλλάξτε εδώ
     seats_key:       'look_and_learn',
     also_decrements: [],             // μόνο το δικό του pool
   },
