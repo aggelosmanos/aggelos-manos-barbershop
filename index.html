@@ -561,6 +561,14 @@ ul{list-style:none}
   .sp-title{font-size:1.8rem}
   .sp-hero-content{padding:0 5% 36px}
 }
+
+/* ── SEAT COUNTER ── */
+.seat-counter{display:flex;align-items:center;gap:8px;margin-top:20px;padding:12px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:2px;font-family:var(--f-body);font-size:.78rem;color:rgba(255,255,255,.65);letter-spacing:.04em}
+.seat-counter svg{color:rgba(255,255,255,.4);flex-shrink:0}
+#seatsAvailable{font-weight:700;color:#fff;font-size:.95rem;min-width:24px;display:inline-block;text-align:center}
+#seatsAvailable.low{color:#f59e0b}
+#seatsAvailable.empty{color:#ef4444}
+.seat-counter-total{color:rgba(255,255,255,.3)}
 </style>
 </head>
 <body>
@@ -971,17 +979,20 @@ ul{list-style:none}
             <span class="sf-info-label">Τοποθεσία</span>
             <span class="sf-info-val">Αθηνών 33, Αλμυρός</span>
           </div>
+        <!-- SEAT COUNTER -->
+        <div class="seat-counter" id="seatCounter">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          Υπολειπόμενες θέσεις:&nbsp;<span id="seatsAvailable">—</span><span class="seat-counter-total">&nbsp;/ 150</span>
         </div>
       </div>
       <div class="sf-right">
-        <form class="seminar-form" onsubmit="submitForm(event)" action="https://formspree.io/f/xdawvkrq" method="POST">
+        <form class="seminar-form" onsubmit="submitForm(event)">
           <div class="form-group">
             <label>Επιλογή Σεμιναρίου</label>
             <select name="seminar" id="seminarSelect" onchange="updateTotal()" required>
               <option value="" disabled selected>Επιλέξτε σεμινάριο...</option>
-              <option value="Look & Learn" data-price="">Look &amp; Learn</option>
-              <option value="Workshop — Πρακτική Εξάσκηση" data-price="">Workshop — Πρακτική Εξάσκηση</option>
-              <option value="Look & Learn & Workshop" data-price="">Look &amp; Learn &amp; Workshop</option>
+              <option value="Look & Learn">Look &amp; Learn</option>
+              <option value="Look & Learn & Workshop">Look &amp; Learn &amp; Workshop</option>
             </select>
           </div>
           <div class="form-total" id="formTotal" style="display:none!important">
@@ -1005,7 +1016,7 @@ ul{list-style:none}
             <textarea name="message" placeholder="Πείτε μας λίγα λόγια για εσάς και τους στόχους σας..." rows="5"></textarea>
           </div>
           <button type="submit" class="btn btn-g" style="font-size:.8rem;padding:16px;cursor:pointer;width:100%;margin-top:8px;justify-content:center">
-            Αποστολή Αίτησης →
+            Ολοκλήρωση Κράτησης →
           </button>
           <p id="form-success" style="display:none;text-align:center;margin-top:20px;color:#fff;font-size:.9rem;font-family:var(--f-body);padding:16px;border:1px solid rgba(255,255,255,.15);border-radius:2px;line-height:1.7">
             ✓ Η αίτησή σας στάλθηκε!<br>
@@ -1013,22 +1024,11 @@ ul{list-style:none}
           </p>
         </form>
 
-        <!-- ΤΡΟΠΟΙ ΠΛΗΡΩΜΗΣ -->
-        <div class="pay-box">
-          <p class="pay-box-title">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-            Τρόποι Πληρωμής
-          </p>
-
-          <!-- Viva Wallet -->
-          <a href="#" class="sf-pay-btn" id="vivaPayBtn">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-            Online Πληρωμή — Viva Wallet
-          </a>
-          <p class="sf-pay-secure">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-            Ασφαλής πληρωμή · Visa · Mastercard · IRIS
-          </p>
+        <!-- STRIPE PAYMENT -->
+        <p class="sf-pay-secure" style="margin-top:16px">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          Ασφαλής πληρωμή μέσω Stripe · Visa · Mastercard
+        </p>
         </div>
       </div>
     </div>
@@ -1151,60 +1151,36 @@ ul{list-style:none}
 <script>
 function submitForm(e){
   e.preventDefault();
-  const form = e.target;
-  const btn = form.querySelector('button[type=submit]');
-  const success = document.getElementById('form-success');
-  btn.textContent = 'Αποστολή...';
-  btn.disabled = true;
-
-  // Δημιουργία μοναδικού κωδικού κράτησης
-  const code = 'AM-' + Date.now().toString(36).toUpperCase().slice(-4) + '-' + Math.random().toString(36).toUpperCase().slice(2,5);
-
-  const data = Object.fromEntries(new FormData(form));
-  data['Κωδικός Κράτησης'] = code;
-
-  fetch('https://formspree.io/f/xdawvkrq', {
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
+  const form=e.target;
+  const btn=form.querySelector('button[type=submit]');
+  const success=document.getElementById('form-success');
+  btn.textContent='Επεξεργασία...';
+  btn.disabled=true;
+  success.style.display='none';
+  const data=Object.fromEntries(new FormData(form));
+  fetch('/api/create-booking',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(data)
+  })
+  .then(r=>r.json().then(json=>({ok:r.ok,json})))
+  .then(({ok,json})=>{
+    if(!ok){
+      alert('⚠️ '+(json.error||'Παρουσιάστηκε σφάλμα. Δοκιμάστε ξανά.'));
+      btn.textContent='Ολοκλήρωση Κράτησης →';
+      btn.disabled=false;
+      fetchAvailability();
+      return;
     }
-  }).then(r => r.json()).then(res => {
-    if(res.ok){
-      // Εμφάνιση κωδικού
-      success.innerHTML = `
-        <div style="margin-bottom:16px">
-          ✓ Η αίτησή σας στάλθηκε!
-        </div>
-        <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.2);border-radius:2px;padding:16px;margin-bottom:12px">
-          <p style="font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px;font-family:var(--f-body)">Κωδικός Κράτησής σας</p>
-          <p style="font-family:'Courier New',monospace;font-size:1.3rem;font-weight:700;color:#fff;letter-spacing:.12em">${code}</p>
-        </div>
-        <p style="font-size:.78rem;color:rgba(255,255,255,.55);line-height:1.7;font-family:var(--f-body)">
-          ⚠️ Προσθέστε τον κωδικό αυτό στις <strong style="color:#fff">σημειώσεις της πληρωμής</strong> στο Viva Wallet για να επιβεβαιωθεί η κράτησή σας.
-        </p>
-      `;
-      success.style.display = 'block';
-      btn.style.display = 'none';
-      form.reset();
-        setTimeout(() => {
-          const vivaBtn = document.getElementById('vivaPayBtn');
-          if(vivaBtn && vivaBtn.href && vivaBtn.href !== '#') {
-            window.open(vivaBtn.href, '_blank');
-          } else {
-            vivaBtn && vivaBtn.scrollIntoView({behavior:'smooth', block:'center'});
-          }
-        }, 2500);
-    } else {
-      btn.textContent = 'Αποστολή Αίτησης →';
-      btn.disabled = false;
-      alert('Σφάλμα: ' + (res.error || 'Δοκιμάστε ξανά'));
-    }
-  }).catch(() => {
-    btn.textContent = 'Αποστολή Αίτησης →';
-    btn.disabled = false;
-    alert('Παρακαλώ ελέγξτε τη σύνδεσή σας και δοκιμάστε ξανά.');
+    success.innerHTML='<div style="margin-bottom:6px">✓ Κράτηση δημιουργήθηκε!</div><span style="font-size:.78rem;color:rgba(255,255,255,.55)">Μεταφορά στη σελίδα πληρωμής...</span>';
+    success.style.display='block';
+    btn.style.display='none';
+    setTimeout(()=>{window.location.replace(json.sessionUrl);},700);
+  })
+  .catch(()=>{
+    alert('Σφάλμα σύνδεσης. Ελέγξτε το internet σας και δοκιμάστε ξανά.');
+    btn.textContent='Ολοκλήρωση Κράτησης →';
+    btn.disabled=false;
   });
 }
 function openModal(id){
@@ -1366,6 +1342,26 @@ document.querySelectorAll('.srv,.price-row,.ct-item,.stat-n').forEach(el=>{el.st
 const secs=document.querySelectorAll('section[id]');
 const nas=document.querySelectorAll('.nav-links a');
 window.addEventListener('scroll',()=>{let c='';secs.forEach(s=>{if(scrollY>=s.offsetTop-100)c=s.id});nas.forEach(a=>{a.style.color=a.getAttribute('href')==='#'+c?'var(--gold)':''})},{passive:true});
+
+// ── SEAT AVAILABILITY POLLING ──────────────────────────────────────────────
+const API_BASE='';
+async function fetchAvailability(){
+  try{
+    const r=await fetch(API_BASE+'/api/availability');
+    if(!r.ok)return;
+    const d=await r.json();
+    const el=document.getElementById('seatsAvailable');
+    if(!el)return;
+    el.textContent=d.available;
+    el.className=d.available===0?'empty':d.available<20?'low':'';
+    const sb=document.querySelector('.seminar-form button[type=submit]');
+    if(sb&&d.available===0){sb.disabled=true;sb.textContent='Δεν υπάρχουν διαθέσιμες θέσεις';sb.style.opacity='.5';}
+  }catch(e){}
+}
+fetchAvailability();
+setInterval(fetchAvailability,15000);
+const _origOpen=window.openModal;
+if(typeof _origOpen==='function'){window.openModal=function(id){_origOpen(id);if(id==='seminar-form')fetchAvailability();};}
 </script>
 </body>
 </html>
