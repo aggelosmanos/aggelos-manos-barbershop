@@ -1331,7 +1331,7 @@ const nas=document.querySelectorAll('.nav-links a');
 window.addEventListener('scroll',()=>{let c='';secs.forEach(s=>{if(scrollY>=s.offsetTop-100)c=s.id});nas.forEach(a=>{a.style.color=a.getAttribute('href')==='#'+c?'var(--gold)':''})},{passive:true});
 
 // ── SEAT AVAILABILITY POLLING ──────────────────────────────────────────────
-const API_BASE='';
+const API_BASE='https://aggelos-manos-barbershop-production.up.railway.app';
 async function fetchAvailability(){
   try{
     const r=await fetch(API_BASE+'/api/availability');
@@ -1353,7 +1353,7 @@ if(typeof _origOpen==='function'){window.openModal=function(id){_origOpen(id);if
 // ── SEAT AVAILABILITY POLLING ──────────────────────────────────────────────
 var _lastAvail = null;
 function fetchAvailability(){
-  fetch('/api/availability')
+  fetch('https://aggelos-manos-barbershop-production.up.railway.app/api/availability')
   .then(function(r){return r.json()})
   .then(function(d){
     _lastAvail = d;
