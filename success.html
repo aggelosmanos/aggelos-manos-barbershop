@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Επιτυχής Κράτηση — Aggelos Manos Mens Salon</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root{--gold:#ffffff;--bg:#0a0a0a;--s1:#111;--s2:#181818;--txt:#f0ebe0;--txt2:rgba(240,235,224,.55)}
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font-family:'Outfit',sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px}
+  .card{background:var(--s1);border:1px solid rgba(255,255,255,.08);max-width:480px;width:100%;padding:52px 40px;text-align:center}
+  .icon{width:64px;height:64px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 28px;font-size:1.6rem}
+  .icon.loading{animation:spin 1.2s linear infinite;border-top-color:#fff}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .icon.success{border-color:rgba(255,255,255,.4)}
+  h1{font-family:'Cinzel',serif;font-size:1.4rem;font-weight:600;letter-spacing:.1em;margin-bottom:12px}
+  p{font-size:.9rem;color:var(--txt2);line-height:1.8;margin-bottom:8px}
+  .booking-id{font-family:'Courier New',monospace;font-size:1.1rem;font-weight:700;color:#fff;letter-spacing:.15em;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);padding:12px 20px;margin:20px 0;display:inline-block}
+  .detail-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:.85rem}
+  .detail-row:last-child{border-bottom:none}
+  .detail-label{color:var(--txt2)}
+  .detail-val{color:#fff;font-weight:500}
+  .btn-home{display:inline-flex;align-items:center;gap:8px;margin-top:28px;font-family:'Outfit',sans-serif;font-size:.7rem;font-weight:500;letter-spacing:.2em;text-transform:uppercase;padding:13px 28px;background:#fff;color:#0a0a0a;border:none;cursor:pointer;transition:all .3s}
+  .btn-home:hover{background:#e0e0e0}
+  .status-msg{margin-top:12px;font-size:.78rem;color:var(--txt2)}
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="icon loading" id="icon">⟳</div>
+  <h1 id="title">Επαληθεύεται η πληρωμή...</h1>
+  <p id="subtitle">Παρακαλώ περιμένετε.</p>
+  <div id="details" style="display:none;margin-top:24px;text-align:left"></div>
+  <p class="status-msg" id="statusMsg"></p>
+</div>
+
+<script>
+const params    = new URLSearchParams(window.location.search);
+const bookingId = params.get('booking_id');
+const API_BASE  = ''; // π.χ. 'https://api.aggelosmanosmenssalon.gr' αν είναι σε άλλο domain
+
+// Απενεργοποίηση back button (best-effort)
+history.pushState(null, '', window.location.href);
+window.addEventListener('popstate', () => {
+  history.pushState(null, '', window.location.href);
+});
+
+async function checkStatus(retries = 0) {
+  if (!bookingId) {
+    showError('Δεν βρέθηκε κωδικός κράτησης.');
+    return;
+  }
+
+  try {
+    const res  = await fetch(`${API_BASE}/api/booking-status/${bookingId}`);
+    const data = await res.json();
+
+    if (data.status === 'confirmed') {
+      showSuccess(data);
+    } else if (data.status === 'cancelled') {
+      showCancelled();
+    } else if (data.status === 'pending') {
+      // Δεν έχει φτάσει ακόμα το webhook — retry μέχρι 20 φορές (40 δευτερόλεπτα)
+      if (retries < 20) {
+        document.getElementById('statusMsg').textContent = `Αναμονή επιβεβαίωσης... (${retries + 1}/20)`;
+        setTimeout(() => checkStatus(retries + 1), 2000);
+      } else {
+        // Το webhook μπορεί να αργεί — δείχνουμε μερική επιτυχία
+        showPendingFallback();
+      }
+    }
+  } catch (err) {
+    if (retries < 5) {
+      setTimeout(() => checkStatus(retries + 1), 3000);
+    } else {
+      showError('Σφάλμα σύνδεσης. Ελέγξτε email ή καλέστε 6987 033949.');
+    }
+  }
+}
+
+function showSuccess(data) {
+  document.getElementById('icon').textContent  = '✓';
+  document.getElementById('icon').className    = 'icon success';
+  document.getElementById('title').textContent = 'Η κράτησή σας επιβεβαιώθηκε!';
+  document.getElementById('subtitle').textContent = 'Σας έχουμε στείλει email επιβεβαίωσης.';
+  document.getElementById('statusMsg').textContent = '';
+
+  const details = document.getElementById('details');
+  details.style.display = 'block';
+  details.innerHTML = `
+    <div style="text-align:center;margin-bottom:20px">
+      <span style="font-size:.58rem;letter-spacing:.35em;text-transform:uppercase;color:rgba(255,255,255,.4)">Κωδικός Κράτησης</span>
+      <div class="booking-id">${data.id}</div>
+    </div>
+    <div class="detail-row"><span class="detail-label">Σεμινάριο</span><span class="detail-val">${data.seminar}</span></div>
+    <div class="detail-row"><span class="detail-label">Όνομα</span><span class="detail-val">${data.name}</span></div>
+    <div style="text-align:center">
+      <a href="/" class="btn-home">← Επιστροφή στο site</a>
+    </div>
+  `;
+}
+
+function showPendingFallback() {
+  document.getElementById('icon').textContent  = '⏳';
+  document.getElementById('icon').className    = 'icon';
+  document.getElementById('title').textContent = 'Η πληρωμή καταγράφηκε';
+  document.getElementById('subtitle').innerHTML = `Η επιβεβαίωση επεξεργάζεται.<br>Θα λάβετε email σύντομα.<br><br>Κωδικός: <strong>${bookingId}</strong>`;
+  document.getElementById('statusMsg').textContent = '';
+  const details = document.getElementById('details');
+  details.style.display = 'block';
+  details.innerHTML = `<div style="text-align:center"><a href="/" class="btn-home">← Επιστροφή στο site</a></div>`;
+}
+
+function showCancelled() {
+  document.getElementById('icon').textContent  = '✕';
+  document.getElementById('icon').className    = 'icon';
+  document.getElementById('title').textContent = 'Η κράτηση ακυρώθηκε';
+  document.getElementById('subtitle').innerHTML = 'Η πληρωμή δεν ολοκληρώθηκε εντός του χρονικού ορίου.<br>Μπορείτε να κάνετε νέα κράτηση.';
+  const details = document.getElementById('details');
+  details.style.display = 'block';
+  details.innerHTML = `<div style="text-align:center"><a href="/#booking-seminar" class="btn-home">Νέα Κράτηση</a></div>`;
+}
+
+function showError(msg) {
+  document.getElementById('icon').textContent  = '!';
+  document.getElementById('icon').className    = 'icon';
+  document.getElementById('title').textContent = 'Κάτι πήγε στραβά';
+  document.getElementById('subtitle').textContent = msg;
+}
+
+checkStatus();
+</script>
+</body>
+</html>
