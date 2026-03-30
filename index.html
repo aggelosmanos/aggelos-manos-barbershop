@@ -1223,10 +1223,7 @@ function changeLB(d){lbIdx=(lbIdx+d+lbImgs.length)%lbImgs.length;document.getEle
 document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===this)closeLB()});
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLB();if(e.key==='ArrowLeft')changeLB(-1);if(e.key==='ArrowRight')changeLB(1)});
 window.addEventListener('scroll',()=>nav.classList.toggle('s',scrollY>60),{passive:true});
-const burger=document.getElementById('burger'); else {
-    totalBox.style.display='none';
-  }
-}
+const burger=document.getElementById('burger');
 // Scroll to top on refresh — λειτουργεί και σε iOS/Android
 const _hasDeepLink = ['#seminars','#booking-seminar','#gallery-full'].includes(window.location.hash);
 if(!_hasDeepLink){
