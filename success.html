@@ -38,7 +38,7 @@
 <script>
 const params    = new URLSearchParams(window.location.search);
 const bookingId = params.get('booking_id');
-const API_BASE  = ''; // π.χ. 'https://api.aggelosmanosmenssalon.gr' αν είναι σε άλλο domain
+const API_BASE  = 'https://aggelos-manos-barbershop-production.up.railway.app';
 
 // Απενεργοποίηση back button (best-effort)
 history.pushState(null, '', window.location.href);
