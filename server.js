@@ -12,7 +12,6 @@ const express    = require('express');
 const cors       = require('cors');
 const Stripe     = require('stripe');
 const { Pool }   = require('pg');
-const nodemailer = require('nodemailer');
 const crypto     = require('crypto');
 
 const app    = express();
@@ -187,52 +186,59 @@ async function reserveSeats(bookingId, name, email, phone, seminar, message, amo
 
 // ─── EMAIL ────────────────────────────────────────────────────────────────────
 async function sendConfirmationEmail(booking) {
-  if (!process.env.EMAIL_USER) return;
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 587,
-    secure: false,
-    auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASS },
-  });
+  if (!process.env.RESEND_API_KEY) return;
+  const ownerEmail = process.env.OWNER_EMAIL || 'axillews133@gmail.com';
+
+  const headers = {
+    'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
+    'Content-Type': 'application/json',
+  };
 
   // Email στον πελάτη
-  await transporter.sendMail({
-    from: `"Aggelos Manos Mens Salon" <${process.env.EMAIL_USER}>`,
-    to:   booking.email,
-    subject: `✓ Επιβεβαίωση Κράτησης ${booking.id}`,
-    html: `
-      <div style="font-family:sans-serif;max-width:500px;margin:0 auto;padding:32px;background:#0a0a0a;color:#f0ebe0;border:1px solid #333">
-        <h2 style="color:#fff">✓ Η κράτησή σας επιβεβαιώθηκε!</h2>
-        <table style="width:100%;margin-top:20px">
-          <tr><td style="color:#888;padding:6px 0">Κωδικός</td>   <td style="color:#fff;font-weight:bold">${booking.id}</td></tr>
-          <tr><td style="color:#888;padding:6px 0">Σεμινάριο</td> <td style="color:#fff">${booking.seminar}</td></tr>
-          <tr><td style="color:#888;padding:6px 0">Όνομα</td>     <td style="color:#fff">${booking.name}</td></tr>
-          <tr><td style="color:#888;padding:6px 0">Ποσό</td>      <td style="color:#fff">${(booking.amount_cents/100).toFixed(2)}€</td></tr>
-        </table>
-        <p style="margin-top:24px;color:#888;font-size:13px">Αθηνών 33, Αλμυρός · 6987 033949</p>
-      </div>
-    `,
+  await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({
+      from: 'Aggelos Manos Mens Salon <onboarding@resend.dev>',
+      to: [booking.email],
+      subject: `✓ Επιβεβαίωση Κράτησης ${booking.id}`,
+      html: `
+        <div style="font-family:sans-serif;max-width:500px;margin:0 auto;padding:32px;background:#0a0a0a;color:#f0ebe0;border:1px solid #333">
+          <h2 style="color:#fff">✓ Η κράτησή σας επιβεβαιώθηκε!</h2>
+          <table style="width:100%;margin-top:20px">
+            <tr><td style="color:#888;padding:6px 0">Κωδικός</td>   <td style="color:#fff;font-weight:bold">${booking.id}</td></tr>
+            <tr><td style="color:#888;padding:6px 0">Σεμινάριο</td> <td style="color:#fff">${booking.seminar}</td></tr>
+            <tr><td style="color:#888;padding:6px 0">Όνομα</td>     <td style="color:#fff">${booking.name}</td></tr>
+            <tr><td style="color:#888;padding:6px 0">Ποσό</td>      <td style="color:#fff">${(booking.amount_cents/100).toFixed(2)}€</td></tr>
+          </table>
+          <p style="margin-top:24px;color:#888;font-size:13px">Αθηνών 33, Αλμυρός · 6987 033949</p>
+        </div>
+      `,
+    }),
   });
 
   // Email στον ιδιοκτήτη
-  const ownerEmail = process.env.OWNER_EMAIL || process.env.EMAIL_USER;
-  await transporter.sendMail({
-    from: `"Aggelos Manos Mens Salon" <${process.env.EMAIL_USER}>`,
-    to:   ownerEmail,
-    subject: `🆕 Νέα Κράτηση ${booking.id} — ${booking.seminar}`,
-    html: `
-      <div style="font-family:sans-serif;max-width:500px;margin:0 auto;padding:32px;background:#0a0a0a;color:#f0ebe0;border:1px solid #333">
-        <h2 style="color:#fff">🆕 Νέα Κράτηση!</h2>
-        <table style="width:100%;margin-top:20px">
-          <tr><td style="color:#888;padding:6px 0">Κωδικός</td>    <td style="color:#fff;font-weight:bold">${booking.id}</td></tr>
-          <tr><td style="color:#888;padding:6px 0">Σεμινάριο</td>  <td style="color:#fff">${booking.seminar}</td></tr>
-          <tr><td style="color:#888;padding:6px 0">Όνομα</td>      <td style="color:#fff">${booking.name}</td></tr>
-          <tr><td style="color:#888;padding:6px 0">Email</td>       <td style="color:#fff">${booking.email}</td></tr>
-          <tr><td style="color:#888;padding:6px 0">Τηλέφωνο</td>   <td style="color:#fff">${booking.phone}</td></tr>
-          <tr><td style="color:#888;padding:6px 0">Ποσό</td>        <td style="color:#fff">${(booking.amount_cents/100).toFixed(2)}€</td></tr>
-        </table>
-      </div>
-    `,
+  await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({
+      from: 'Aggelos Manos Mens Salon <onboarding@resend.dev>',
+      to: [ownerEmail],
+      subject: `🆕 Νέα Κράτηση ${booking.id} — ${booking.seminar}`,
+      html: `
+        <div style="font-family:sans-serif;max-width:500px;margin:0 auto;padding:32px;background:#0a0a0a;color:#f0ebe0;border:1px solid #333">
+          <h2 style="color:#fff">🆕 Νέα Κράτηση!</h2>
+          <table style="width:100%;margin-top:20px">
+            <tr><td style="color:#888;padding:6px 0">Κωδικός</td>    <td style="color:#fff;font-weight:bold">${booking.id}</td></tr>
+            <tr><td style="color:#888;padding:6px 0">Σεμινάριο</td>  <td style="color:#fff">${booking.seminar}</td></tr>
+            <tr><td style="color:#888;padding:6px 0">Όνομα</td>      <td style="color:#fff">${booking.name}</td></tr>
+            <tr><td style="color:#888;padding:6px 0">Email</td>       <td style="color:#fff">${booking.email}</td></tr>
+            <tr><td style="color:#888;padding:6px 0">Τηλέφωνο</td>   <td style="color:#fff">${booking.phone}</td></tr>
+            <tr><td style="color:#888;padding:6px 0">Ποσό</td>        <td style="color:#fff">${(booking.amount_cents/100).toFixed(2)}€</td></tr>
+          </table>
+        </div>
+      `,
+    }),
   });
 }
 
