@@ -1177,9 +1177,19 @@ function submitForm(e){
   .then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j}})})
   .then(function(res){
     if(!res.ok){alert('⚠️ '+(res.j.error||'Σφάλμα. Δοκιμάστε ξανά.'));btn.textContent='Ολοκλήρωση Κράτησης →';btn.disabled=false;fetchAvailability();return;}
-    success.innerHTML='<div style="margin-bottom:6px">✓ Κράτηση δημιουργήθηκε!</div><span style="font-size:.78rem;color:rgba(255,255,255,.55)">Μεταφορά στη σελίδα πληρωμής...</span>';
+    var timeLeft = 30 * 60;
+    success.innerHTML='<div style="margin-bottom:10px;font-size:.95rem">✓ Η θέση σας κρατήθηκε!</div><div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);padding:16px;margin:12px 0;text-align:center"><div style="font-size:.62rem;letter-spacing:.3em;color:rgba(255,255,255,.5);text-transform:uppercase;margin-bottom:6px">Ολοκληρώστε την πληρωμή εντός</div><div id="countdown-timer" style="font-family:monospace;font-size:2rem;font-weight:700;color:#fff;letter-spacing:.1em">30:00</div><div style="font-size:.72rem;color:rgba(255,255,255,.4);margin-top:4px">Μετά τη λήξη η θέση ελευθερώνεται</div></div><div style="font-size:.78rem;color:rgba(255,255,255,.55)">Μεταφορά στη σελίδα πληρωμής...</div>';
     success.style.display='block';btn.style.display='none';
-    setTimeout(function(){window.location.replace(res.j.sessionUrl);},700);
+    var countdownEl = document.getElementById('countdown-timer');
+    var countdownInterval = setInterval(function(){
+      timeLeft--;
+      if(timeLeft <= 0){ clearInterval(countdownInterval); return; }
+      var m = Math.floor(timeLeft/60);
+      var s = timeLeft % 60;
+      countdownEl.textContent = (m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+      if(timeLeft <= 300) countdownEl.style.color = '#ff6b6b';
+    }, 1000);
+    setTimeout(function(){window.location.replace(res.j.sessionUrl);},2000);
   })
   .catch(function(){alert('Σφάλμα σύνδεσης. Δοκιμάστε ξανά.');btn.textContent='Ολοκλήρωση Κράτησης →';btn.disabled=false;});
 }
