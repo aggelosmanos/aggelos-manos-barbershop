@@ -362,8 +362,8 @@ ul{list-style:none}
 .guest-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:8px}
 .guest-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:2px;overflow:hidden;transition:border-color .3s,transform .3s}
 .guest-card:hover{border-color:rgba(255,255,255,.3);transform:translateY(-3px)}
-.guest-photo{width:100%;aspect-ratio:16/9;max-height:320px;overflow:hidden;background:var(--s3)}
-.guest-photo img{width:100%;height:100%;object-fit:cover;object-position:center 20%;filter:grayscale(20%);transition:filter .4s,transform .5s}
+.guest-photo{width:100%;aspect-ratio:4/3;max-height:400px;overflow:hidden;background:var(--s3)}
+.guest-photo img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:grayscale(20%);transition:filter .4s,transform .5s}
 .guest-card:hover .guest-photo img{filter:grayscale(0%);transform:scale(1.04)}
 .guest-initials{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:var(--f-title);font-size:2rem;font-weight:600;color:rgba(255,255,255,.15);letter-spacing:.1em;aspect-ratio:3/4}
 .guest-info{padding:18px 20px 22px}
@@ -376,7 +376,7 @@ ul{list-style:none}
 .sp-logo{display:flex;align-items:center;gap:11px;text-decoration:none;cursor:pointer}
 .sp-close{display:flex;align-items:center;gap:8px;background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.6);font-family:var(--f-body);font-size:.72rem;font-weight:400;letter-spacing:.12em;padding:8px 16px;border-radius:2px;cursor:pointer;transition:all .2s}
 .sp-close:hover{color:#fff;border-color:rgba(255,255,255,.4)}
-.sp-hero{position:relative;height:38vh;min-height:280px;display:flex;align-items:flex-end;overflow:hidden}
+.sp-hero{position:relative;height:22vh;min-height:180px;display:flex;align-items:flex-end;overflow:hidden}
 .sp-hero-bg{position:absolute;inset:0}
 .sp-hero-bg img{width:100%;height:100%;object-fit:cover;filter:grayscale(100%) brightness(.45)}
 .sp-hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(10,10,10,.2) 0%,rgba(10,10,10,.85) 100%)}
@@ -910,11 +910,7 @@ ul{list-style:none}
             <div class="guest-info">
               <span class="guest-name">Ivan Cutter</span>
               <span class="guest-title">Master Barber</span>
-              <div style="margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.08)">
-                <p style="font-size:.82rem;color:rgba(255,255,255,.7);line-height:1.8;margin-bottom:10px">Την πρώτη ημέρα θα διεξαχθεί Look and Learn μέσα από μια πλούσια θεωρία και δύο αναλυτικές παρουσιάσεις σε ένα short trim και ένα long trim με κυρίαρχο εργαλείο μας το ψαλίδι.</p>
-                <p style="font-size:.82rem;color:rgba(255,255,255,.55);margin-bottom:10px">⏱ Διάρκεια: 11:00–18:00</p>
-                <p style="font-size:.82rem;color:rgba(255,255,255,.7);line-height:1.8">Την δεύτερη ημέρα θα ακολουθήσει πρακτική, σε πολύ περιορισμένο αριθμό συμμετεχόντων.</p>
-              </div>
+
             </div>
           </div>
         </div>
@@ -936,10 +932,7 @@ ul{list-style:none}
           <p>Η εξειδίκευσή μου στο ψαλίδι με οδήγησε να γίνω μέλος της παγκόσμιας καλλιτεχνικής ομάδας της ιαπωνικής εταιρείας Mizutani, δίπλα σε καλλιτέχνες που θαυμάζω και εκτιμώ.</p>
           <p>Η προσέγγισή μου συνδυάζει την παράδοση με τη γεωμετρική ακρίβεια της σύγχρονης κομμωτικής, με στόχο τη βαθύτερη κατανόηση των θεμελίων που οδηγούν σε αυτοπεποίθηση, ακρίβεια και δημιουργική σκέψη.</p>
           <p>Στόχος είναι κάθε επαγγελματίας να αποκτήσει τα εργαλεία και τη γνώση ώστε να διαμορφώσει τη δική του, ξεχωριστή επαγγελματική ταυτότητα.</p>
-          <div class="sp-divider-section"></div>
-          <p>Την πρώτη ημέρα θα διεξαχθεί Look and Learn μέσα από μια πλούσια θεωρία και δύο αναλυτικές παρουσιάσεις σε ένα short trim και ένα long trim με κυρίαρχο εργαλείο μας το ψαλίδι.</p>
-          <p>Διάρκεια: 11:00–18:00.</p>
-          <p>Την δεύτερη ημέρα θα ακολουθήσει πρακτική, σε πολύ περιορισμένο αριθμό συμμετεχόντων.</p>
+
         </div>
       </div>
     </div>
