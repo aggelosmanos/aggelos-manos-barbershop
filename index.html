@@ -1172,8 +1172,15 @@ function submitForm(e){
   .then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j}})})
   .then(function(res){
     if(!res.ok){alert('⚠️ '+(res.j.error||'Σφάλμα. Δοκιμάστε ξανά.'));btn.textContent='Ολοκλήρωση Κράτησης →';btn.disabled=false;fetchAvailability();return;}
-    var timeLeft = 30 * 60;
-    success.innerHTML='<div style="margin-bottom:10px;font-size:.95rem">✓ Η θέση σας κρατήθηκε!</div><div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);padding:16px;margin:12px 0;text-align:center"><div style="font-size:.62rem;letter-spacing:.3em;color:rgba(255,255,255,.5);text-transform:uppercase;margin-bottom:6px">Ολοκληρώστε την πληρωμή εντός</div><div id="countdown-timer" style="font-family:monospace;font-size:2rem;font-weight:700;color:#fff;letter-spacing:.1em">30:00</div><div style="font-size:.72rem;color:rgba(255,255,255,.4);margin-top:4px">Μετά τη λήξη η θέση ελευθερώνεται</div></div><div style="font-size:.78rem;color:rgba(255,255,255,.55)">Μεταφορά στη σελίδα πληρωμής...</div>';
+    // Υπολογισμός χρόνου — αν επιστρέψει expires_at χρησιμοποιούμε αυτόν, αλλιώς 30 λεπτά
+    var timeLeft = res.j.expiresAt ? Math.max(0, Math.floor((res.j.expiresAt - Date.now()) / 1000)) : 30 * 60;
+    var isRedirect = res.j.redirecting || false;
+    var titleMsg = isRedirect
+      ? '↩ Υπάρχει ήδη κράτηση με αυτό το email. Σε μεταφέρω στην πληρωμή...'
+      : '✓ Η θέση σας κρατήθηκε!';
+    var m0 = Math.floor(timeLeft/60), s0 = timeLeft%60;
+    var timeStr = (m0<10?'0':'')+m0+':'+(s0<10?'0':'')+s0;
+    success.innerHTML='<div style="margin-bottom:10px;font-size:.95rem">'+titleMsg+'</div><div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);padding:16px;margin:12px 0;text-align:center"><div style="font-size:.62rem;letter-spacing:.3em;color:rgba(255,255,255,.5);text-transform:uppercase;margin-bottom:6px">Ολοκληρώστε την πληρωμή εντός</div><div id="countdown-timer" style="font-family:monospace;font-size:2rem;font-weight:700;color:#fff;letter-spacing:.1em">'+timeStr+'</div><div style="font-size:.72rem;color:rgba(255,255,255,.4);margin-top:4px">Μετά τη λήξη η θέση ελευθερώνεται</div></div><div style="font-size:.78rem;color:rgba(255,255,255,.55)">Μεταφορά στη σελίδα πληρωμής...</div>';
     success.style.display='block';btn.style.display='none';
     var countdownEl = document.getElementById('countdown-timer');
     var countdownInterval = setInterval(function(){

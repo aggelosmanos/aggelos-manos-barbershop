@@ -341,7 +341,7 @@ app.post('/api/create-booking', rateLimit(60_000, 5), async (req, res) => {
           try {
             const existingSession = await stripe.checkout.sessions.retrieve(existing.stripe_session_id);
             if (existingSession.status === 'open') {
-              return res.json({ sessionUrl: existingSession.url, bookingId: existing.id });
+              return res.json({ sessionUrl: existingSession.url, bookingId: existing.id, redirecting: true, expiresAt: Number(existing.expires_at) });
             }
           } catch(e) {}
         }
@@ -365,7 +365,7 @@ app.post('/api/create-booking', rateLimit(60_000, 5), async (req, res) => {
           payment_intent_data: { description: `Κράτηση #${existing.id}`, metadata: { bookingId: existing.id } },
         });
         await pool.query('UPDATE bookings SET stripe_session_id=$1 WHERE id=$2', [renewedSession.id, existing.id]);
-        return res.json({ sessionUrl: renewedSession.url, bookingId: existing.id });
+        return res.json({ sessionUrl: renewedSession.url, bookingId: existing.id, redirecting: true, expiresAt: newExpiresAt });
       }
     }
 
