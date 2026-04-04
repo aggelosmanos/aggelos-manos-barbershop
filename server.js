@@ -329,9 +329,53 @@ app.post('/api/create-booking', rateLimit(60_000, 5), async (req, res) => {
         return res.status(409).json({ error: msg });
       }
       if (result.reason === 'duplicate') {
-        return res.status(409).json({
-          error: `Υπάρχει ήδη κράτηση για αυτό το email (${result.bookingId}).`
+        // Βρες το υπάρχον Stripe session URL και στείλε τον πελάτη εκεί
+        const existingRes = await pool.query(
+          'SELECT stripe_session_id FROM bookings WHERE id = $1',
+          [result.bookingId]
+        );
+        const existing = existingRes.rows[0];
+        if (existing?.stripe_session_id) {
+          try {
+            const session = await stripe.checkout.sessions.retrieve(existing.stripe_session_id);
+            if (session.status === 'open') {
+              return res.json({ sessionUrl: session.url, bookingId: result.bookingId });
+            }
+          } catch(e) {}
+        }
+        // Αν το session έχει λήξει, ακύρωσε την παλιά κράτηση και συνέχισε
+        await pool.query(
+          `UPDATE bookings SET status='cancelled', cancelled_at=$1, cancel_reason='resubmit'
+           WHERE id=$2`,
+          [Date.now(), result.bookingId]
+        );
+        // Επανάληψη με νέα κράτηση — κάλεσε ξανά το reserveSeats
+        const newBookingId = generateBookingId();
+        const newExpiresAt = Date.now() + CONFIG.TIMEOUT_MINUTES * 60_000;
+        const newResult = await reserveSeats(
+          newBookingId, name.trim(), email.trim(), phone.trim(),
+          seminar, message?.trim(), seminarDef.amount, newExpiresAt
+        );
+        if (!newResult.ok) {
+          return res.status(409).json({ error: 'Δεν υπάρχουν διαθέσιμες θέσεις.' });
+        }
+        // Συνέχεια με το νέο bookingId
+        Object.assign(result, newResult);
+        Object.assign({ bookingId: newBookingId }, { bookingId: newBookingId });
+        // Χρησιμοποιούμε νέο bookingId για το Stripe
+        const newSession = await stripe.checkout.sessions.create({
+          payment_method_types: ['card'],
+          mode: 'payment',
+          line_items: [{ price_data: { currency: 'eur', product_data: { name: `Σεμινάριο: ${seminarDef.label}`, description: `Κράτηση #${newBookingId} — Aggelos Manos Mens Salon` }, unit_amount: seminarDef.amount }, quantity: 1 }],
+          customer_email: email,
+          metadata: { bookingId: newBookingId, name, phone, seminar },
+          success_url: `${CONFIG.FRONTEND_URL}/success.html?session_id={CHECKOUT_SESSION_ID}&booking_id=${newBookingId}`,
+          cancel_url: `${CONFIG.FRONTEND_URL}/?cancelled=1#booking-seminar`,
+          expires_at: Math.floor(newExpiresAt / 1000),
+          payment_intent_data: { description: `Κράτηση #${newBookingId}`, metadata: { bookingId: newBookingId } },
         });
+        await pool.query('UPDATE bookings SET stripe_session_id = $1 WHERE id = $2', [newSession.id, newBookingId]);
+        return res.json({ sessionUrl: newSession.url, bookingId: newBookingId });
       }
     }
 
