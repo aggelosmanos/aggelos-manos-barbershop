@@ -33,6 +33,12 @@
   .pin-saved-notice{font-size:.7rem;color:rgba(0,200,100,.7);letter-spacing:.1em;margin-top:6px;display:none}
   .forget-pin{font-size:.65rem;color:rgba(255,255,255,.25);cursor:pointer;text-decoration:underline;text-align:right;margin-top:4px;display:none}
   .forget-pin:hover{color:rgba(255,100,100,.6)}
+  .scanner-wrap{display:none;margin-top:16px;position:relative;border-radius:2px;overflow:hidden;border:1px solid rgba(255,255,255,.15)}
+  .scanner-wrap video{width:100%;display:block;max-height:260px;object-fit:cover}
+  .scanner-line{position:absolute;top:0;left:0;right:0;height:2px;background:rgba(255,255,255,.6);animation:scan 2s linear infinite;pointer-events:none}
+  @keyframes scan{0%{top:0}100%{top:100%}}
+  .scanner-close{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center}
+  .scanner-hint{font-size:.65rem;color:rgba(255,255,255,.3);text-align:center;margin-top:8px;letter-spacing:.1em}
 </style>
 </head>
 <body>
@@ -51,7 +57,15 @@
       <input type="text" id="bookingId" placeholder="π.χ. AM-3A389F" style="text-transform:uppercase"/>
     </div>
     <button onclick="verify()">Επαλήθευση →</button>
-    <button class="scan-btn" onclick="scanQR()">📷 Σκανάρισμα QR</button>
+    <button class="scan-btn" onclick="startScanner()">📷 Σκανάρισμα QR</button>
+
+    <!-- QR Scanner -->
+    <div class="scanner-wrap" id="scannerWrap">
+      <video id="scannerVideo" autoplay playsinline muted></video>
+      <div class="scanner-line"></div>
+      <button class="scanner-close" onclick="stopScanner()">✕</button>
+    </div>
+    <p class="scanner-hint" id="scannerHint" style="display:none">Στόχευσε το QR code...</p>
 
     <div class="result" id="result">
       <div class="result-icon" id="resultIcon"></div>
@@ -60,19 +74,22 @@
     </div>
   </div>
 
+<!-- jsQR library για ανάγνωση QR -->
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
 <script>
 const API = 'https://aggelos-manos-barbershop-production.up.railway.app';
 const PIN_KEY = 'am_verify_pin';
+
+let scannerStream = null;
+let scannerInterval = null;
 
 // --- PIN αποθήκευση ---
 function getSavedPin() {
   return localStorage.getItem(PIN_KEY) || '';
 }
-
 function savePin(pin) {
   localStorage.setItem(PIN_KEY, pin);
 }
-
 function forgetSavedPin() {
   localStorage.removeItem(PIN_KEY);
   const pinInput = document.getElementById('pinInput');
@@ -87,48 +104,104 @@ function forgetSavedPin() {
 window.addEventListener('DOMContentLoaded', () => {
   const saved = getSavedPin();
   const pinInput = document.getElementById('pinInput');
-
   if (saved) {
-    // Έχουμε αποθηκευμένο PIN — κρύβουμε το input, δείχνουμε notice
     pinInput.value = saved;
     pinInput.style.display = 'none';
     document.getElementById('pinSavedNotice').style.display = 'block';
     document.getElementById('forgetPin').style.display = 'block';
   }
-
-  // Auto-fill από URL param ?id=AM-XXXX
   const params = new URLSearchParams(window.location.search);
   const idParam = params.get('id');
   if (idParam) {
     document.getElementById('bookingId').value = idParam.toUpperCase();
-    // Αν έχουμε και PIN αποθηκευμένο, κάνε αυτόματα verify!
-    if (saved) {
-      verify();
-    }
+    if (saved) verify();
   }
 });
+
+// --- QR Scanner ---
+async function startScanner() {
+  const wrap = document.getElementById('scannerWrap');
+  const video = document.getElementById('scannerVideo');
+  const hint = document.getElementById('scannerHint');
+
+  try {
+    scannerStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: 'environment' } // πίσω κάμερα
+    });
+    video.srcObject = scannerStream;
+    wrap.style.display = 'block';
+    hint.style.display = 'block';
+
+    // Διαβάζουμε frames κάθε 300ms
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    scannerInterval = setInterval(() => {
+      if (video.readyState === video.HAVE_ENOUGH_DATA) {
+        canvas.width  = video.videoWidth;
+        canvas.height = video.videoHeight;
+        ctx.drawImage(video, 0, 0);
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const code = jsQR(imageData.data, imageData.width, imageData.height);
+        if (code) {
+          handleQRResult(code.data);
+        }
+      }
+    }, 300);
+
+  } catch(e) {
+    alert('Δεν επιτράπηκε η πρόσβαση στην κάμερα. Έλεγξε τις ρυθμίσεις του browser.');
+  }
+}
+
+function stopScanner() {
+  if (scannerStream) {
+    scannerStream.getTracks().forEach(t => t.stop());
+    scannerStream = null;
+  }
+  if (scannerInterval) {
+    clearInterval(scannerInterval);
+    scannerInterval = null;
+  }
+  document.getElementById('scannerWrap').style.display = 'none';
+  document.getElementById('scannerHint').style.display = 'none';
+}
+
+function handleQRResult(data) {
+  stopScanner();
+  // Βγάζουμε το ?id=AM-XXXX από το URL του QR
+  try {
+    const url = new URL(data);
+    const id = url.searchParams.get('id');
+    if (id) {
+      document.getElementById('bookingId').value = id.toUpperCase();
+      verify();
+      return;
+    }
+  } catch(e) {}
+  // Αν το QR είναι απευθείας ο κωδικός (π.χ. AM-3A389F)
+  if (data.startsWith('AM-')) {
+    document.getElementById('bookingId').value = data.toUpperCase();
+    verify();
+  } else {
+    alert('Δεν αναγνωρίστηκε έγκυρο QR κράτησης.');
+  }
+}
 
 // --- Verify ---
 async function verify() {
   const pin = document.getElementById('pinInput').value.trim() || getSavedPin();
   const id  = document.getElementById('bookingId').value.trim().toUpperCase();
-
   if (!pin) { alert('Βάλε PIN πρόσβασης'); return; }
   if (!id)  { alert('Βάλε κωδικό κράτησης'); return; }
-
   try {
     const res  = await fetch(`${API}/api/verify/${id}?pin=${encodeURIComponent(pin)}`);
     const data = await res.json();
-
     if (data.valid) {
-      // Αποθήκευσε το PIN μόνο αν είναι σωστό
       savePin(pin);
-      // Κρύψε το input, δείξε notice
       document.getElementById('pinInput').style.display = 'none';
       document.getElementById('pinSavedNotice').style.display = 'block';
       document.getElementById('forgetPin').style.display = 'block';
     }
-
     showResult(data);
   } catch(e) {
     alert('Σφάλμα σύνδεσης. Δοκίμασε ξανά.');
@@ -138,7 +211,6 @@ async function verify() {
 function showResult(data) {
   const el = document.getElementById('result');
   el.style.display = 'block';
-
   if (data.valid) {
     el.className = 'result valid';
     document.getElementById('resultIcon').textContent  = '✅';
@@ -159,11 +231,6 @@ function showResult(data) {
   }
 }
 
-function scanQR() {
-  alert('Σκανάρισε το QR με την κάμερα του κινητού — ανοίγει αυτή τη σελίδα αυτόματα με τον κωδικό συμπληρωμένο!');
-}
-
-// Enter key
 document.addEventListener('keydown', e => { if (e.key === 'Enter') verify(); });
 </script>
 </body>
