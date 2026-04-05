@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Επαλήθευση Κράτησης — Artistic Minds</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Cinzel:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{background:#0a0a0a;color:#f0ebe0;font-family:'Outfit',sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
+  .logo{width:80px;height:80px;border-radius:50%;object-fit:cover;margin-bottom:20px}
+  h1{font-family:'Cinzel',serif;font-size:1.1rem;letter-spacing:.2em;color:#fff;margin-bottom:32px;text-align:center}
+  .card{background:#111;border:1px solid rgba(255,255,255,.1);max-width:400px;width:100%;padding:32px;border-radius:2px}
+  .pin-group{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+  label{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+  input{background:#1a1a1a;border:1px solid rgba(255,255,255,.15);color:#fff;padding:12px 16px;font-family:'Outfit',sans-serif;font-size:.95rem;width:100%;outline:none;border-radius:2px}
+  input:focus{border-color:rgba(255,255,255,.4)}
+  button{width:100%;padding:14px;background:#fff;color:#0a0a0a;font-family:'Outfit',sans-serif;font-size:.75rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;border:none;cursor:pointer;border-radius:2px;margin-top:8px;transition:background .2s}
+  button:hover{background:#e0e0e0}
+  .result{margin-top:24px;padding:20px;border-radius:2px;display:none}
+  .result.valid{background:rgba(0,200,100,.08);border:1px solid rgba(0,200,100,.3)}
+  .result.invalid{background:rgba(255,50,50,.08);border:1px solid rgba(255,50,50,.3)}
+  .result-icon{font-size:2.5rem;text-align:center;margin-bottom:12px}
+  .result-title{font-family:'Cinzel',serif;font-size:1.1rem;text-align:center;margin-bottom:16px}
+  .result.valid .result-title{color:#00c864}
+  .result.invalid .result-title{color:#ff3232}
+  .detail-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:.85rem}
+  .detail-row:last-child{border-bottom:none}
+  .detail-label{color:rgba(255,255,255,.4)}
+  .detail-val{color:#fff;font-weight:500}
+  .scan-btn{margin-top:16px;background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7)}
+  .scan-btn:hover{background:rgba(255,255,255,.05)}
+</style>
+</head>
+<body>
+  <img src="images/artistic-minds.jpg" alt="Artistic Minds" class="logo"/>
+  <h1>ΕΠΑΛΗΘΕΥΣΗ ΚΡΑΤΗΣΗΣ</h1>
+
+  <div class="card">
+    <div class="pin-group">
+      <label>PIN Πρόσβασης</label>
+      <input type="password" id="pinInput" placeholder="••••" maxlength="10"/>
+    </div>
+    <div class="pin-group">
+      <label>Κωδικός Κράτησης</label>
+      <input type="text" id="bookingId" placeholder="π.χ. AM-3A389F" style="text-transform:uppercase"/>
+    </div>
+    <button onclick="verify()">Επαλήθευση →</button>
+    <button class="scan-btn" onclick="scanQR()">📷 Σκανάρισμα QR</button>
+
+    <div class="result" id="result">
+      <div class="result-icon" id="resultIcon"></div>
+      <div class="result-title" id="resultTitle"></div>
+      <div id="resultDetails"></div>
+    </div>
+  </div>
+
+<script>
+const API = 'https://aggelos-manos-barbershop-production.up.railway.app';
+
+// Auto-fill από URL param ?id=AM-XXXX
+const params = new URLSearchParams(window.location.search);
+if (params.get('id')) {
+  document.getElementById('bookingId').value = params.get('id').toUpperCase();
+}
+
+async function verify() {
+  const pin = document.getElementById('pinInput').value.trim();
+  const id  = document.getElementById('bookingId').value.trim().toUpperCase();
+
+  if (!pin) { alert('Βάλε PIN πρόσβασης'); return; }
+  if (!id)  { alert('Βάλε κωδικό κράτησης'); return; }
+
+  try {
+    const res  = await fetch(`${API}/api/verify/${id}?pin=${encodeURIComponent(pin)}`);
+    const data = await res.json();
+    showResult(data);
+  } catch(e) {
+    alert('Σφάλμα σύνδεσης. Δοκίμασε ξανά.');
+  }
+}
+
+function showResult(data) {
+  const el = document.getElementById('result');
+  el.style.display = 'block';
+
+  if (data.valid) {
+    el.className = 'result valid';
+    document.getElementById('resultIcon').textContent  = '✅';
+    document.getElementById('resultTitle').textContent = 'ΕΓΚΥΡΗ ΚΡΑΤΗΣΗ';
+    document.getElementById('resultDetails').innerHTML = `
+      <div class="detail-row"><span class="detail-label">Κωδικός</span><span class="detail-val">${data.id}</span></div>
+      <div class="detail-row"><span class="detail-label">Όνομα</span><span class="detail-val">${data.name}</span></div>
+      <div class="detail-row"><span class="detail-label">Σεμινάριο</span><span class="detail-val">${data.seminar}</span></div>
+      <div class="detail-row"><span class="detail-label">Ποσό</span><span class="detail-val">${data.amount}</span></div>
+    `;
+  } else {
+    el.className = 'result invalid';
+    document.getElementById('resultIcon').textContent  = '❌';
+    document.getElementById('resultTitle').textContent = data.error || 'ΜΗ ΕΓΚΥΡΗ ΚΡΑΤΗΣΗ';
+    document.getElementById('resultDetails').innerHTML = data.status
+      ? `<div class="detail-row"><span class="detail-label">Status</span><span class="detail-val">${data.status}</span></div>`
+      : '';
+  }
+}
+
+function scanQR() {
+  alert('Για σκανάρισμα QR χρησιμοποίησε την κάμερα του κινητού σου — το QR ανοίγει αυτή τη σελίδα αυτόματα με τον κωδικό συμπληρωμένο!');
+}
+
+// Enter key
+document.addEventListener('keydown', e => { if (e.key === 'Enter') verify(); });
+</script>
+</body>
+</html>

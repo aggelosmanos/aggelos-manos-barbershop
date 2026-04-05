@@ -203,13 +203,23 @@ async function sendConfirmationEmail(booking) {
           <img src="https://aggelosmanosmenssalon.gr/images/artistic-minds.jpg" alt="Artistic Minds Seminars" style="width:100px;height:100px;border-radius:50%;object-fit:cover;display:inline-block"/>
         </div>
         <h2 style="color:#fff">✓ Η κράτησή σας επιβεβαιώθηκε!</h2>
+        <div style="text-align:center;margin:24px 0;padding:20px;background:#111;border:1px solid #333;border-radius:4px">
+          <p style="font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px">Εισιτήριο Εισόδου</p>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://aggelosmanosmenssalon.gr/verify.html?id=${booking.id}&bgcolor=111111&color=ffffff&margin=10" alt="QR Code" style="display:inline-block;border-radius:4px"/>
+          <p style="font-family:monospace;font-size:1.1rem;font-weight:700;color:#fff;letter-spacing:.15em;margin-top:12px">${booking.id}</p>
+          <p style="font-size:.72rem;color:rgba(255,255,255,.35);margin-top:6px">Παρουσιάστε αυτό το QR code την ημέρα του σεμιναρίου</p>
+        </div>
         <table style="width:100%;margin-top:20px">
           <tr><td style="color:#888;padding:6px 0">Κωδικός</td>   <td style="color:#fff;font-weight:bold">${booking.id}</td></tr>
           <tr><td style="color:#888;padding:6px 0">Σεμινάριο</td> <td style="color:#fff">${booking.seminar}</td></tr>
           <tr><td style="color:#888;padding:6px 0">Όνομα</td>     <td style="color:#fff">${booking.name}</td></tr>
           <tr><td style="color:#888;padding:6px 0">Ποσό</td>      <td style="color:#fff">${(booking.amount_cents/100).toFixed(2)}€</td></tr>
         </table>
-        <p style="margin-top:24px;color:#888;font-size:13px">Για περισσότερες πληροφορίες καλέστε στο 6987 033949</p>
+        <div style="margin-top:24px;padding-top:20px;border-top:1px solid #222">
+          <p style="font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:10px">Πολιτική Σεμιναρίου</p>
+          <p style="font-size:.78rem;color:#666;line-height:1.8">Οι κρατήσεις πραγματοποιούνται κατόπιν προκαταβολής, η οποία καταβάλλεται κατά την επιβεβαίωση της κράτησης. Το υπόλοιπο ποσό εξοφλείται την ημέρα της παροχής της υπηρεσίας σε μετρητά.</p>
+        </div>
+        <p style="margin-top:16px;color:#888;font-size:13px">Για περισσότερες πληροφορίες καλέστε στο 6987 033949</p>
       </div>
     `,
   });
@@ -473,6 +483,31 @@ app.get('/api/booking-status/:id', rateLimit(10_000, 20), async (req, res) => {
   `, [id]);
   if (!result.rows[0]) return res.status(404).json({ error: 'Not found' });
   res.json(result.rows[0]);
+});
+
+/**
+ * GET /api/verify/:id?pin=XXXX
+ * Επαλήθευση κράτησης για σκανάρισμα QR
+ */
+app.get('/api/verify/:id', async (req, res) => {
+  const pin = req.query.pin;
+  if (pin !== process.env.VERIFY_PIN) {
+    return res.status(401).json({ error: 'Μη εξουσιοδοτημένη πρόσβαση.' });
+  }
+  const id = req.params.id.replace(/[^A-Z0-9\-]/g, '').slice(0, 20);
+  const result = await pool.query(`
+    SELECT id, name, seminar, status, confirmed_at, amount_cents FROM bookings WHERE id = $1
+  `, [id]);
+  if (!result.rows[0]) return res.status(404).json({ valid: false, error: 'Δεν βρέθηκε κράτηση.' });
+  const b = result.rows[0];
+  res.json({
+    valid: b.status === 'confirmed',
+    id: b.id,
+    name: b.name,
+    seminar: b.seminar,
+    status: b.status,
+    amount: (b.amount_cents / 100).toFixed(2) + '€',
+  });
 });
 
 // ─── START ────────────────────────────────────────────────────────────────────
