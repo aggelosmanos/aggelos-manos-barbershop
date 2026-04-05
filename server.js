@@ -206,7 +206,7 @@ async function sendConfirmationEmail(booking) {
           <tr><td style="color:#888;padding:6px 0">Όνομα</td>     <td style="color:#fff">${booking.name}</td></tr>
           <tr><td style="color:#888;padding:6px 0">Ποσό</td>      <td style="color:#fff">${(booking.amount_cents/100).toFixed(2)}€</td></tr>
         </table>
-        <p style="margin-top:24px;color:#888;font-size:13px">Αθηνών 33, Αλμυρός · 6987 033949</p>
+        <p style="margin-top:24px;color:#888;font-size:13px">Για περισσότερες πληροφορίες καλέστε στο 6987 033949</p>
       </div>
     `,
   });
