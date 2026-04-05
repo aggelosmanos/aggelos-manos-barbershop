@@ -30,7 +30,7 @@ const CONFIG = {
 const SEMINARS = {
   'Look & Learn': {
     label:           'Look & Learn',
-    amount:          3000,          // 30.00€ προπληρωμή
+    amount:          50,          // 30.00€ προπληρωμή
     seats_key:       'look_and_learn',
     also_decrements: [],
   },
