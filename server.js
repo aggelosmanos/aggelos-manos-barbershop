@@ -147,18 +147,6 @@ async function reserveSeats(bookingId, name, email, phone, seminar, message, amo
       }
     }
 
-    // 2. Anti-double-booking
-    const existingRes = await client.query(`
-      SELECT id FROM bookings
-      WHERE email = $1 AND seminar = $2 AND status IN ('pending','confirmed')
-      AND created_at > $3
-    `, [email, seminar, now - 24 * 60 * 60 * 1000]);
-
-    if (existingRes.rows.length > 0) {
-      await client.query('ROLLBACK');
-      return { ok: false, reason: 'duplicate', bookingId: existingRes.rows[0].id };
-    }
-
     // 3. Insert κράτηση
     await client.query(`
       INSERT INTO bookings
