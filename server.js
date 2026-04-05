@@ -30,7 +30,7 @@ const CONFIG = {
 const SEMINARS = {
   'Look & Learn': {
     label:           'Look & Learn',
-    amount:          50,          // 100.00€
+    amount:          8000,          // 100.00€
     seats_key:       'look_and_learn',
     also_decrements: [],
   },
@@ -199,6 +199,9 @@ async function sendConfirmationEmail(booking) {
     subject: `✓ Επιβεβαίωση Κράτησης ${booking.id}`,
     html: `
       <div style="font-family:sans-serif;max-width:500px;margin:0 auto;padding:32px;background:#0a0a0a;color:#f0ebe0;border:1px solid #333">
+        <div style="text-align:center;margin-bottom:24px">
+          <img src="https://aggelosmanosmenssalon.gr/images/artistic-minds.jpg" alt="Artistic Minds Seminars" style="width:100px;height:100px;border-radius:50%;object-fit:cover;display:inline-block"/>
+        </div>
         <h2 style="color:#fff">✓ Η κράτησή σας επιβεβαιώθηκε!</h2>
         <table style="width:100%;margin-top:20px">
           <tr><td style="color:#888;padding:6px 0">Κωδικός</td>   <td style="color:#fff;font-weight:bold">${booking.id}</td></tr>
