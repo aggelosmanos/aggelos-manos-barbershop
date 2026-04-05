@@ -28,8 +28,11 @@
   .detail-row:last-child{border-bottom:none}
   .detail-label{color:rgba(255,255,255,.4)}
   .detail-val{color:#fff;font-weight:500}
-  .scan-btn{margin-top:16px;background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7)}
+  .scan-btn{margin-top:8px;background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7)}
   .scan-btn:hover{background:rgba(255,255,255,.05)}
+  .pin-saved-notice{font-size:.7rem;color:rgba(0,200,100,.7);letter-spacing:.1em;margin-top:6px;display:none}
+  .forget-pin{font-size:.65rem;color:rgba(255,255,255,.25);cursor:pointer;text-decoration:underline;text-align:right;margin-top:4px;display:none}
+  .forget-pin:hover{color:rgba(255,100,100,.6)}
 </style>
 </head>
 <body>
@@ -37,9 +40,11 @@
   <h1>ΕΠΑΛΗΘΕΥΣΗ ΚΡΑΤΗΣΗΣ</h1>
 
   <div class="card">
-    <div class="pin-group">
+    <div class="pin-group" id="pinGroup">
       <label>PIN Πρόσβασης</label>
-      <input type="password" id="pinInput" placeholder="••••" maxlength="10"/>
+      <input type="password" id="pinInput" placeholder="••••" maxlength="20"/>
+      <span class="pin-saved-notice" id="pinSavedNotice">✓ PIN αποθηκευμένο</span>
+      <span class="forget-pin" id="forgetPin" onclick="forgetSavedPin()">Αλλαγή PIN</span>
     </div>
     <div class="pin-group">
       <label>Κωδικός Κράτησης</label>
@@ -57,15 +62,55 @@
 
 <script>
 const API = 'https://aggelos-manos-barbershop-production.up.railway.app';
+const PIN_KEY = 'am_verify_pin';
 
-// Auto-fill από URL param ?id=AM-XXXX
-const params = new URLSearchParams(window.location.search);
-if (params.get('id')) {
-  document.getElementById('bookingId').value = params.get('id').toUpperCase();
+// --- PIN αποθήκευση ---
+function getSavedPin() {
+  return localStorage.getItem(PIN_KEY) || '';
 }
 
+function savePin(pin) {
+  localStorage.setItem(PIN_KEY, pin);
+}
+
+function forgetSavedPin() {
+  localStorage.removeItem(PIN_KEY);
+  const pinInput = document.getElementById('pinInput');
+  pinInput.value = '';
+  pinInput.style.display = 'block';
+  document.getElementById('pinSavedNotice').style.display = 'none';
+  document.getElementById('forgetPin').style.display = 'none';
+  pinInput.focus();
+}
+
+// --- Αρχικοποίηση ---
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = getSavedPin();
+  const pinInput = document.getElementById('pinInput');
+
+  if (saved) {
+    // Έχουμε αποθηκευμένο PIN — κρύβουμε το input, δείχνουμε notice
+    pinInput.value = saved;
+    pinInput.style.display = 'none';
+    document.getElementById('pinSavedNotice').style.display = 'block';
+    document.getElementById('forgetPin').style.display = 'block';
+  }
+
+  // Auto-fill από URL param ?id=AM-XXXX
+  const params = new URLSearchParams(window.location.search);
+  const idParam = params.get('id');
+  if (idParam) {
+    document.getElementById('bookingId').value = idParam.toUpperCase();
+    // Αν έχουμε και PIN αποθηκευμένο, κάνε αυτόματα verify!
+    if (saved) {
+      verify();
+    }
+  }
+});
+
+// --- Verify ---
 async function verify() {
-  const pin = document.getElementById('pinInput').value.trim();
+  const pin = document.getElementById('pinInput').value.trim() || getSavedPin();
   const id  = document.getElementById('bookingId').value.trim().toUpperCase();
 
   if (!pin) { alert('Βάλε PIN πρόσβασης'); return; }
@@ -74,6 +119,16 @@ async function verify() {
   try {
     const res  = await fetch(`${API}/api/verify/${id}?pin=${encodeURIComponent(pin)}`);
     const data = await res.json();
+
+    if (data.valid) {
+      // Αποθήκευσε το PIN μόνο αν είναι σωστό
+      savePin(pin);
+      // Κρύψε το input, δείξε notice
+      document.getElementById('pinInput').style.display = 'none';
+      document.getElementById('pinSavedNotice').style.display = 'block';
+      document.getElementById('forgetPin').style.display = 'block';
+    }
+
     showResult(data);
   } catch(e) {
     alert('Σφάλμα σύνδεσης. Δοκίμασε ξανά.');
@@ -105,7 +160,7 @@ function showResult(data) {
 }
 
 function scanQR() {
-  alert('Για σκανάρισμα QR χρησιμοποίησε την κάμερα του κινητού σου — το QR ανοίγει αυτή τη σελίδα αυτόματα με τον κωδικό συμπληρωμένο!');
+  alert('Σκανάρισε το QR με την κάμερα του κινητού — ανοίγει αυτή τη σελίδα αυτόματα με τον κωδικό συμπληρωμένο!');
 }
 
 // Enter key
