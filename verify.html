@@ -33,12 +33,14 @@
   .pin-saved-notice{font-size:.7rem;color:rgba(0,200,100,.7);letter-spacing:.1em;margin-top:6px;display:none}
   .forget-pin{font-size:.65rem;color:rgba(255,255,255,.25);cursor:pointer;text-decoration:underline;text-align:right;margin-top:4px;display:none}
   .forget-pin:hover{color:rgba(255,100,100,.6)}
-  .scanner-wrap{display:none;margin-top:16px;position:relative;border-radius:2px;overflow:hidden;border:1px solid rgba(255,255,255,.15)}
-  .scanner-wrap video{width:100%;display:block;max-height:260px;object-fit:cover}
-  .scanner-line{position:absolute;top:0;left:0;right:0;height:2px;background:rgba(255,255,255,.6);animation:scan 2s linear infinite;pointer-events:none}
-  @keyframes scan{0%{top:0}100%{top:100%}}
-  .scanner-close{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center}
-  .scanner-hint{font-size:.65rem;color:rgba(255,255,255,.3);text-align:center;margin-top:8px;letter-spacing:.1em}
+  .scanner-wrap{display:none;margin-top:16px;position:relative;border-radius:2px;overflow:hidden;background:#000}
+  .scanner-wrap video{width:100%;display:block;height:280px;object-fit:cover}
+  .scanner-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+  .scanner-box{width:180px;height:180px;border:2px solid rgba(255,255,255,.8);border-radius:4px;box-shadow:0 0 0 9999px rgba(0,0,0,.45)}
+  .scanner-line{position:absolute;left:50%;transform:translateX(-50%);width:180px;height:2px;background:rgba(255,200,0,.8);animation:scan 1.8s ease-in-out infinite}
+  @keyframes scan{0%{top:calc(50% - 90px)}100%{top:calc(50% + 88px)}}
+  .scanner-close{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.65);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;pointer-events:all}
+  .scanner-hint{font-size:.65rem;color:rgba(255,255,255,.35);text-align:center;margin-top:8px;letter-spacing:.1em;display:none}
 </style>
 </head>
 <body>
@@ -57,15 +59,17 @@
       <input type="text" id="bookingId" placeholder="π.χ. AM-3A389F" style="text-transform:uppercase"/>
     </div>
     <button onclick="verify()">Επαλήθευση →</button>
-    <button class="scan-btn" onclick="startScanner()">📷 Σκανάρισμα QR</button>
+    <button class="scan-btn" id="scanBtn" onclick="startScanner()">📷 Σκανάρισμα QR</button>
 
-    <!-- QR Scanner -->
     <div class="scanner-wrap" id="scannerWrap">
       <video id="scannerVideo" autoplay playsinline muted></video>
-      <div class="scanner-line"></div>
+      <div class="scanner-overlay">
+        <div class="scanner-box"></div>
+        <div class="scanner-line"></div>
+      </div>
       <button class="scanner-close" onclick="stopScanner()">✕</button>
     </div>
-    <p class="scanner-hint" id="scannerHint" style="display:none">Στόχευσε το QR code...</p>
+    <p class="scanner-hint" id="scannerHint">Στόχευσε το QR μέσα στο τετράγωνο</p>
 
     <div class="result" id="result">
       <div class="result-icon" id="resultIcon"></div>
@@ -74,39 +78,35 @@
     </div>
   </div>
 
-<!-- jsQR library για ανάγνωση QR -->
-<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 <script>
 const API = 'https://aggelos-manos-barbershop-production.up.railway.app';
 const PIN_KEY = 'am_verify_pin';
 
 let scannerStream = null;
-let scannerInterval = null;
+let animFrame = null;
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d', { willReadFrequently: true });
 
-// --- PIN αποθήκευση ---
-function getSavedPin() {
-  return localStorage.getItem(PIN_KEY) || '';
-}
-function savePin(pin) {
-  localStorage.setItem(PIN_KEY, pin);
-}
+function getSavedPin() { return localStorage.getItem(PIN_KEY) || ''; }
+function savePin(pin)  { localStorage.setItem(PIN_KEY, pin); }
+
 function forgetSavedPin() {
   localStorage.removeItem(PIN_KEY);
-  const pinInput = document.getElementById('pinInput');
-  pinInput.value = '';
-  pinInput.style.display = 'block';
+  const p = document.getElementById('pinInput');
+  p.value = '';
+  p.style.display = 'block';
   document.getElementById('pinSavedNotice').style.display = 'none';
   document.getElementById('forgetPin').style.display = 'none';
-  pinInput.focus();
+  p.focus();
 }
 
-// --- Αρχικοποίηση ---
 window.addEventListener('DOMContentLoaded', () => {
   const saved = getSavedPin();
-  const pinInput = document.getElementById('pinInput');
   if (saved) {
-    pinInput.value = saved;
-    pinInput.style.display = 'none';
+    const p = document.getElementById('pinInput');
+    p.value = saved;
+    p.style.display = 'none';
     document.getElementById('pinSavedNotice').style.display = 'block';
     document.getElementById('forgetPin').style.display = 'block';
   }
@@ -118,49 +118,61 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// --- QR Scanner ---
+// ── QR Scanner ──────────────────────────────────────────
 async function startScanner() {
-  const wrap = document.getElementById('scannerWrap');
   const video = document.getElementById('scannerVideo');
-  const hint = document.getElementById('scannerHint');
+  const wrap  = document.getElementById('scannerWrap');
+  const hint  = document.getElementById('scannerHint');
 
   try {
+    // Ζητάμε πίσω κάμερα με υψηλή ανάλυση για καλύτερη ανάγνωση QR
     scannerStream = await navigator.mediaDevices.getUserMedia({
-      video: { facingMode: 'environment' } // πίσω κάμερα
+      video: {
+        facingMode: { ideal: 'environment' },
+        width:  { ideal: 1280 },
+        height: { ideal: 720 }
+      }
     });
     video.srcObject = scannerStream;
+    await video.play();
+
     wrap.style.display = 'block';
     hint.style.display = 'block';
 
-    // Διαβάζουμε frames κάθε 300ms
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    scannerInterval = setInterval(() => {
-      if (video.readyState === video.HAVE_ENOUGH_DATA) {
-        canvas.width  = video.videoWidth;
-        canvas.height = video.videoHeight;
-        ctx.drawImage(video, 0, 0);
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const code = jsQR(imageData.data, imageData.width, imageData.height);
-        if (code) {
-          handleQRResult(code.data);
-        }
-      }
-    }, 300);
-
+    requestAnimationFrame(scanFrame);
   } catch(e) {
-    alert('Δεν επιτράπηκε η πρόσβαση στην κάμερα. Έλεγξε τις ρυθμίσεις του browser.');
+    alert('Δεν επιτράπηκε η πρόσβαση στην κάμερα.');
   }
 }
 
+function scanFrame() {
+  const video = document.getElementById('scannerVideo');
+  if (!scannerStream) return;
+
+  if (video.readyState === video.HAVE_ENOUGH_DATA && video.videoWidth > 0) {
+    canvas.width  = video.videoWidth;
+    canvas.height = video.videoHeight;
+    ctx.drawImage(video, 0, 0);
+
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const code = jsQR(imageData.data, imageData.width, imageData.height, {
+      inversionAttempts: 'dontInvert'
+    });
+
+    if (code && code.data) {
+      handleQRResult(code.data);
+      return; // σταματάμε το loop
+    }
+  }
+
+  animFrame = requestAnimationFrame(scanFrame);
+}
+
 function stopScanner() {
+  if (animFrame) { cancelAnimationFrame(animFrame); animFrame = null; }
   if (scannerStream) {
     scannerStream.getTracks().forEach(t => t.stop());
     scannerStream = null;
-  }
-  if (scannerInterval) {
-    clearInterval(scannerInterval);
-    scannerInterval = null;
   }
   document.getElementById('scannerWrap').style.display = 'none';
   document.getElementById('scannerHint').style.display = 'none';
@@ -168,18 +180,16 @@ function stopScanner() {
 
 function handleQRResult(data) {
   stopScanner();
-  // Βγάζουμε το ?id=AM-XXXX από το URL του QR
   try {
     const url = new URL(data);
-    const id = url.searchParams.get('id');
+    const id  = url.searchParams.get('id');
     if (id) {
       document.getElementById('bookingId').value = id.toUpperCase();
       verify();
       return;
     }
   } catch(e) {}
-  // Αν το QR είναι απευθείας ο κωδικός (π.χ. AM-3A389F)
-  if (data.startsWith('AM-')) {
+  if (/^AM-/i.test(data)) {
     document.getElementById('bookingId').value = data.toUpperCase();
     verify();
   } else {
@@ -187,7 +197,7 @@ function handleQRResult(data) {
   }
 }
 
-// --- Verify ---
+// ── Verify ──────────────────────────────────────────────
 async function verify() {
   const pin = document.getElementById('pinInput').value.trim() || getSavedPin();
   const id  = document.getElementById('bookingId').value.trim().toUpperCase();
