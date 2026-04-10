@@ -318,7 +318,7 @@ app.post('/api/create-booking', rateLimit(60_000, 5), async (req, res) => {
     const bookingId = generateBookingId();
     const expiresAt = Date.now() + CONFIG.TIMEOUT_MINUTES * 60_000;
 
-    const invoiceData = body.invoice ? JSON.stringify(body.invoice) : null;
+    const invoiceData = req.body.invoice ? JSON.stringify(req.body.invoice) : null;
     const result = await reserveSeats(
       bookingId, name.trim(), email.trim(), phone.trim(),
       seminar, message?.trim(), seminarDef.amount, expiresAt, invoiceData
