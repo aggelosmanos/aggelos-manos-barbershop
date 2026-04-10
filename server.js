@@ -73,7 +73,8 @@ async function initDB() {
         expires_at        BIGINT  NOT NULL,
         confirmed_at      BIGINT,
         cancelled_at      BIGINT,
-        cancel_reason     TEXT
+        cancel_reason     TEXT,
+        invoice_data      TEXT
       );
 
       CREATE TABLE IF NOT EXISTS booking_seat_locks (
@@ -129,7 +130,7 @@ async function getPoolAvailability(client, poolId) {
   };
 }
 
-async function reserveSeats(bookingId, name, email, phone, seminar, message, amount, expiresAt) {
+async function reserveSeats(bookingId, name, email, phone, seminar, message, amount, expiresAt, invoiceData) {
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
@@ -150,9 +151,9 @@ async function reserveSeats(bookingId, name, email, phone, seminar, message, amo
     // 3. Insert κράτηση
     await client.query(`
       INSERT INTO bookings
-        (id, name, email, phone, seminar, message, amount_cents, status, created_at, expires_at)
-      VALUES ($1,$2,$3,$4,$5,$6,$7,'pending',$8,$9)
-    `, [bookingId, name, email, phone, seminar, message || '', amount, now, expiresAt]);
+        (id, name, email, phone, seminar, message, amount_cents, status, created_at, expires_at, invoice_data)
+      VALUES ($1,$2,$3,$4,$5,$6,$7,'pending',$8,$9,$10)
+    `, [bookingId, name, email, phone, seminar, message || '', amount, now, expiresAt, invoiceData || null]);
 
     // 4. Καταγραφή pools
     for (const poolId of poolsToLock) {
@@ -317,9 +318,10 @@ app.post('/api/create-booking', rateLimit(60_000, 5), async (req, res) => {
     const bookingId = generateBookingId();
     const expiresAt = Date.now() + CONFIG.TIMEOUT_MINUTES * 60_000;
 
+    const invoiceData = body.invoice ? JSON.stringify(body.invoice) : null;
     const result = await reserveSeats(
       bookingId, name.trim(), email.trim(), phone.trim(),
-      seminar, message?.trim(), seminarDef.amount, expiresAt
+      seminar, message?.trim(), seminarDef.amount, expiresAt, invoiceData
     );
 
     if (!result.ok) {
@@ -388,6 +390,7 @@ app.post('/api/create-booking', rateLimit(60_000, 5), async (req, res) => {
         }],
         customer_email: email,
         metadata: { bookingId, name, phone, seminar },
+        invoice_creation: { enabled: true },
         success_url: `${CONFIG.FRONTEND_URL}/success.html?session_id={CHECKOUT_SESSION_ID}&booking_id=${bookingId}`,
         cancel_url:  `${CONFIG.FRONTEND_URL}/?cancelled=1#booking-seminar`,
         expires_at:  Math.floor(expiresAt / 1000),

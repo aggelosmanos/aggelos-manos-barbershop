@@ -1036,6 +1036,36 @@ ul{list-style:none}
             <label>Μήνυμα</label>
             <textarea name="message" placeholder="Πείτε μας λίγα λόγια για εσάς και τους στόχους σας..." rows="5"></textarea>
           </div>
+
+          <!-- ΤΙΜΟΛΟΓΙΟ -->
+          <div style="border:1px solid rgba(255,255,255,.1);border-radius:2px;padding:16px;margin-bottom:8px;background:rgba(255,255,255,.03)">
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;margin-bottom:0">
+              <input type="checkbox" id="wantsInvoice" name="wantsInvoice" onchange="toggleInvoice(this.checked)" style="width:16px;height:16px;accent-color:#fff;cursor:pointer;flex-shrink:0"/>
+              <span style="display:flex;flex-direction:column;gap:2px">
+                <span style="font-size:.82rem;color:#fff;font-weight:500;letter-spacing:.05em">Θέλω τιμολόγιο</span>
+                <span style="font-size:.7rem;color:rgba(255,255,255,.35);letter-spacing:.05em">Προαιρετικό — μόνο για επαγγελματίες</span>
+              </span>
+            </label>
+            <div id="invoiceFields" style="display:none;margin-top:16px;border-top:1px solid rgba(255,255,255,.08);padding-top:16px">
+              <div class="form-group" style="margin-bottom:12px">
+                <label>Επωνυμία</label>
+                <input type="text" name="inv_company" placeholder="π.χ. Κομμωτήριο Παπαδόπουλος"/>
+              </div>
+              <div class="form-group" style="margin-bottom:12px">
+                <label>ΑΦΜ</label>
+                <input type="text" name="inv_vat" placeholder="π.χ. 123456789" maxlength="12"/>
+              </div>
+              <div class="form-group" style="margin-bottom:12px">
+                <label>ΔΟΥ</label>
+                <input type="text" name="inv_tax_office" placeholder="π.χ. Αλμυρού"/>
+              </div>
+              <div class="form-group" style="margin-bottom:0">
+                <label>Διεύθυνση</label>
+                <input type="text" name="inv_address" placeholder="π.χ. Αθηνών 33, Αλμυρός"/>
+              </div>
+            </div>
+          </div>
+
           <button type="submit" class="btn btn-g" style="font-size:.8rem;padding:16px;cursor:pointer;width:100%;margin-top:8px;justify-content:center">
             Ολοκλήρωση Κράτησης →
           </button>
@@ -1170,11 +1200,27 @@ ul{list-style:none}
 </div>
 
 <script>
+function toggleInvoice(checked) {
+  var fields = document.getElementById('invoiceFields');
+  fields.style.display = checked ? 'block' : 'none';
+}
+
 function submitForm(e){
   e.preventDefault();
   var form=e.target,btn=form.querySelector('button[type=submit]'),success=document.getElementById('form-success');
   btn.textContent='Επεξεργασία...';btn.disabled=true;success.style.display='none';
   var data=Object.fromEntries(new FormData(form));
+  // Προσθήκη invoice data αν θέλει τιμολόγιο
+  var wantsInvoice = document.getElementById('wantsInvoice').checked;
+  if (wantsInvoice) {
+    data.invoice = {
+      company:    data.inv_company || '',
+      vat:        data.inv_vat || '',
+      tax_office: data.inv_tax_office || '',
+      address:    data.inv_address || ''
+    };
+  }
+  delete data.inv_company; delete data.inv_vat; delete data.inv_tax_office; delete data.inv_address; delete data.wantsInvoice;
   fetch('https://aggelos-manos-barbershop-production.up.railway.app/api/create-booking',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
   .then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j}})})
   .then(function(res){
