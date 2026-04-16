@@ -1,7 +1,7 @@
 /**
  * Aggelos Manos Mens Salon — Booking Backend v4 (PostgreSQL)
  * Δύο σεμινάρια με cross-decrement λογική:
- *   - Look & Learn:          150 θέσεις
+ *   - Look & Learn:           94 θέσεις
  *   - Look & Learn Workshop:   6 θέσεις (κάθε κράτηση -1 και από τα 150)
  *
  * npm install express stripe pg nodemailer dotenv cors
@@ -55,9 +55,9 @@ async function initDB() {
       );
 
       INSERT INTO seat_pools (id, label, total_seats) VALUES
-        ('look_and_learn', 'Look & Learn',         150),
+        ('look_and_learn', 'Look & Learn',          94),
         ('workshop',       'Look & Learn Workshop',  6)
-      ON CONFLICT (id) DO NOTHING;
+      ON CONFLICT (id) DO UPDATE SET total_seats = EXCLUDED.total_seats;
 
       CREATE TABLE IF NOT EXISTS bookings (
         id                TEXT    PRIMARY KEY,
