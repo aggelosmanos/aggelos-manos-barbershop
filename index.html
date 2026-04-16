@@ -931,6 +931,36 @@ ul{list-style:none}
           </div>
         </div>
       </div>
+      <!-- PROMO BANNER -->
+      <div id="promoBanner" style="background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.25);border-radius:2px;padding:20px 20px 16px;margin-bottom:0">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+          <span style="font-family:var(--f-body);font-size:.55rem;font-weight:700;letter-spacing:.4em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.15);padding:4px 10px;border-radius:1px">Περιορισμένη Προσφορά</span>
+          <span style="font-family:var(--f-body);font-size:.6rem;color:rgba(255,255,255,.5);letter-spacing:.1em">Λήγει 9 Μαΐου</span>
+        </div>
+        <div style="font-family:var(--f-display);font-size:2.2rem;font-weight:300;color:#fff;line-height:1;margin-bottom:4px">−20%</div>
+        <div style="font-family:var(--f-body);font-size:.75rem;color:rgba(255,255,255,.7);margin-bottom:14px;letter-spacing:.04em">σε όλα τα σεμινάρια</div>
+        <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:rgba(255,255,255,.04);border-radius:1px">
+            <span style="font-family:var(--f-body);font-size:.78rem;color:rgba(255,255,255,.75)">Look &amp; Learn</span>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-family:var(--f-display);font-size:.88rem;color:rgba(255,255,255,.3);text-decoration:line-through">100€</span>
+              <span style="font-family:var(--f-display);font-size:1.1rem;color:#fff;font-weight:400">80€</span>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:rgba(255,255,255,.04);border-radius:1px">
+            <span style="font-family:var(--f-body);font-size:.78rem;color:rgba(255,255,255,.75)">Workshop</span>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span style="font-family:var(--f-display);font-size:.88rem;color:rgba(255,255,255,.3);text-decoration:line-through">400€</span>
+              <span style="font-family:var(--f-display);font-size:1.1rem;color:#fff;font-weight:400">320€</span>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08)">
+          <span style="font-family:var(--f-body);font-size:.62rem;color:rgba(255,255,255,.4);letter-spacing:.08em">Αντίστροφη μέτρηση:</span>
+          <span id="promoCountdown" style="font-family:var(--f-body);font-size:.7rem;font-weight:600;color:#fff;letter-spacing:.06em">—</span>
+        </div>
+      </div>
+
       <div class="sp-cta-box" style="position:static">
         <h3>Κλείστε τη θέση σας</h3>
         <p>Οι θέσεις είναι περιορισμένες. Εκδηλώστε το ενδιαφέρον σας τώρα.</p>
@@ -995,14 +1025,14 @@ ul{list-style:none}
           <div class="sc-row">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             <span>Look &amp; Learn:</span>
-            <strong id="seats-look-and-learn">—</strong>
-            <span class="sc-total">/ 150</span>
+            <strong id="seats-look-and-learn">94</strong>
+            <span class="sc-total">θέσεις απομένουν</span>
           </div>
           <div class="sc-row">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             <span>Workshop:</span>
-            <strong id="seats-workshop">—</strong>
-            <span class="sc-total">/ 6</span>
+            <strong id="seats-workshop">2</strong>
+            <span class="sc-total">θέσεις απομένουν</span>
           </div>
         </div>
       </div>
@@ -1012,8 +1042,8 @@ ul{list-style:none}
             <label>Επιλογή Σεμιναρίου</label>
             <select name="seminar" id="seminarSelect" required>
               <option value="" disabled selected>Επιλέξτε σεμινάριο...</option>
-              <option value="Look & Learn">Look &amp; Learn — 100€ (Προκαταβολή 30€)</option>
-              <option value="Look & Learn Workshop">Look &amp; Learn Workshop — 400€ + Δωρεάν κούκλα πρακτικής άσκησης (Προκαταβολή 50€)</option>
+              <option value="Look & Learn">Look &amp; Learn — 80€ (Προσφορά -20% έως 9/5) (Προκαταβολή 30€)</option>
+              <option value="Look & Learn Workshop">Look &amp; Learn Workshop — 320€ (Προσφορά -20% έως 9/5) + Δωρεάν κούκλα πρακτικής άσκησης (Προκαταβολή 50€)</option>
             </select>
           </div>
           <div class="form-total" id="formTotal" style="display:none!important">
@@ -1343,6 +1373,26 @@ if(!_hasDeepLink){
     const diff = startX - e.changedTouches[0].clientX;
     if(Math.abs(diff)>50) slideRev(diff>0?1:-1);
   }, {passive:true});
+})();
+
+// ── PROMO COUNTDOWN ──────────────────────────────────────────────────────────
+(function(){
+  var deadline = new Date("2025-05-09T23:59:59");
+  function updateCountdown(){
+    var now = new Date();
+    var diff = deadline - now;
+    var el = document.getElementById("promoCountdown");
+    var banner = document.getElementById("promoBanner");
+    if(!el) return;
+    if(diff <= 0){ if(banner) banner.style.display="none"; return; }
+    var d = Math.floor(diff/86400000);
+    var h = Math.floor((diff%86400000)/3600000);
+    var m = Math.floor((diff%3600000)/60000);
+    var s = Math.floor((diff%60000)/1000);
+    el.textContent = d+"μ "+String(h).padStart(2,"0")+":"+String(m).padStart(2,"0")+":"+String(s).padStart(2,"0");
+  }
+  updateCountdown();
+  setInterval(updateCountdown,1000);
 })();
 
 // Deep links — άνοιγμα σελίδας από URL hash
