@@ -944,16 +944,10 @@ ul{list-style:none}
             <span style="font-family:var(--f-body);font-size:.78rem;color:rgba(255,255,255,.75)">Look &amp; Learn</span>
             <div style="display:flex;align-items:center;gap:8px">
               <span style="font-family:var(--f-display);font-size:.88rem;color:rgba(255,255,255,.3);text-decoration:line-through">100€</span>
-              <span style="font-family:var(--f-display);font-size:1.1rem;color:#fff;font-weight:400">80€</span>
+              <span style="font-family:var(--f-display);font-size:.8rem;color:rgba(255,255,255,.6);font-weight:400">−20%</span>
             </div>
           </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:rgba(255,255,255,.04);border-radius:1px">
-            <span style="font-family:var(--f-body);font-size:.78rem;color:rgba(255,255,255,.75)">Workshop</span>
-            <div style="display:flex;align-items:center;gap:8px">
-              <span style="font-family:var(--f-display);font-size:.88rem;color:rgba(255,255,255,.3);text-decoration:line-through">400€</span>
-              <span style="font-family:var(--f-display);font-size:1.1rem;color:#fff;font-weight:400">320€</span>
-            </div>
-          </div>
+
         </div>
         <div style="display:flex;align-items:center;gap:6px;padding-top:12px;border-top:1px solid rgba(255,255,255,.08)">
           <span style="font-family:var(--f-body);font-size:.62rem;color:rgba(255,255,255,.4);letter-spacing:.08em">Αντίστροφη μέτρηση:</span>
@@ -1042,8 +1036,8 @@ ul{list-style:none}
             <label>Επιλογή Σεμιναρίου</label>
             <select name="seminar" id="seminarSelect" required>
               <option value="" disabled selected>Επιλέξτε σεμινάριο...</option>
-              <option value="Look & Learn">Look &amp; Learn — 80€ (Προσφορά -20% έως 9/5) (Προκαταβολή 30€)</option>
-              <option value="Look & Learn Workshop">Look &amp; Learn Workshop — 320€ (Προσφορά -20% έως 9/5) + Δωρεάν κούκλα πρακτικής άσκησης (Προκαταβολή 50€)</option>
+              <option value="Look & Learn">Look &amp; Learn — Προσφορά -20% έως 9/5 (Προκαταβολή 30€)</option>
+              <option value="Look & Learn Workshop">Look &amp; Learn Workshop — 400€ + Δωρεάν κούκλα πρακτικής άσκησης (Προκαταβολή 50€)</option>
             </select>
           </div>
           <div class="form-total" id="formTotal" style="display:none!important">
@@ -1481,7 +1475,7 @@ function fetchAvailability(){
       el.textContent = val;
       el.className = val === 0 ? 'empty' : val <= Math.ceil(max*0.13) ? 'low' : '';
     }
-    setEl('seats-look-and-learn', d.look_and_learn.available, 150);
+    setEl('seats-look-and-learn', d.look_and_learn.available, 94);
     setEl('seats-workshop',       d.workshop.available,       6);
 
     // Ενημέρωσε το submit button ανάλογα με το επιλεγμένο σεμινάριο
