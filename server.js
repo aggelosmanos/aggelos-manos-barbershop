@@ -55,7 +55,7 @@ async function initDB() {
       );
 
       INSERT INTO seat_pools (id, label, total_seats) VALUES
-        ('look_and_learn', 'Look & Learn',          94),
+        ('look_and_learn', 'Look & Learn',         110),
         ('workshop',       'Look & Learn Workshop',  6)
       ON CONFLICT (id) DO UPDATE SET total_seats = EXCLUDED.total_seats;
 
