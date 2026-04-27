@@ -30,7 +30,7 @@ const CONFIG = {
 const SEMINARS = {
   'Look & Learn': {
     label:           'Look & Learn',
-    amount:          3000,          // 30.00€ προκαταβολή
+    amount:          50,            // 0.50€ test
     seats_key:       'look_and_learn',
     also_decrements: [],
   },
@@ -203,6 +203,7 @@ async function sendConfirmationEmail(booking) {
           <tr><td style="color:#888;padding:6px 0">Σεμινάριο</td> <td style="color:#fff">${booking.seminar}</td></tr>
           <tr><td style="color:#888;padding:6px 0">Όνομα</td>     <td style="color:#fff">${booking.name}</td></tr>
           <tr><td style="color:#888;padding:6px 0">Ποσό</td>      <td style="color:#fff">${(booking.amount_cents/100).toFixed(2)}€</td></tr>
+          <tr><td style="color:#888;padding:6px 0">Τοποθεσία</td><td style="color:#fff">Park Hotel<br><span style="font-size:.85rem;color:#aaa">Δεληγιώργη 2, Βόλος</span></td></tr>
         </table>
         <div style="margin-top:24px;padding-top:20px;border-top:1px solid #222">
           <p style="font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:10px">Πολιτική Σεμιναρίου</p>
@@ -228,7 +229,20 @@ async function sendConfirmationEmail(booking) {
           <tr><td style="color:#888;padding:6px 0">Email</td>       <td style="color:#fff">${booking.email}</td></tr>
           <tr><td style="color:#888;padding:6px 0">Τηλέφωνο</td>   <td style="color:#fff">${booking.phone}</td></tr>
           <tr><td style="color:#888;padding:6px 0">Ποσό</td>        <td style="color:#fff">${(booking.amount_cents/100).toFixed(2)}€</td></tr>
+          <tr><td style="color:#888;padding:6px 0">Τοποθεσία</td>  <td style="color:#fff">Park Hotel<br><span style="font-size:.85rem;color:#aaa">Δεληγιώργη 2, Βόλος</span></td></tr>
         </table>
+        ${booking.invoice_data ? (() => {
+          const inv = JSON.parse(booking.invoice_data);
+          return \`<div style="margin-top:20px;padding:14px 16px;background:#111;border:1px solid #b8860b;border-radius:4px;">
+            <p style="font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#b8860b;margin:0 0 10px;">⚠ Ζητείται Τιμολόγιο</p>
+            <table style="width:100%;font-size:13px;">
+              <tr><td style="color:#888;padding:4px 0;">Επωνυμία</td><td style="color:#fff;">\${inv.company || '—'}</td></tr>
+              <tr><td style="color:#888;padding:4px 0;">ΑΦΜ</td><td style="color:#fff;">\${inv.vat || '—'}</td></tr>
+              <tr><td style="color:#888;padding:4px 0;">ΔΟΥ</td><td style="color:#fff;">\${inv.tax_office || '—'}</td></tr>
+              <tr><td style="color:#888;padding:4px 0;">Διεύθυνση</td><td style="color:#fff;">\${inv.address || '—'}</td></tr>
+            </table>
+          </div>\`;
+        })() : ''}
       </div>
     `,
   });
