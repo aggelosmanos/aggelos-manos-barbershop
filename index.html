@@ -1079,13 +1079,13 @@ ul{list-style:none}
           <div class="sc-row">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             <span>Look &amp; Learn:</span>
-            <strong id="seats-look-and-learn">94</strong>
+            <strong id="seats-look-and-learn">—</strong>
             <span class="sc-total">θέσεις απομένουν</span>
           </div>
           <div class="sc-row">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             <span>Workshop:</span>
-            <strong id="seats-workshop">2</strong>
+            <strong id="seats-workshop">—</strong>
             <span class="sc-total">θέσεις απομένουν</span>
           </div>
         </div>
@@ -1498,26 +1498,6 @@ document.querySelectorAll('.srv,.price-row,.ct-item,.stat-n').forEach(el=>{el.st
 const secs=document.querySelectorAll('section[id]');
 const nas=document.querySelectorAll('.nav-links a');
 window.addEventListener('scroll',()=>{let c='';secs.forEach(s=>{if(scrollY>=s.offsetTop-100)c=s.id});nas.forEach(a=>{a.style.color=a.getAttribute('href')==='#'+c?'var(--gold)':''})},{passive:true});
-
-// ── SEAT AVAILABILITY POLLING ──────────────────────────────────────────────
-const API_BASE='https://aggelos-manos-barbershop-production.up.railway.app';
-async function fetchAvailability(){
-  try{
-    const r=await fetch(API_BASE+'/api/availability');
-    if(!r.ok)return;
-    const d=await r.json();
-    const el=document.getElementById('seatsAvailable');
-    if(!el)return;
-    el.textContent=d.available;
-    el.className=d.available===0?'empty':d.available<20?'low':'';
-    const sb=document.querySelector('.seminar-form button[type=submit]');
-    if(sb&&d.available===0){sb.disabled=true;sb.textContent='Δεν υπάρχουν διαθέσιμες θέσεις';sb.style.opacity='.5';}
-  }catch(e){}
-}
-fetchAvailability();
-setInterval(fetchAvailability,15000);
-const _origOpen=window.openModal;
-if(typeof _origOpen==='function'){window.openModal=function(id){_origOpen(id);if(id==='seminar-form')fetchAvailability();};}
 
 // ── SEAT AVAILABILITY POLLING ──────────────────────────────────────────────
 var _lastAvail = null;
